@@ -67,4 +67,33 @@ router.get('/drug-search', verify, async (req, res) => {
      }).clone();
 });
 
+// list details about a drug
+router.get('/view-drug-details', verify, async (req, res) => {
+    const { drug_id } = req.body;
+
+    try {
+        await Drug.findOne({ _id: drug_id }, async (err, result) => {
+            if (err) {
+                return res.status(400).json({ message: "Drug details not found" });
+            }
+
+            if (result) {
+                // await Drug.updateOne({ _id: drug_id }, {$inc : { views: 1 }}, (err, _) => {
+                //     if (err) {
+                //         return res.status(400).json({ message: "Something went wrong. Please try again later."})
+                //     }
+                //     return res.status(200).json({ message: "success", data: result });
+                // }).clone()
+                let update_view_count = await Drug.updateOne({ _id: drug_id }, {$inc : { views: 1 }})
+
+                if (update_view_count) {
+                    return res.status(200).json({ message: "success", data: result });
+                }
+            }
+        }).clone();
+    } catch (error) {
+        return res.status(400).json({ message: "An error occurred.", error })
+    }
+});
+
 module.exports = router;
