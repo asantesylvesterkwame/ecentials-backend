@@ -5,6 +5,10 @@ const prescriptionSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
+    store_id: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: false
+    },
     status: {
         type: Number,
         required: true
