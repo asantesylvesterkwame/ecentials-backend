@@ -289,4 +289,30 @@ router.post('/health-pin', verify, async (req, res) => {
 })
 
 
+// allow a verified user to reset a pin
+router.post('/reset-health-pin', verify, async (req, res) => {
+    const user_id = req.user._id
+    const pin = req.body.pin
+
+    try {
+        await User.updateOne({
+            _id: user_id
+        }, {
+            $set: {
+                "health.pin": encryptPassword(pin)
+            }
+        }, (err, _) => {
+            if (err) {
+                return res.status(400).json({ message: "Failed to reset pin." })
+            }
+            return res.status(200).json({ message: "success", })
+        }).clone();
+    } catch (err) {
+        return res.status(400).json({
+            message: "Something went wrong",
+            data: err
+        })
+    }
+});
+
 module.exports = router
