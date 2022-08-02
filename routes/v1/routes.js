@@ -9,6 +9,7 @@ router.use('/api/v1/user/favourites', require('./User/favourites'))
 router.use('/api/v1/user/orders', require('./User/orders'))
 router.use('/api/v1/user/cart', require('./User/cart'))
 router.use('/api/v1/user/checkout', require('./User/checkout'))
+router.use('/api/v1/user/bookmarks', require('./User/bookmark'))
 
 // pharmacy related details endpoints
 router.use('/api/v1/pharmacies', require('./Pharmacy/pharmacy'))
