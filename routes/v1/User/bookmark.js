@@ -36,4 +36,19 @@ router.get('/list-bookmark-items', verify, async (req, res) => {
     }).clone();
 }); 
 
+
+// remove an item from bookmarks
+router.delete('/remove-bookmark-item', verify, async (req, res) => {
+    const user_id = req.user._id;
+
+    const { item_id } = req.body;
+
+    await Bookmark.deleteOne({ user_id, item_id }, (err, _) => {
+        if (err) {
+            return res.status(404).json({ message: "Item not removed. Try again later" });
+        }
+        return res.status(200).json({ message: "success" });
+    }).clone();
+});
+
 module.exports = router;
