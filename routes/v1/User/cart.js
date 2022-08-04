@@ -27,7 +27,7 @@ router.post('/add-item', verify, async (req, res) => {
 
 // endpoint for authorized user to remove an item from cart
 router.delete('/remove-item-from-cart', verify, async (req, res) => {
-    user_id = req.user._id;
+    const user_id = req.user._id;
     const { item_id } = req.body;
 
     await Cart.deleteOne(
@@ -41,5 +41,17 @@ router.delete('/remove-item-from-cart', verify, async (req, res) => {
     ).clone();
 });
 
+
+// list all cart items for a user
+router.get('/fetch-all-cart-items', verify, async (req, res) => {
+    const user_id = req.user._id;
+    
+    await Cart.find({ user_id }, (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: "Failed to retrieve cart items." })
+        }
+        return res.status(200).json({ message: "success", data: result });
+    }).clone();
+});
 
 module.exports = router;
