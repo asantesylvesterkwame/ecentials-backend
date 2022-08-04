@@ -96,4 +96,20 @@ router.get('/view-drug-details', verify, async (req, res) => {
     }
 });
 
+// list popular drug. This uses the views added during each detail view
+// this can be reviewed later on to show how drug popularity is being displayed.
+router.get('/list-popular-drugs', verify, async (req, res) => {
+    try {
+        const drugs = await Drug.find().sort({views: -1})
+
+        if (drugs) {
+            return res.status(200).json({ message: "success", data: drugs})
+        }
+
+        return res.status(200).json({ message: "success", data: [] })
+    } catch (error) {
+        return res.status(200).json({ message: "Something went wrong", })        
+    }
+})
+
 module.exports = router;
