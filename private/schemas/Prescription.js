@@ -11,13 +11,13 @@ const prescriptionSchema = new mongoose.Schema({
     },
     status: {
         type: Number,
-        required: true
+        required: false,
+        default: 0
     },
     image: {
-        type: String, 
-        required: false, 
-        min: 2,
-        max: 255
+        data: Buffer,
+        contentType: String,
+        required: false,
     },
 }, { timestamps: true });
 
