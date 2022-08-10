@@ -17,4 +17,16 @@ router.get('/total-orders', verify, async (req, res) => {
 });
 
 
+// get a count of all the total products sold by a pharmacy
+router.get('/total-products-sold', verify, async (req, res) => {
+    const { store_id } = req.body;
+
+    await Orders.find({ store_id, fulfilled: true }).count((err, result) => {
+        if (err) {
+            return res.status(400).json({ message: "Could not retrieve total products sold." });
+        }
+        return res.status(200).json({ message: "success", data: result });
+    }).clone();
+});
+
 module.exports = router;
