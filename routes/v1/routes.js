@@ -15,6 +15,7 @@ router.use('/api/v1/user/bookmarks', require('./User/bookmark'))
 router.use('/api/v1/pharmacies', require('./Pharmacy/pharmacy'))
 
 router.use('/api/v1/pharmacy/drugs', require('./Pharmacy/drug'))
+router.use('/api/v1/pharmacy/orders', require('./Pharmacy/orders'))
 
 // pescription related endpoints
 router.use('/api/v1/prescriptions', require('./Prescription/prescription'))
