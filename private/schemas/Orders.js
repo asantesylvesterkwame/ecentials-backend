@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const ordersSchema = new mongoose.Schema({
+    store_id: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
+    },
     who_ordered: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true
@@ -12,6 +16,11 @@ const ordersSchema = new mongoose.Schema({
     status: {
         type: Number,
         required: true
+    },
+    fulfilled: {
+        type: Boolean,
+        required: true,
+        default:false
     },
     order_item_id: {
         type: mongoose.SchemaTypes.ObjectId,
