@@ -18,7 +18,7 @@ router.post('/add-new-hospital', (req, res) => {
         name, address, opening_hours, phone_number, gps_address
     }, (err, result) => {
         if (err) {
-            return res.status(200).json({ message: "Failed to create a hospital" });
+            return res.status(400).json({ message: "Failed to create a hospital" });
         }
         return res.status(200).json({ message: "success", data: result });
     })
