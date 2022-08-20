@@ -20,4 +20,7 @@ router.use('/api/v1/pharmacy/orders', require('./Pharmacy/orders'))
 // pescription related endpoints
 router.use('/api/v1/prescriptions', require('./Prescription/prescription'))
 
+// hospital related endpoints
+router.use('/api/v1/hospitals', require('./Hospital/hospital'))
+
 module.exports = router
