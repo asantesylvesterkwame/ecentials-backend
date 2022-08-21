@@ -68,7 +68,7 @@ router.get('/drug-search', verify, async (req, res) => {
 });
 
 // list details about a drug
-router.get('/view-drug-details', verify, async (req, res) => {
+router.post('/view-drug-details', verify, async (req, res) => {
     const { drug_id } = req.body;
 
     try {
