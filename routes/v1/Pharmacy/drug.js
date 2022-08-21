@@ -38,7 +38,7 @@ router.post('/add-new-drug', verify, async (req, res) => {
 });
 
 // list all drugs associated to a particular pharmacy or shop
-router.get('', verify, async (req, res) => {
+router.post('', verify, async (req, res) => {
     const { store_id } = req.body;
 
     await Drug.find({ store_id }, (err, result) => {
