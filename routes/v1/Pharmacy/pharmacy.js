@@ -50,7 +50,7 @@ router.post('/create-new-pharmacy', async (req, res) => {
 
 // allow a user to search for a pharmacy using keywords,
 // name, city, address
-router.get('/search-for-pharmacy', verify, async (req, res) => {
+router.post('/search-for-pharmacy', verify, async (req, res) => {
     const { search_text } = req.body;
 
     await Store.find({ 
@@ -74,7 +74,7 @@ router.get('/search-for-pharmacy', verify, async (req, res) => {
 // This might be a heavy task, in the future, it should be 
 // refactored to make use of a queuing mechanism to avoid
 // http request timeout
-router.get('/search-nearby-pharmacies', verify, async (req, res) => {
+router.post('/search-nearby-pharmacies', verify, async (req, res) => {
     const { search_text, user_latitude, user_longitude } = req.body;
 
     try {
