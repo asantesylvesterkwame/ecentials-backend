@@ -2,7 +2,8 @@ const router = require('express').Router();
 
 const { encryptPassword } = require('../../../private/helpers/functions');
 const Store = require('../../../private/schemas/Store');
-const verify = require('../../../verifyToken')
+const verify = require('../../../verifyToken');
+const getDistance = require('../../../private/helpers/get_distance');
 
 
 // list all pharmacies
@@ -68,6 +69,50 @@ router.get('/search-for-pharmacy', verify, async (req, res) => {
 });
 
 
+// allow a user to search verified pharmacies at a distance
+// specified. This distance should not exceed 20 km.
+// This might be a heavy task, in the future, it should be 
+// refactored to make use of a queuing mechanism to avoid
+// http request timeout
+router.get('/search-nearby-pharmacies', verify, async (req, res) => {
+    const { search_text, user_latitude, user_longitude } = req.body;
+
+    try {
+        const pharmacies = await Store.find({});
+        
+        if (pharmacies == null) {
+            return res.status(400).json({ message: "No pharmacy available"});
+        }
+
+        let results = []
+
+        let text = search_text.toLowerCase();
+
+        pharmacies.forEach(pharmacy => {
+            // get the distance between
+            const distance = getDistance({lat1: user_latitude, lng1: user_longitude, lat2: pharmacy.gps_lat, 
+                lng2: pharmacy.gps_lng});
+            
+            if (distance < 50.0) {
+                // check if search text matches any of the params
+                if (pharmacy.name.toLowerCase().includes(text) || pharmacy.description.toLowerCase().includes(text) || 
+                pharmacy.address.toLowerCase().includes(text)) {
+                    results.push(pharmacy);    
+                }
+            }
+        });
+        
+        if (results.length == 0) {
+            return res.status(400).json({ message: "No pharmacy found" });
+        }
+
+        return res.status(200).json({ message: "success", data: results})
+
+    } catch (error) {
+        console.log(error)
+        return res.status(400).json({ message: "An error occurred. Please try again later.", data: error});
+    }
+})
 
 module.exports = router;
     
