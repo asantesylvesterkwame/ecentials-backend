@@ -40,4 +40,17 @@ router.post('/book-an-appointment', verify, async (req, res) => {
 });
 
 
+// retrieve all upcoming, completed and cancelled appointments
+router.post('/fetch-appointment-information', verify, async (req, res) => {
+    const user_id = req.user._id;
+    const { status } = req.body;
+
+    await Appointments.find({ user_id, status }, (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: "Appointment not found" });
+        }
+        return res.status(200).json({ message: "success", data: result });
+    }).clone();
+});
+
 module.exports = router;
