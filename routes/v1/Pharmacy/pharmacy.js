@@ -103,7 +103,7 @@ router.get('/search-nearby-pharmacies', verify, async (req, res) => {
         });
         
         if (results.length == 0) {
-            return res.status(400).json({ message: "No pharmacy found" });
+            return res.status(200).json({ message: "No pharmacy found", data: [] });
         }
 
         return res.status(200).json({ message: "success", data: results})
