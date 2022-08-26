@@ -55,9 +55,9 @@ router.post('/search-for-pharmacy', verify, async (req, res) => {
 
     await Store.find({ 
         "$or": [
-            {name: { $regex: search_text }},
-            {description: { $regex: search_text }},
-            {address: { $regex: search_text }}
+            {name: { $regex: search_text, '$options' : 'i' }},
+            {description: { $regex: search_text, '$options' : 'i' }},
+            {address: { $regex: search_text, '$options' : 'i' }}
         ]
      }, (err, result) => {
          if (err) {
