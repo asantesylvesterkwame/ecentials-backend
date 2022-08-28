@@ -23,7 +23,7 @@ const hospitalSchema = new mongoose.Schema({
     },
     images: [
         {
-            data: Buffer,
+            image: Buffer,
             contentType: String,
         }
     ]
