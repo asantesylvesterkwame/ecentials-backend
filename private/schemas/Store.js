@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const storeSchema = new mongoose.Schema({
-    user_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true
-    },
+    // user_id: {
+    //     type: mongoose.SchemaTypes.ObjectId,
+    //     required: true
+    // },
     store_pin: {
         type: String,
         required: true
