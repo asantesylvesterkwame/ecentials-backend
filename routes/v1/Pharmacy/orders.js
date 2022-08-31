@@ -52,4 +52,18 @@ router.get('/total-income-made-by-pharmacy', verify, async (req, res) => {
     }).clone();
 });
 
+
+// get all the orders that have been completed
+// an order has been completed if the fulfilled is set to true
+router.get('/fetch-sales', verify, async (req, res) => {
+    const { facility_id } = req.body;
+
+    await Orders.find({ facility_id, fulfilled: true }, (err, result) => {
+        if (err) {
+            return res.status(400).json({ message: "Failed to fetch pharmacy sales" });
+        }
+        return res.status(200).json({ message: "success", data: result });
+    }).clone();
+});
+
 module.exports = router;
