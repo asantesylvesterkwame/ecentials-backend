@@ -3,11 +3,12 @@ const mongoose = require("mongoose")
 const walletSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: true,
+        unique: true
     },
-    amount: {
+    balance: {
         type: Number,
-        required: true
+        default: 0
     },
 }, { timestamps: true });
 
