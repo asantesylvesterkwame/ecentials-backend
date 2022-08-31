@@ -10,6 +10,8 @@ router.use('/api/v1/user/orders', require('./User/orders'))
 router.use('/api/v1/user/cart', require('./User/cart'))
 router.use('/api/v1/user/checkout', require('./User/checkout'))
 router.use('/api/v1/user/bookmarks', require('./User/bookmark'))
+router.use('/api/v1/user/appointments', require('./User/appointment'))
+router.use('/api/v1/user/wallet', require('./User/Wallet/wallet.controller'))
 
 // pharmacy related details endpoints
 router.use('/api/v1/pharmacies', require('./Pharmacy/pharmacy'))
