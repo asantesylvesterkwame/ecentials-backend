@@ -15,6 +15,19 @@ async function createWallet(user_id) {
 }
 
 
+// get user wallet's balance
+async function getWalletBalance(user_id) {
+    try {
+        const balance = await Wallet.findOne({ user_id }, { _id: 0, balance: 1 });
+        return { message: "success", data: balance };
+    } catch (error) {
+        return { message: "An error occurred when retrieving using balance" };
+    }
+}
+
+
+
 module.exports = {
-    createWallet
+    createWallet,
+    getWalletBalance
 }
