@@ -1,4 +1,5 @@
 const Wallet = require('../../schemas/Wallet');
+const WalletTransactions = require('../../schemas/WalletTransactions');
 
 // create a new ecentials wallet
 async function createWallet(user_id) {
@@ -26,8 +27,19 @@ async function getWalletBalance(user_id) {
 }
 
 
+// retrieve recently performed wallet transactions
+async function recentWalletTransactions(user_id) {
+    try {
+        const transactions = await WalletTransactions.find({ user_id }).limit(5);
+        return { message: "succes", data: transactions };
+    } catch (error) {
+        return { message: "An error occurred when retrieving recent wallet transactions"}
+    }
+}
+
 
 module.exports = {
     createWallet,
-    getWalletBalance
+    getWalletBalance,
+    recentWalletTransactions
 }

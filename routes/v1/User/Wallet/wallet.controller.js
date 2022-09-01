@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const { createWallet, getWalletBalance } = require('../../../../private/services/wallet/wallet.service');
+const { createWallet, getWalletBalance, recentWalletTransactions } = require('../../../../private/services/wallet/wallet.service');
 const verify = require('../../../../verifyToken')
 
 
@@ -24,5 +24,15 @@ router.get('/get-ecentials-wallet-balance', verify, async (req, res, next) => {
     }
 });
 
+
+router.get('/recent-ecentials-wallet-transactions', verify, async (req, res, next) => {
+    const user_id = req.user._id;
+
+    try {
+        res.json(await recentWalletTransactions(user_id));
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;
