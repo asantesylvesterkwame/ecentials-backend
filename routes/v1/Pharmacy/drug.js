@@ -50,7 +50,7 @@ router.post('', verify, async (req, res) => {
 });
 
 // search for a drug using name, manufacturer, description
-router.get('/drug-search', verify, async (req, res) => {
+router.post('/drug-search', verify, async (req, res) => {
     const { search_text } = req.body;
 
     await Drug.find({ 

@@ -13,6 +13,20 @@ const walletTransactionSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    status: {
+        type: String,
+        required: [true, "payment status is required"],
+        enum: ["successful", "pending", "failed"],
+    },
+    paymentMethod: { 
+        type: String, 
+        default: "flutterwave" 
+    },
+    currency: {
+        type: String,
+        required: [true, "currency is required"],
+        enum: ["GH", "USD", "EUR", "GBP"],
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model("WalletTransaction", walletTransactionSchema);
