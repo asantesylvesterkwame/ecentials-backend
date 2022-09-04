@@ -23,7 +23,7 @@ router.post('/add-new-bookmark-item', verify, async (req, res) => {
 
 
 // list all specific bookmarked items for a user
-router.get('/list-bookmark-items', verify, async (req, res) => {
+router.post('/list-bookmark-items', verify, async (req, res) => {
     const user_id = req.user._id;
 
     const { bookmark_type } = req.body;

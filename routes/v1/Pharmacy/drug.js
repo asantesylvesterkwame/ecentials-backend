@@ -38,7 +38,7 @@ router.post('/add-new-drug', verify, async (req, res) => {
 });
 
 // list all drugs associated to a particular pharmacy or shop
-router.get('', verify, async (req, res) => {
+router.post('', verify, async (req, res) => {
     const { store_id } = req.body;
 
     await Drug.find({ store_id }, (err, result) => {
@@ -50,7 +50,7 @@ router.get('', verify, async (req, res) => {
 });
 
 // search for a drug using name, manufacturer, description
-router.get('/drug-search', verify, async (req, res) => {
+router.post('/drug-search', verify, async (req, res) => {
     const { search_text } = req.body;
 
     await Drug.find({ 
@@ -68,7 +68,7 @@ router.get('/drug-search', verify, async (req, res) => {
 });
 
 // list details about a drug
-router.get('/view-drug-details', verify, async (req, res) => {
+router.post('/view-drug-details', verify, async (req, res) => {
     const { drug_id } = req.body;
 
     try {

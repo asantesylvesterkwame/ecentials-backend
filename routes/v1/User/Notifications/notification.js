@@ -7,7 +7,8 @@ const User = require('../../../../private/schemas/User');
 
 // creates a new notification for a verified user
 router.post('/add_notification_for_user', verify, async (req, res) => {
-    const { user_id, title, message, image, notification_type } = req.body;
+    const user_id = req.user._id;
+    const { title, message, image, notification_type } = req.body;
 
     const isUserPresent = await User.findOne({
         _id: user_id
@@ -53,7 +54,7 @@ router.get('/fetch-all-user-notifications', verify, async (req, res) => {
 
 // this route allows a user to fetch a specific notification or recommended
 // notification for the user
-router.get('/fetch-user-notifications', verify, async (req, res) => {
+router.post('/fetch-user-notifications', verify, async (req, res) => {
     const user_id = req.user._id;
     const { notification_type } = req.body;
 

@@ -20,7 +20,7 @@ router.get('', verify, async (req, res) => {
 
 
 // list information about an order item for a verified user
-router.get('/order-item', verify, async (req, res) => {
+router.post('/order-item', verify, async (req, res) => {
     user_id = req.user._id;
     const { order_id } = req.body;
 
@@ -31,7 +31,11 @@ router.get('/order-item', verify, async (req, res) => {
         if (err) {
             return res.status(400).json({message: 'Failed to load order item'});
         }
-        return res.status(200).json({message: 'success', data: result});
+        data = []
+        if (result != null) {
+            data = result;
+        }
+        return res.status(200).json({message: 'success', data: data});
     }).clone();
 });
 

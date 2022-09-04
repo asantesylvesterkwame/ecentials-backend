@@ -4,7 +4,7 @@ const Favourites = require('../../../private/schemas/Favourites');
 const verify = require('../../../verifyToken')
 
 // list all favourites for a verified user
-router.get('', verify , async (req, res) => {
+router.post('', verify , async (req, res) => {
     user_id = req.user._id;
     const { favourite_type } = req.body;
 
