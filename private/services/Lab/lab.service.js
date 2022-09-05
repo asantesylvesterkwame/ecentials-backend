@@ -35,7 +35,7 @@ async function fetchAllLabs() {
         const results = await Lab.find({});
 
         if (results == null) {
-            return { message: "No lab found. Please try again later" };
+            return { message: "No lab found. Please try again later", data: [] };
         }
         return { message: "success", data: results };
     } catch (error) {
@@ -43,7 +43,30 @@ async function fetchAllLabs() {
     }
 }
 
+
+// search for a lab using specific keywords
+// [name, address, gps_address]
+async function searchForLab({search_text}) {
+    try {
+        const results = await Lab.find({
+            "$or": [
+                {name: { $regex: search_text, '$options' : 'i' }},
+                {address: { $regex: search_text, '$options' : 'i' }},
+                {gps_address: { $regex: search_text, '$options' : 'i' }},
+            ]
+        });
+
+        if (results) {
+            return { message: "success", data: results };
+        }
+        return { message: "No lab found", data: []};
+    } catch (error) {
+        return { message: "An error occurred, please try again later." };
+    }
+}
+
 module.exports = {
     createNewLab,
-    fetchAllLabs
+    fetchAllLabs,
+    searchForLab
 }
