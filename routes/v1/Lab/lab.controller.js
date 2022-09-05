@@ -1,4 +1,5 @@
-const { createNewLab } = require("../../../private/services/Lab/lab.service");
+const { createNewLab, fetchAllLabs } = require("../../../private/services/Lab/lab.service");
+const verify = require("../../../verifyToken");
 
 const router = require("express").Router();
 
@@ -26,8 +27,17 @@ router.post("/create-new-lab", async (req, res, next) => {
       })
     );
   } catch (error) {
-      next(error);
+    next(error);
   }
+});
+
+// fetch all labs for a verified user on the platform
+router.get("", verify, async (req, res, next) => {
+    try {
+        return res.status(200).json(await fetchAllLabs());
+    } catch (error) {
+        next(error);
+    }
 });
 
 module.exports = router;

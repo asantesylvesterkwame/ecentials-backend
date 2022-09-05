@@ -29,7 +29,21 @@ async function createNewLab({
 }
 
 
+// retrieve all labs
+async function fetchAllLabs() {
+    try {
+        const results = await Lab.find({});
+
+        if (results == null) {
+            return { message: "No lab found. Please try again later" };
+        }
+        return { message: "success", data: results };
+    } catch (error) {
+        return { message: "An error occurred."}
+    }
+}
 
 module.exports = {
-    createNewLab
+    createNewLab,
+    fetchAllLabs
 }
