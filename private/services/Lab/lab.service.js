@@ -1,4 +1,5 @@
 const Lab = require("../../schemas/Lab");
+const Staff = require("../../schemas/Staff");
 
 // create a new lab using information about the lab
 async function createNewLab({
@@ -65,8 +66,25 @@ async function searchForLab({search_text}) {
     }
 }
 
+// retrieves top rated laboratory doctors in a lab
+// TODO would have to implement logic on how a doctor becomes top rated on 
+// the platform
+async function getTopRatedDoctors({ facility_type }) {
+    try {
+        const results = await Staff.find({ facility_type }).limit(5);
+
+        if (results) {
+            return { message: "success", data: results };
+        }
+        return { message: "No doctor found", data: [] };
+    } catch (error) {
+        return { message: "An error occurred" };
+    }
+}
+
 module.exports = {
     createNewLab,
     fetchAllLabs,
-    searchForLab
+    searchForLab,
+    getTopRatedDoctors
 }
