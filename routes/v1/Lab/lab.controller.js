@@ -1,4 +1,4 @@
-const { createNewLab, fetchAllLabs, searchForLab } = require("../../../private/services/Lab/lab.service");
+const { createNewLab, fetchAllLabs, searchForLab, getTopRatedDoctors } = require("../../../private/services/Lab/lab.service");
 const verify = require("../../../verifyToken");
 
 const router = require("express").Router();
@@ -40,6 +40,14 @@ router.get("", verify, async (req, res, next) => {
     }
 });
 
+router.post('/fetch-top-doctors-in-labs', verify, async (req, res, next) => {
+    const { facility_type } = req.body;
+    try {
+        return res.status(200).json(await getTopRatedDoctors({ facility_type }))
+    } catch (error) {
+        next(error);
+    }
+});
 
 // allow a verified user to search for a lab
 router.post('/search-for-lab', verify, async (req, res, next) => {
