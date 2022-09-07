@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 const Drug = require('../../../private/schemas/Drug');
+const { searchDrugInSpecificPharmacy } = require('../../../private/services/Pharmacy/Drug/drug.service');
 const verify = require('../../../verifyToken')
 
 
@@ -111,5 +112,17 @@ router.get('/list-popular-drugs', verify, async (req, res) => {
         return res.status(200).json({ message: "Something went wrong", })        
     }
 })
+
+
+// search for a drug in a particular pharmacy
+router.post('/pharmacy-specific-drug-search', verify, async (req, res, next) => {
+    const { search_text, store_id } = req.body;
+
+    try {
+        return res.json(await searchDrugInSpecificPharmacy({ search_text, store_id }));
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;
