@@ -19,14 +19,13 @@ router.post('/add-new-drug', verify, async (req, res) => {
         manufacturer,
         views,
         discount,
-        nhis,
-        images
+        nhis
     } = req.body;
 
     if (!!name && !!manufacturer && !!description) {
         Drug.create({
             store_id, name, prize, description, dosage, quantity, dosage_form, manufacturer, views,
-            discount, nhis, images
+            discount, nhis 
         }, (err, result) => {
             if (err) {
                 return res.status(400).json({ message: "Failed to add drug. Try again later." });
