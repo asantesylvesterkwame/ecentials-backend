@@ -15,20 +15,16 @@ const vehicleSchema = new mongoose.Schema({
     },
     brand: {
         type: String,
-        required: true
+        required: false
     },
     color: {
         type: String,
-        required: true
-    },
-    insurance: {
-        type: String,
         required: false
     },
-    date: {
-        type: Date,
-        default: Date.now
-    },
+    insurance: {
+        type: Boolean,
+        required: false
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Vehicle", vehicleSchema);
