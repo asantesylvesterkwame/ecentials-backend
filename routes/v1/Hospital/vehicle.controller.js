@@ -1,12 +1,14 @@
 const { verify } = require("jsonwebtoken");
 const {
   createNewAmbulance,
+  getTotalAmbulanceCount,
 } = require("../../../private/services/Hospital/Vehicle/vehicle.service");
 
 const router = require("express").Router();
 
 router.post("/add-new-ambulance", verify, async (req, res, next) => {
-  const { driver_id, name, licence_no, brand, color, insurance } = req.body;
+  const { driver_id, facility_id, name, licence_no, brand, color, insurance } =
+    req.body;
 
   try {
     return res
@@ -14,6 +16,7 @@ router.post("/add-new-ambulance", verify, async (req, res, next) => {
       .json(
         await createNewAmbulance(
           driver_id,
+          facility_id,
           name,
           licence_no,
           brand,
@@ -22,7 +25,15 @@ router.post("/add-new-ambulance", verify, async (req, res, next) => {
         )
       );
   } catch (error) {
-      next(error);
+    next(error);
+  }
+});
+
+router.get("/get-total-ambulance-count", verify, async (req, res, next) => {
+  try {
+    return res.status(200).json(await getTotalAmbulanceCount());
+  } catch (error) {
+    next(error);
   }
 });
 

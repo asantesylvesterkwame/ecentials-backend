@@ -3,6 +3,7 @@ const Vehicle = require("../../../schemas/Vehicle")
 // create a new ambulance
 async function createNewAmbulance({
   driver_id,
+  facility_id,
   name,
   licence_no,
   brand = null,
@@ -12,6 +13,7 @@ async function createNewAmbulance({
     try {
         const results = await Vehicle.create({
             driver_id,
+            facility_id,
             name,
             licence_no,
             brand,
@@ -29,6 +31,19 @@ async function createNewAmbulance({
 }
 
 
+// get a count of ambulances
+// TODO specify in the future how the count will be performed
+async function getTotalAmbulanceCount() {
+    try {
+        const results =  await Vehicle.find({}).count();
+        return { message: "success", data: results };
+    } catch (error) {
+        return { message: "unsuccessful", data: 0 };
+    }
+}
+
+
 module.exports = {
-    createNewAmbulance
+    createNewAmbulance,
+    getTotalAmbulanceCount,
 }
