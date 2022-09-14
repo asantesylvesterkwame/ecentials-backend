@@ -1,79 +1,59 @@
-const router = require('express').Router();
-const fs = require('fs')
+const router = require("express").Router();
+const multer = require("multer");
 
-const Prescription = require('../../../private/schemas/Prescription');
-const verify = require('../../../verifyToken')
-const multer = require('multer')
 
-const upload = multer({ limits:  {fileSize: 1064960 }, dest: './uploads'}).single('picture')
+const Prescription = require("../../../private/schemas/Prescription");
+const verify = require("../../../verifyToken");
+const {
+  uploadPrescription,
+} = require("../../../private/services/Prescription/user_prescription.service");
 
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage }).single("picture");
 
 // upload a new prescription
 // this is done by a user on the ecentials themselves.
-router.post('/new-prescription', verify, async (req, res) => {
-   const user_id = req.user._id;
-   
-    upload(req, res, (err) => {
-        
-        if (err) {
-            return res.status(400).json({ message: "An error occurred", data: err })
-        }
+router.post("/new-prescription", verify, upload, async (req, res, next) => {
+  const user_id = req.user._id;
+  const { store_id } = req.body;
 
-        if (req.file.path == null) {
-            return res.status(400).json({ message: "Please select a file."})
-        }
-
-        const newImg = fs.readFileSync(req.file.path);
-        const encImg = newImg.toString('base64');
-        const image = {
-            data: Buffer.from(encImg, 'base64'),
-            contentType: req.file.mimetype
-        }
-        
-        Prescription.create({
-            user_id, image
-        }, (err, result) => {
-            if (err) {
-                return res.status(400).json({ message: "Failed to upload prescription." })
-            }
-            return res.status(200).json({ message: 'success', data: result });
-        })
-    });
-   
-//    if (!!user_id && !!status ) {
-//     await Prescription.create({
-//         user_id, status, image
-//     }, (err, result) => {
-//         if (err) {
-//             return res.status(400).json({message: 'Failed to save prescription'})
-//         }
-//         return res.status(200).json({message: 'success', data: result});
-//     } );
-//    } else {
-//        return res.status(400).json({message: "Please provide the necessary data"});
-//    }
+  try {
+    return res
+      .status(201)
+      .json(await uploadPrescription({ user_id, store_id, file: req.file }));
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
-
 
 // upload a new prescription - pharmacists
 // this upload is done by the pharmacists on behalf of the user.
 // if the user details is not in the system, the pharmacists add them.
-router.post('/upload-prescription-by-pharmacists', verify, async (req, res) => {
-    const { user_id, status, store_id } = req.body; 
+router.post("/upload-prescription-by-pharmacists", verify, async (req, res) => {
+  const { user_id, status, store_id } = req.body;
 
-    if (!!user_id && !!store_id ) {
-        await Prescription.create({
-            user_id, status, store_id
-        }, (err, result) => {
-            if (err) {
-                return res.status(400).json({message: 'Failed to save prescription'})
-            }
-            return res.status(200).json({message: 'success', data: result});
-        } );
-       } else {
-           return res.status(400).json({message: "Please provide the necessary data"});
-       }
+  if (!!user_id && !!store_id) {
+    await Prescription.create(
+      {
+        user_id,
+        status,
+        store_id,
+      },
+      (err, result) => {
+        if (err) {
+          return res
+            .status(400)
+            .json({ message: "Failed to save prescription" });
+        }
+        return res.status(200).json({ message: "success", data: result });
+      }
+    );
+  } else {
+    return res
+      .status(400)
+      .json({ message: "Please provide the necessary data" });
+  }
 });
-
 
 module.exports = router;
