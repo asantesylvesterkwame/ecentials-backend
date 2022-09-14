@@ -15,10 +15,9 @@ const prescriptionSchema = new mongoose.Schema({
         default: 0
     },
     image: {
-        data: Buffer,
-        contentType: String,
-        required: false,
-    },
+        type: String,
+        required: false
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model("Prescription", prescriptionSchema);
