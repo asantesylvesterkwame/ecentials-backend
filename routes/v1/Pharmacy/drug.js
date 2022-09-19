@@ -59,7 +59,7 @@ router.post('/drug-search', verify, async (req, res) => {
             {description: { $regex: search_text }},
             {manufacturer: { $regex: search_text }}
         ]
-     }, { name: 1, prize: 1 }, (err, result) => {
+     }, { }, (err, result) => {
          if (err) {
              return res.status(400).json({ message: 'Could not find drug. Try again later.'})
          }
