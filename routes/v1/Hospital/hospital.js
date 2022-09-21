@@ -73,9 +73,9 @@ router.post('/search-for-hospital', verify, async (req, res) => {
         });
     
         if (results == null) {
-            return res.status(400).json({ message: "No hospital found"})
+            return res.status(200).json({ message: "No hospital found", data: []})
         }
-        return res.status(400).json({ message: "success", data: results });
+        return res.status(200).json({ message: "success", data: results });
     } catch (error) {
         return res.status(400).json({ message: "Something went wrong. Please try again" });
     }
