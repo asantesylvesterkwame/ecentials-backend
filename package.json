@@ -4,7 +4,8 @@
   "description": "A new improved health care system",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon private/server.js"
+    "start": "nodemon private/server.js",
+    "lint:fix": "eslint --fix ./*.js"
   },
   "repository": {
     "type": "git",
@@ -39,6 +40,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.2"
+    "@types/bcryptjs": "^2.4.2",
+    "eslint": "^8.24.0"
   }
 }
