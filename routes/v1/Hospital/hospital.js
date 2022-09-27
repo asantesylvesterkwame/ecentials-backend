@@ -1,4 +1,3 @@
-const fs = require('fs')
 const router = require('express').Router();
 const multer = require('multer')
 
