@@ -5,7 +5,7 @@ const multer = require("multer");
 const Prescription = require("../../../private/schemas/Prescription");
 const verify = require("../../../verifyToken");
 const {
-  uploadPrescription,
+  uploadPrescription, getUserPrescription,
 } = require("../../../private/services/Prescription/user_prescription.service");
 
 const storage = multer.memoryStorage();
@@ -55,5 +55,18 @@ router.post("/upload-prescription-by-pharmacists", verify, async (req, res) => {
       .json({ message: "Please provide the necessary data" });
   }
 });
+
+
+// get all prescriptions belonging to a user
+router.get('/user-prescriptions', verify, async (req, res, next) => {
+  const user_id = req.user._id;
+
+  try {
+    return res.status(200).json(await getUserPrescription({ user_id }));
+  } catch (error) {
+    next(error);
+  }
+});
+
 
 module.exports = router;

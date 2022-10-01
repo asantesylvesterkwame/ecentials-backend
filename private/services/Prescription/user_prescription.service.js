@@ -20,6 +20,23 @@ async function uploadPrescription({ user_id, store_id, file }) {
   }
 }
 
+
+// retrieve prescriptions for a user
+async function getUserPrescription({ user_id }) {
+  try {
+    const results = await Prescription.find({ user_id });
+
+    if (results != null) {
+      return { message: "success", data: results };
+    }
+    return { message: "No prescriptions found", data: [] };
+  } catch (error) {
+    return { message: "An error occurred. Please try again"}
+  }
+}
+
+
 module.exports = {
   uploadPrescription,
+  getUserPrescription
 };
