@@ -30,16 +30,17 @@ async function getUserPrescription({ user_id }) {
     // loop over the results obtained
     // and map the store id to the store name
     data = [];
-    results.map(async (result) => {
-      const store_detail = await getPharmacyDetails({ pharmacy_id: result["store_id"] });
-      
-      const store_name = store_detail.data["name"];
-      data.push({ ...result._doc, store_name })
-    });
 
+    for (let i = 0; i < results.length; i++) {
+      const prescription = results[i];
+      const store_detail = await getPharmacyDetails({ pharmacy_id: prescription["store_id"] });
+      const store_name = store_detail.data.name;
+
+      data.push({ ...prescription._doc, store_name })
+    }  
     return { message: "success", data };
   } catch (error) {
-    return { message: "An error occurred. Please try again"}
+    return { message: "An error occurred. Please try again", error }
   }
 }
 
