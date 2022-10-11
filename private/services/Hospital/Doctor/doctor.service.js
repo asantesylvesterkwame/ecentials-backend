@@ -10,7 +10,21 @@ async function getDoctorsInHospital({ hospital_id, staff_type }) {
   }
 }
 
+// get information about a doctor in a hospital
+async function getDoctorInformaion({ doctor_id, hospital_id, staff_type }) {
+  try {
+    const result = await Staff.find({
+      _id: doctor_id,
+      facility_id: hospital_id,
+      staff_type,
+    });
+    return { message: "success", data: result };
+  } catch (error) {
+    return { message: "an error occurred, please try again" };
+  }
+}
 
 module.exports = {
-    getDoctorsInHospital,
-}
+  getDoctorsInHospital,
+  getDoctorInformaion,
+};
