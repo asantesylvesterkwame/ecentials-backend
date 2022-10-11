@@ -9,12 +9,12 @@ const staffSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    hospital_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true
-    },
+    // hospital_id: {
+    //     type: mongoose.SchemaTypes.ObjectId,
+    //     required: true
+    // },
     employee_id: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: String,
         required: true
     },
     name: {
@@ -43,7 +43,7 @@ const staffSchema = new mongoose.Schema({
     },
     availability: {
         type: String,
-        required: true
+        required: false
     },
     username: {
         type: String,
@@ -52,10 +52,6 @@ const staffSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    date_added: {
-        type: Date,
-        default: Date.now
     },
 }, { timestamps: true });
 
