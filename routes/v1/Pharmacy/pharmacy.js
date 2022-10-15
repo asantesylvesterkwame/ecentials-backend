@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { encryptPassword } = require('../../../private/helpers/functions');
 const Store = require('../../../private/schemas/Store');
-const verify = require('../../../verifyToken');
+const { verify } = require('../../../verifyToken');
 const getDistance = require('../../../private/helpers/get_distance');
 
 
@@ -102,7 +102,7 @@ router.post('/search-nearby-pharmacies', verify, async (req, res) => {
             }
         });
         
-        if (results.length == 0) {
+        if (results.length === 0) {
             return res.status(200).json({ message: "No pharmacy found", data: [] });
         }
 

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const Favourites = require('../../../private/schemas/Favourites');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 // list all favourites for a verified user
 router.post('', verify , async (req, res) => {

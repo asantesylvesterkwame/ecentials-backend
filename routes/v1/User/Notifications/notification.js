@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const verify = require('../../../../verifyToken');
+const { verify } = require('../../../../verifyToken');
 const Notification = require('../../../../private/schemas/Notification');
 const User = require('../../../../private/schemas/User');
 

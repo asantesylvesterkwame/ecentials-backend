@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const Cart = require('../../../private/schemas/Cart');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 
 // allows a verified user to add an item to cart

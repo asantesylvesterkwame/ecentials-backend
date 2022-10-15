@@ -1,7 +1,7 @@
 const router = require('express').Router()
 var mongoose = require('mongoose')
 const bcrypt = require('bcryptjs/dist/bcrypt') //encrypting the password
-const verify = require('../../../verifyToken') //checks if the user has a jwt token
+const { verify } = require('../../../verifyToken') //checks if the user has a jwt token
 const User = require('../../../private/schemas/User')
 
 const {

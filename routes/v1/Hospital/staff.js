@@ -3,7 +3,7 @@ const router = require('express').Router();
 
 const Staff = require('../../../private/schemas/Staff');
 const { getDoctorsInHospital, getDoctorInformaion } = require('../../../private/services/Hospital/Doctor/doctor.service');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 
 // returns top rated doctors on the platform

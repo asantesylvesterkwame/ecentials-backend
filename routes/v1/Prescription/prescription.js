@@ -3,7 +3,7 @@ const multer = require("multer");
 
 
 const Prescription = require("../../../private/schemas/Prescription");
-const verify = require("../../../verifyToken");
+const { verify } = require("../../../verifyToken");
 const {
   uploadPrescription, getUserPrescription, deleteUserPrescription,
 } = require("../../../private/services/Prescription/user_prescription.service");

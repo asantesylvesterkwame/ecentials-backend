@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { createWallet, getWalletBalance, recentWalletTransactions } = require('../../../../private/services/wallet/wallet.service');
-const verify = require('../../../../verifyToken')
+const { verify } = require('../../../../verifyToken')
 
 
 // handle wallet creation for a user
