@@ -1,10 +1,9 @@
-const fs = require('fs')
 const router = require('express').Router();
 const multer = require('multer')
 
 const Hospital = require('../../../private/schemas/Hospital');
-const { uploadHospitalImages } = require('../../../private/services/Hospital/hospital.service');
-const verify = require('../../../verifyToken');
+const { uploadHospitalImages, searchNearbyHospital} = require('../../../private/services/Hospital/hospital.service');
+const { verify } = require('../../../verifyToken');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -72,4 +71,14 @@ router.post('/search-for-hospital', verify, async (req, res) => {
 });
 
 
+// search for a nearby hospitals
+router.post('/search-nearby-hospitals', verify, async (req, res, next) => {
+    const { search_text, user_latitude, user_longitude } = req.body;
+
+    try {
+        return res.status(200).json(await searchNearbyHospital({ search_text, user_latitude, user_longitude }))
+    } catch (error) {
+        next(error);
+    }
+});
 module.exports = router;
