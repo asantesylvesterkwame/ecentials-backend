@@ -17,7 +17,7 @@ async function getDoctorInformaion({ doctor_id, hospital_id, staff_type }) {
       _id: doctor_id,
       facility_id: hospital_id,
       staff_type,
-    });
+    }, { password: 0 });
     return { message: "success", data: result };
   } catch (error) {
     return { message: "an error occurred, please try again" };
