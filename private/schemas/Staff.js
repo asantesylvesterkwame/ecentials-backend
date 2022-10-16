@@ -42,7 +42,7 @@ const staffSchema = new mongoose.Schema({
         required: true
     },
     availability: {
-        type: String,
+        type: Date,
         required: false
     },
     username: {
