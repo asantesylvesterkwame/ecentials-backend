@@ -2,6 +2,7 @@ require('dotenv').config();
 const sinon = require("sinon");
 const mongoose = require("mongoose")
 const request = require('supertest')
+var enableDestroy = require('server-destroy');
 
 const Hospital = require('../../../../private/schemas/Hospital');
 
