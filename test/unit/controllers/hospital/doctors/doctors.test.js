@@ -2,9 +2,6 @@ require('dotenv').config();
 const sinon = require("sinon");
 const mongoose = require("mongoose")
 const request = require('supertest');
-const User = require('../../../../../private/schemas/User');
-const Ratings = require('../../../../../private/schemas/Ratings');
-const Staff = require('../../../../../private/schemas/Staff');
 const UserFactory = require('../../../../factories/user.factory');
 const HospitalFactory = require('../../../../factories/hospital.factory');
 const StaffFactory = require('../../../../factories/staff.factory');
@@ -55,17 +52,15 @@ describe("Test the doctor endpoints", () => {
             "recipient_id": doctor._id,
             "recipient_type": staff_factory.staff_type
         }
-        console.log(data)
+        
         return request(app)
             .post("/api/v1/hospital/staffs/get-doctor-reviews")
             .send(data)
             .expect(200)
             .then((response) => {
-                console.log(review);
-                console.log(response.body)
-                expect(response.body.data[0].rating).toBe(review_factory.rating)
-                expect(response.body.data[0].message).toBe(review_factory.message)
-                expect(response.body.data[0].reviewer_name).toBe(user_factory.name)
+                expect(response.body.data[0].rating).toBe(review_factory.rating);
+                expect(response.body.data[0].message).toBe(review_factory.message);
+                expect(response.body.data[0].reviewer_name).toBe(user_factory.name);
             })
 
     })
