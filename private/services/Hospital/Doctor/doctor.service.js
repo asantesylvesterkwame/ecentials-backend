@@ -44,7 +44,17 @@ async function getDoctorReviews({ recipient_id, recipient_type }) {
         $addFields: {
          "reviewer_name": "$Reviewer.personal.name",
         }
-       }
+       },
+       {
+        "$project": {
+          "_id": 1,
+          "recipient_id": 1,
+          "recipient_type": 1,
+          "message": 1,
+          "rating": 1,
+          "reviewer_name": "$Reviewer.personal.name",
+        }
+      }
     ]);
     return { message: "success", data: results };
   } catch (error) {
