@@ -1,3 +1,5 @@
+const ObjectId = require('mongoose').Types.ObjectId
+
 const Ratings = require("../../../schemas/Ratings");
 const Staff = require("../../../schemas/Staff");
 
@@ -14,11 +16,34 @@ async function getDoctorsInHospital({ hospital_id, staff_type }) {
 // get information about a doctor in a hospital
 async function getDoctorInformaion({ doctor_id, hospital_id, staff_type }) {
   try {
-    const result = await Staff.find({
-      _id: doctor_id,
-      facility_id: hospital_id,
-      staff_type,
-    }, { password: 0 });
+    const result = await Staff.aggregate([
+      {$match: { "_id": ObjectId(doctor_id), "facility_id": ObjectId(hospital_id), staff_type }},
+      {
+        $lookup: {
+          from: "hospitals",
+          localField: "facility_id",
+          foreignField: "_id",
+          as: "hospital"
+        }
+      },
+      {
+        $unwind: "$hospital"
+      },
+      {
+        $project: {
+          "_id": 1,
+          "facility_type": 1,
+          "facility_name": "$hospital.name",
+          "employee_id": 1,
+          "name": 1,
+          "specification": 1,
+          "experience": 1,
+          "staff_type": 1,
+          "username": 1,
+          "about": 1
+        }
+      }
+    ]);
     return { message: "success", data: result };
   } catch (error) {
     return { message: "an error occurred, please try again" };
