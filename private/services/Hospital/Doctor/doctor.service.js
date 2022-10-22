@@ -54,6 +54,7 @@ async function getDoctorInformaion({ doctor_id, hospital_id, staff_type }) {
 async function getDoctorReviews({ recipient_id, recipient_type }) {
   try {
     const results = await Ratings.aggregate([
+      {$match: { "recipient_id": ObjectId(recipient_id), recipient_type }},
       {
         $lookup: {
           from: "users",
