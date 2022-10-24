@@ -31,4 +31,8 @@ router.use('/api/v1/hospital/staffs', require('./Hospital/staff'))
 // lab related endpoints
 router.use('/api/v1/labs', require('./Lab/lab.controller'))
 
+// business owner endpoints
+router.use('/api/v1/business-owner', require('./BusinessOwner/businessOwner.controller'))
+
+
 module.exports = router
