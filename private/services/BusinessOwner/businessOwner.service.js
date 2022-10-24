@@ -1,3 +1,6 @@
+const bcrypt = require("bcryptjs/dist/bcrypt");
+const jwt = require('jsonwebtoken')
+
 const { registerValidation } = require("../../../routes/v1/User/validation/auth_validation");
 const BusinessAccount = require("../../helpers/business_account");
 const { encryptPassword } = require("../../helpers/functions");
@@ -59,7 +62,7 @@ async function _sendEmail({ email, accountID, bussinerOwnerID }) {
   sendMail(email, mail_body).then((result) => {
     // create a record for the accountID which would be later 
     // used for verification.
-    AccountID.create({ account_id: encryptPassword(accountID), business_owner: bussinerOwnerID},
+    AccountID.create({ account_id: accountID, business_owner: bussinerOwnerID},
       (err, _) => {
         if (err) {
           throw Error("failed to save account id")
@@ -70,6 +73,52 @@ async function _sendEmail({ email, accountID, bussinerOwnerID }) {
   });
 }
 
+// allow a business owner to login using password and the generated account id
+// if successful, a token is sent to them.
+async function loginBusinessOwner({ password, account_id}) {
+  try {
+    const result = await AccountID.aggregate([
+      { $match: { "account_id": account_id   }},
+      {
+        $lookup: {
+          from: 'businessowners',
+          localField: "business_owner",
+          foreignField: "_id",
+          as: 'owner'
+        }
+      },
+      {
+        $unwind: "$owner"
+      },
+      {
+        $project: {
+          "_id": 1,
+          "account_id": 1,
+          "business_owner": 1,
+          "owner_id": "$owner._id",
+          "owner_password": "$owner.password"
+        }
+      }
+    ])
+    if (result != null) {
+      // compare the passwords to see if they are the same
+      const isValidPassword = await bcrypt.compareSync(password, result[0].owner_password);
+      
+      if (!isValidPassword) {
+        return { message: "wrong password, please try again" };
+      }
+      
+      // create and assign a token
+      const token = jwt.sign({_id: result[0].owner_id}, process.env.SECRET);
+      return { token, "owner_id": result[0].owner_id };
+    }
+    return { message: "wrong password or account id, please try again" }
+  } catch (error) {
+    return { message: 'an error occurred, please try again'}
+  }
+}
+
 module.exports = {
   createBusinessOwner,
+  loginBusinessOwner
 };
