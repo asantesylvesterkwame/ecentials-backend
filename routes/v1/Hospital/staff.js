@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 const Staff = require('../../../private/schemas/Staff');
-const { getDoctorsInHospital, getDoctorInformaion, getDoctorReviews } = require('../../../private/services/Hospital/Doctor/doctor.service');
+const { getDoctorsInHospital, getDoctorInformaion, getDoctorReviews, getPrimaryDoctorsForUser } = require('../../../private/services/Hospital/Doctor/doctor.service');
 const { verify } = require('../../../verifyToken')
 
 
@@ -55,5 +55,15 @@ router.post('/get-doctor-reviews', verify, async (req, res, next) => {
         next(error)
     }
 });
+
+// get user's primary doctors
+router.get('/get-primary-doctors', verify, async (req, res, next) => {
+    const user_id = req.user._id;
+    try {
+        return res.status(200).json(await getPrimaryDoctorsForUser({ user_id }));
+    } catch (error) {
+        next(error);
+    }
+})
 
 module.exports = router;
