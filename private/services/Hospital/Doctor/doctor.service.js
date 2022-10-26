@@ -2,6 +2,7 @@ const ObjectId = require('mongoose').Types.ObjectId
 
 const Ratings = require("../../../schemas/Ratings");
 const Staff = require("../../../schemas/Staff");
+const User = require('../../../schemas/User');
 
 // get all doctors in a hospital using the hospital
 async function getDoctorsInHospital({ hospital_id, staff_type }) {
@@ -88,8 +89,52 @@ async function getDoctorReviews({ recipient_id, recipient_type }) {
   }
 }
 
+// get all primary doctors for a user
+async function getPrimaryDoctorsForUser({ user_id }) {
+  try {
+    const results = await User.aggregate([
+      { $match: {"_id": ObjectId(user_id) }},
+      {
+        $lookup: {
+          from: "staffs",
+          localField: "primary_doctors",
+          foreignField: "_id",
+          as: "staff"
+        }
+      },
+      { 
+        $unwind: '$staff'
+      },
+      {
+          $lookup: {
+              from: "hospitals",
+              localField: "staff.facility_id",
+              foreignField: "_id",
+              as: "hospital"
+          }
+      },
+      { 
+        $unwind: '$hospital'
+      },
+      {
+        $project: {
+          "_id": 0,
+          "staff_name": "$staff.name",
+          "experience": "$staff.experience",
+          "about": "$staff.about",
+          "hospital": "$hospital.name"
+        }
+      }
+    ]);
+    return { message: "success", data: results };
+  } catch (error) {
+    return { message: "an error occurred, please try again." };
+  }
+}
+
 module.exports = {
   getDoctorsInHospital,
   getDoctorInformaion,
   getDoctorReviews,
+  getPrimaryDoctorsForUser,
 };
