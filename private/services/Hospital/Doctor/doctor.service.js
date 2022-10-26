@@ -132,9 +132,26 @@ async function getPrimaryDoctorsForUser({ user_id }) {
   }
 }
 
+// add a doctor as a user's primary
+async function addPrimaryDoctorForUser({ user_id, doctor_id }) {
+  try {
+    const result = await User.updateOne(
+      { _id: user_id }, 
+      { $push: { primary_doctors: ObjectId(doctor_id)}
+    });
+    if (result != null) {
+      return { message: "success" };
+    }
+    return { message: "failed to add doctor to primary doctors" };
+  } catch (error) {
+    return { message: "an error occurred, please try again"}
+  }
+}
+
 module.exports = {
   getDoctorsInHospital,
   getDoctorInformaion,
   getDoctorReviews,
   getPrimaryDoctorsForUser,
+  addPrimaryDoctorForUser,
 };
