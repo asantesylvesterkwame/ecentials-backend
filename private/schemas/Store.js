@@ -1,10 +1,11 @@
 const mongoose = require("mongoose");
 
 const storeSchema = new mongoose.Schema({
-    // user_id: {
-    //     type: mongoose.SchemaTypes.ObjectId,
-    //     required: true
-    // },
+    owner_id: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true,
+        ref: "businessowners"
+    },
     store_pin: {
         type: String,
         required: true
