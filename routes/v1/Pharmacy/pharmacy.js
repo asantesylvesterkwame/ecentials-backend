@@ -4,6 +4,7 @@ const { encryptPassword } = require('../../../private/helpers/functions');
 const Store = require('../../../private/schemas/Store');
 const { verify } = require('../../../verifyToken');
 const getDistance = require('../../../private/helpers/get_distance');
+const { isBusinessOwnerHavingPharmacy } = require('../../../private/services/Pharmacy/Information/information.service');
 
 
 // list all pharmacies
@@ -114,6 +115,18 @@ router.post('/search-nearby-pharmacies', verify, async (req, res) => {
         return res.status(400).json({ message: "An error occurred. Please try again later.", data: error});
     }
 })
+
+
+// checks whether an owner has a pharmacy
+router.get('/check-whether-owner-has-pharmacy', verify, async (req, res, next) => {
+    const owner_id = req.user._id;
+    
+    try {
+        return res.status(200).json(await isBusinessOwnerHavingPharmacy({ owner_id }));
+    } catch (error) {
+        next(error);
+    }
+});
 
 module.exports = router;
     
