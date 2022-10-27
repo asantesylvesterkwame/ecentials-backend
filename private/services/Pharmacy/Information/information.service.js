@@ -10,7 +10,20 @@ async function getPharmacyDetails({ pharmacy_id }) {
     }
 }
 
+// check whether an business owner has a pharmacy
+async function isBusinessOwnerHavingPharmacy({ owner_id }) {
+    try {
+        const result = await Store.find({ owner_id });
+        
+        if (result.length > 0) return { message: "success", data: result, has_pharmacy: true };
+        
+        return { message: "success", has_pharmacy: false };
+    } catch (error) {
+        return { message: "an error occurred, please try again" };
+    }
+}
 
 module.exports = {
-    getPharmacyDetails
+    getPharmacyDetails,
+    isBusinessOwnerHavingPharmacy,
 }
