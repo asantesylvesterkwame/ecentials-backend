@@ -18,7 +18,8 @@ router.get('', verify, async (req, res) => {
 
 
 // create a new pharmacy
-router.post('/create-new-pharmacy', async (req, res) => {
+router.post('/create-new-pharmacy', verify, async (req, res) => {
+    const owner_id = req.user._id;
     const { 
         store_pin, 
         name, 
@@ -34,7 +35,7 @@ router.post('/create-new-pharmacy', async (req, res) => {
 
      if (!!name && !!licence_no && !!city) {
          await Store.create({
-             name, description, address, city, licence_no, logo, accept_nhis,
+             owner_id, name, description, address, city, licence_no, logo, accept_nhis,
              gps_lat, gps_lng, store_pin: encryptPassword(store_pin)
          }, (err, result) => {
              if (err) {
