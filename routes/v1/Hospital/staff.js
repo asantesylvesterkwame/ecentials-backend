@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 const Staff = require('../../../private/schemas/Staff');
-const { getDoctorsInHospital, getDoctorInformaion, getDoctorReviews, getPrimaryDoctorsForUser, addPrimaryDoctorForUser } = require('../../../private/services/Hospital/Doctor/doctor.service');
+const { getDoctorsInHospital, getDoctorInformaion, getDoctorReviews, getPrimaryDoctorsForUser, addPrimaryDoctorForUser, searchDoctor } = require('../../../private/services/Hospital/Doctor/doctor.service');
 const { verify } = require('../../../verifyToken')
 
 
@@ -73,6 +73,17 @@ router.post('/add-primary-doctor', verify, async (req, res, next) => {
 
     try {
         return res.status(200).json(await addPrimaryDoctorForUser({ user_id, doctor_id }));
+    } catch (error) {
+        next(error);
+    }
+});
+
+// search for a doctor irrespective of hospital
+router.post('/search-for-doctor', verify, async (req, res, next) => {
+    const { search_text } = req.body;
+
+    try {
+        return res.status(200).json(await searchDoctor({search_text}));
     } catch (error) {
         next(error);
     }
