@@ -19,7 +19,8 @@ const staffSchema = new mongoose.Schema({
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        text: true
     },
     phone_number: {
         type: String,
@@ -27,19 +28,23 @@ const staffSchema = new mongoose.Schema({
     },
     specification: {
         type: String,
-        required: true
+        required: true,
+        text: true
     },
     experience: {
         type: Number,
-        required: true
+        required: true,
+        text: true
     },
     about: {
         type: String,
-        required: false
+        required: false,
+        text: true
     },
     staff_type: {
         type: String,
-        required: true
+        required: true,
+        text: true
     },
     availability: {
         type: Date,
