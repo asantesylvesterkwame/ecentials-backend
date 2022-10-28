@@ -148,10 +148,47 @@ async function addPrimaryDoctorForUser({ user_id, doctor_id }) {
   }
 }
 
+// search for a doctor irrespective of hospital
+async function searchDoctor({ search_text }) {
+  try {
+    const result = await Staff.aggregate([
+      { $match: { $text: { $search: "Dennis" } } },
+      {
+        $lookup: {
+          from: "hospitals",
+          localField: "facility_id",
+          foreignField: "_id",
+          as: "hospital"
+        }
+      },
+      {
+        $unwind: "$hospital"
+      },
+      {
+        $project: {
+          "_id": 1,
+          "name": 1,
+          "specification": 1,
+          "experience": 1,
+          "about": 1,
+          "staff_type": 1,
+          "availability": 1,
+          "hospital_name": "$hospital.name",
+        }
+      }
+    ]);
+    return {message: "success", data: result};
+  } catch (error) {
+    return {message: "an error occurred, please try again"}
+  }
+}
+
+
 module.exports = {
   getDoctorsInHospital,
   getDoctorInformaion,
   getDoctorReviews,
   getPrimaryDoctorsForUser,
   addPrimaryDoctorForUser,
+  searchDoctor,
 };
