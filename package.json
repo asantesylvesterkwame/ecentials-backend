@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "A new improved health care system",
   "main": "server.js",
+  "engines": {
+    "node": "18.12"
+  },
   "scripts": {
     "start": "nodemon private/server.js",
     "test": "jest --no-cache --detectOpenHandles --runInBand"
