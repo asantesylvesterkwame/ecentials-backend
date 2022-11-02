@@ -25,3 +25,5 @@ yarn-error.log*
 
 # image uploads
 /uploads
+
+/ecentials-backend
