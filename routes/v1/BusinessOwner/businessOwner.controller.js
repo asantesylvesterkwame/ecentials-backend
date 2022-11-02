@@ -1,5 +1,6 @@
 const {
-  createBusinessOwner, loginBusinessOwner,
+  createBusinessOwner,
+  loginBusinessOwner,
 } = require("../../../private/services/BusinessOwner/businessOwner.service");
 
 const router = require("express").Router();
@@ -23,18 +24,18 @@ router.post("/create-business-owner", async (req, res, next) => {
   }
 });
 
-router.post('/login-business-owner', async (req, res, next) => {
+router.post("/login-business-owner", async (req, res, next) => {
   const { account_id, password } = req.body;
   try {
     const result = await loginBusinessOwner({ account_id, password });
 
-    if (!('token' in result)) {
+    if (!("token" in result)) {
       return res.status(200).json(result);
     }
-    return res.status(200).header('auth_token', result.token).json(result);
+    return res.status(200).header("auth_token", result.token).json(result);
   } catch (error) {
     next(error);
   }
-})
+});
 
 module.exports = router;
