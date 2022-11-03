@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 const Staff = require('../../../private/schemas/Staff');
-const { getDoctorsInHospital, getDoctorInformaion, getDoctorReviews, getPrimaryDoctorsForUser, addPrimaryDoctorForUser, searchDoctor } = require('../../../private/services/Hospital/Doctor/doctor.service');
+const { getDoctorsInHospital, getDoctorInformaion, getDoctorReviews, getPrimaryDoctorsForUser, addPrimaryDoctorForUser, searchDoctor, removePrimaryDoctor } = require('../../../private/services/Hospital/Doctor/doctor.service');
 const { verify } = require('../../../verifyToken')
 
 
@@ -88,5 +88,17 @@ router.post('/search-for-doctor', verify, async (req, res, next) => {
         next(error);
     }
 });
+
+// remove a doctor from user's primary doctors
+router.post('/remove-primary-doctor', verify, async (req, res, next) => {
+    const user_id = req.user._id
+    const { doctor_id } = req.body
+
+    try {
+        return res.status(200).json(await removePrimaryDoctor({ user_id, doctor_id }))
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router;
