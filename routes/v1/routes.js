@@ -19,6 +19,7 @@ router.use('/api/v1/pharmacies', require('./Pharmacy/pharmacy'))
 
 router.use('/api/v1/pharmacy/drugs', require('./Pharmacy/drug'))
 router.use('/api/v1/pharmacy/orders', require('./Pharmacy/orders'))
+router.use('/api/v1/pharmacy/drug-category', require('./Pharmacy/DrugCategory/drugCategory.controller'))
 
 // pescription related endpoints
 router.use('/api/v1/prescriptions', require('./Prescription/prescription'))
