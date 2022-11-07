@@ -119,7 +119,9 @@ async function getPrimaryDoctorsForUser({ user_id }) {
       {
         $project: {
           "_id": 0,
+          "staff_id": "$staff._id",
           "staff_name": "$staff.name",
+          "specialisation": "$staff.specification",
           "experience": "$staff.experience",
           "about": "$staff.about",
           "hospital": "$hospital.name"
@@ -183,6 +185,20 @@ async function searchDoctor({ search_text }) {
   }
 }
 
+// remove primary doctor
+async function removePrimaryDoctor({ user_id, doctor_id }) {
+  try {
+    const result = await User.updateOne({
+      _id: user_id,
+    },
+    {
+      $pull: { primary_doctors: ObjectId(doctor_id) }
+    })
+    return { message: "success" };
+  } catch (error) {
+    return { message: "an error occurred, please try again" }
+  }
+}
 
 module.exports = {
   getDoctorsInHospital,
@@ -191,4 +207,5 @@ module.exports = {
   getPrimaryDoctorsForUser,
   addPrimaryDoctorForUser,
   searchDoctor,
+  removePrimaryDoctor,
 };
