@@ -1,41 +1,44 @@
 const router = require('express').Router();
+const multer = require("multer")
 
 const Drug = require('../../../private/schemas/Drug');
-const { searchDrugInSpecificPharmacy } = require('../../../private/services/Pharmacy/Drug/drug.service');
+const { searchDrugInSpecificPharmacy, addDrugToInventory } = require('../../../private/services/Pharmacy/Drug/drug.service');
 const { verify } = require('../../../verifyToken')
 
+const storage = multer.memoryStorage()
+const upload = multer({ storage }).single("picture")
 
 // allows a verified pharmacy to add a new drug to their 
 // drugs catalog.
-router.post('/add-new-drug', verify, async (req, res) => {
-    const {
-        store_id,
-        name,
-        prize,
-        description,
-        dosage,
-        quantity,
-        dosage_form,
-        manufacturer,
-        views,
-        discount,
-        nhis
-    } = req.body;
+// router.post('/add-new-drug', verify, async (req, res) => {
+//     const {
+//         store_id,
+//         name,
+//         prize,
+//         description,
+//         dosage,
+//         quantity,
+//         dosage_form,
+//         manufacturer,
+//         views,
+//         discount,
+//         nhis
+//     } = req.body;
 
-    if (!!name && !!manufacturer && !!description) {
-        Drug.create({
-            store_id, name, prize, description, dosage, quantity, dosage_form, manufacturer, views,
-            discount, nhis 
-        }, (err, result) => {
-            if (err) {
-                return res.status(400).json({ message: "Failed to add drug. Try again later." });
-            }
-            return res.status(200).json({ message: 'success', data: result })
-        });
-    } else {
-        res.status(403).json({ message: 'Please make sure you have provided the needed details.'});
-    }
-});
+//     if (!!name && !!manufacturer && !!description) {
+//         Drug.create({
+//             store_id, name, prize, description, dosage, quantity, dosage_form, manufacturer, views,
+//             discount, nhis 
+//         }, (err, result) => {
+//             if (err) {
+//                 return res.status(400).json({ message: "Failed to add drug. Try again later." });
+//             }
+//             return res.status(200).json({ message: 'success', data: result })
+//         });
+//     } else {
+//         res.status(403).json({ message: 'Please make sure you have provided the needed details.'});
+//     }
+// });
 
 // list all drugs associated to a particular pharmacy or shop
 router.post('', verify, async (req, res) => {
@@ -123,5 +126,30 @@ router.post('/pharmacy-specific-drug-search', verify, async (req, res, next) => 
         next(error);
     }
 });
+
+// allow a verified pharmacy staff to add a drug / product to 
+// pharmacy inventory
+router.post("/add-new-drug", verify, upload, async (req, res, next) => {
+    // const {
+    //     store_id,
+    //     category_id,
+    //     name,
+    //     medicine_group,
+    //     price,
+    //     dosage,
+    //     manufacturer,
+    //     description,
+    //     expiry_date,
+    // } = req.body
+
+    try {
+        return res.status(200).json(await addDrugToInventory({
+            ...req.body,
+            image: req.file
+        }))
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router;
