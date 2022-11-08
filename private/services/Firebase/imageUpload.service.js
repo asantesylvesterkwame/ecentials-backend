@@ -5,7 +5,7 @@ const app = require("../../config/firebase.config");
 
 const storage = getStorage(app);
 
-async function uploadImage(file) {
+async function uploadFile(file, base_dir_name) {
 	let imageUrl = ""
   
 	try {
@@ -14,8 +14,7 @@ async function uploadImage(file) {
 		const type = file.originalname.split(".")[1];
 		const fileName = `${name}_${timestamp}.${type}`;
 
-		const storageRef = ref(storage, `images/${fileName}`);
-		console.log(file.buffer)
+		const storageRef = ref(storage, `${base_dir_name}/${fileName}`);
 		
 		const metadata = {
 			contentType: file.mimetype,
@@ -34,4 +33,4 @@ async function uploadImage(file) {
 	}
 }
 
-module.exports = { uploadImage };
+module.exports = { uploadFile };
