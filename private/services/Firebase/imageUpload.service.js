@@ -15,7 +15,6 @@ async function uploadImage(file) {
 		const fileName = `${name}_${timestamp}.${type}`;
 
 		const storageRef = ref(storage, `images/${fileName}`);
-		console.log(file.buffer)
 		
 		const metadata = {
 			contentType: file.mimetype,
