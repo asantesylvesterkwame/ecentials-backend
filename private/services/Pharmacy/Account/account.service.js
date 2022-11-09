@@ -15,12 +15,12 @@ async function createNewPharmacy({
             business_registration_document: uploadedDocumentUrl
         })
 
-        if (!result) {
+        if (result != null) {
             return { message: "success", data: result }
         }
         return { message: "failed to create pharmacy, please try again" }
     } catch (error) {
-        return { message: "an error occurred, please try again" }
+        return { message: "an error occurred, please try again", error }
     }
 }
 
