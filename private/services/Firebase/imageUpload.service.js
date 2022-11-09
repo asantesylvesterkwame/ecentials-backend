@@ -8,7 +8,7 @@ const storage = getStorage(app);
 async function uploadImage(file) {
 	let imageUrl = ""
   
-	try {
+	// try {
 		const timestamp = Date.now();
 		const name = file.originalname.replace(/ /g, "_").split(".")[0];
 		const type = file.originalname.split(".")[1];
@@ -28,10 +28,10 @@ async function uploadImage(file) {
 		});
 		
 		return imageUrl;
-  } catch (error) {
+//   } catch (error) {
 		
-		return "";
-	}
+// 		return "";
+// 	}
 }
 
 module.exports = { uploadImage };
