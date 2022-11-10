@@ -6,11 +6,16 @@ const storeSchema = new mongoose.Schema({
         required: true,
         ref: "businessowners"
     },
-    store_pin: {
+    password: {
         type: String,
         required: true
     },
     name: {
+        type: String, 
+        required: true,
+        unique: true
+    },
+    email: {
         type: String, 
         required: true,
     },
@@ -18,11 +23,11 @@ const storeSchema = new mongoose.Schema({
         type: String, 
         required: false,
     },
-    address: {
+    gps_address: {
         type: String, 
         required: true,
     },
-    city: {
+    location: {
         type: String, 
         required: true,
     },
@@ -30,13 +35,21 @@ const storeSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    phone_number: {
+        type: String,
+        required: true
+    },
+    open_hours: {
+        type: String,
+        required: true
+    },
     licence_no: {
         type: String,
         required: true
     },
     logo: {
         type: String,
-        required: true
+        required: false
     },
     accept_nhis: {
         type: Boolean,
@@ -50,9 +63,9 @@ const storeSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    date_added: {
-        type: Date,
-        default: Date.now
+    business_registration_document: {
+        type: String,
+        required: true
     }
 }, { timestamps: true });
 

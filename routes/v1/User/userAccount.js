@@ -1,12 +1,17 @@
 const router = require('express').Router()
-var mongoose = require('mongoose')
+const multer = require('multer')
 const bcrypt = require('bcryptjs/dist/bcrypt') //encrypting the password
+
 const { verify } = require('../../../verifyToken') //checks if the user has a jwt token
 const User = require('../../../private/schemas/User')
 
 const {
     encryptPassword
 } = require('../../../private/helpers/functions')
+const { uploadProfileImage } = require('../../../private/services/User/Account/account.service')
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage }).single("profile")
 
 //this verifies using the token before any transaction is made. 
 //fetch personal details
@@ -315,4 +320,12 @@ router.post('/reset-health-pin', verify, async (req, res) => {
     }
 });
 
+// allows verified user to update their profile image
+router.post('/update-profile-image', verify, upload, async (req, res, next) => {
+    try {
+        return res.status(200).json(await uploadProfileImage({ req }))
+    } catch (error) {
+        next(error)
+    }
+})
 module.exports = router
