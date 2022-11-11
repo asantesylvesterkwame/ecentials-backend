@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon private/server.js",
-    "test": "jest --no-cache --detectOpenHandles --runInBand"
+    "test": "jest --no-cache --detectOpenHandles --runInBand",
+    "create-env": "printenv > .env"
   },
   "repository": {
     "type": "git",
