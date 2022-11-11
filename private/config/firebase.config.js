@@ -4,13 +4,13 @@ require('dotenv').config();
 
 
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSENGER_SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID,
+  apiKey: "AIzaSyCNOWMXxvV8jkAA7oa5-yW5yR4GozrW5FI",
+  authDomain: "ecentials-82465.firebaseapp.com",
+  projectId: "ecentials-82465",
+  storageBucket: "ecentials-82465.appspot.com",
+  messagingSenderId: "405312315660",
+  appId: "1:405312315660:web:d7a13888f4c84a98eaa929",
+  measurementId: "G-WHDQVR8Z7J",
 };
 
 const app = initializeApp(firebaseConfig);
