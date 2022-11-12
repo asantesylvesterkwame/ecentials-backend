@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 const Bookmark = require('../../../private/schemas/Bookmark');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 
 // allows a verified user to bookmark an item

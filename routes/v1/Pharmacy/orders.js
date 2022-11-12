@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const Orders = require('../../../private/schemas/Orders');
 const PaymentTransaction = require('../../../private/schemas/PaymentTransaction');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 
 // retrieve the total orders placed at a particular pharmacy/shop

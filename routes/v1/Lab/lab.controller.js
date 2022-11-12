@@ -1,5 +1,5 @@
 const { createNewLab, fetchAllLabs, searchForLab, getTopRatedDoctors } = require("../../../private/services/Lab/lab.service");
-const verify = require("../../../verifyToken");
+const { verify } = require("../../../verifyToken");
 
 const router = require("express").Router();
 

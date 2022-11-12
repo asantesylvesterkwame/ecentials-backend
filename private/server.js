@@ -1,20 +1,30 @@
-const express = require('express')
-require('dotenv').config();
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-const keys = require('./../keys.json')
+const keys = require("./../keys.json");
 
-app.set('keys', keys.ecentials)
+app.set("keys", keys.ecentials);
 
-const routes = require('../routes/v1/routes')
+const routes = require("../routes/v1/routes");
 
 //connect to database
-const mongoose = require('./database/mongodb.js')(app.get('keys').db_name)
+const mongoose = require("./database/mongodb.js")(app.get("keys").db_name);
+
+// Using CORS
+app.use(cors());
 
 //send post requests
-app.use(express.json())
+app.use(express.json());
 
 //Route middleware
-app.use('', routes)
+app.use("", routes);
 
-app.listen(process.env.PORT || 3001 , () => console.log('Server running on port 3001'))
+if (process.env.NODE_ENV !== "test") {
+  app.listen(process.env.PORT || 3001, () =>
+    console.log("Server running on port 3001")
+  );
+}
+
+module.exports = app;

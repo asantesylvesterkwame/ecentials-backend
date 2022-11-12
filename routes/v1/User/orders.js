@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const Orders = require('../../../private/schemas/Orders');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 
 // list all orders for a verified user

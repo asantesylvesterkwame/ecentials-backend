@@ -6,6 +6,8 @@
 # testing
 /coverage
 
+.fleet
+
 # production
 /build
 
@@ -23,3 +25,5 @@ yarn-error.log*
 
 # image uploads
 /uploads
+
+/ecentials-backend

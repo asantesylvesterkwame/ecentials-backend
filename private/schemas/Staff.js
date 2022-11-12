@@ -9,17 +9,18 @@ const staffSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    hospital_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true
-    },
+    // hospital_id: {
+    //     type: mongoose.SchemaTypes.ObjectId,
+    //     required: true
+    // },
     employee_id: {
-        type: mongoose.SchemaTypes.ObjectId,
+        type: String,
         required: true
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        text: true
     },
     phone_number: {
         type: String,
@@ -27,23 +28,27 @@ const staffSchema = new mongoose.Schema({
     },
     specification: {
         type: String,
-        required: true
+        required: true,
+        text: true
     },
     experience: {
-        type: String,
-        required: true
+        type: Number,
+        required: true,
+        text: true
     },
     about: {
         type: String,
-        required: false
+        required: false,
+        text: true
     },
     staff_type: {
         type: String,
-        required: true
+        required: true,
+        text: true
     },
     availability: {
-        type: String,
-        required: true
+        type: Date,
+        required: false
     },
     username: {
         type: String,
@@ -52,10 +57,6 @@ const staffSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
-    },
-    date_added: {
-        type: Date,
-        default: Date.now
     },
 }, { timestamps: true });
 

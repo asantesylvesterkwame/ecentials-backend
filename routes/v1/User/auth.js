@@ -17,6 +17,7 @@ const {registerValidation, emailValidation, passwordValidation} = require('./val
 const verify = require('../../../verifyToken')
 const sendMail = require('../../../private/services/send_email')
 const RecoveryCode = require('../../../private/schemas/RecoveryCode')
+const EMAILBODY = require('../../../private/helpers/mail_body')
 
 dotenv.config()
 
@@ -110,12 +111,13 @@ router.post('/recover_password', async (req, res) => {
     const { email } = req.body;
     
     let code = `${uuid()}`.substring(0, 6).toUpperCase()
+    let mail_body = EMAILBODY(code, "imgs/logo_ios.png", "not-me-password-reset")
 
     if (email === '') {
         return res.status(400).json({ message: 'user email not provided.' });
     }
 
-    sendMail(email, code).then(result => {
+    sendMail(email, mail_body).then(result => {
         // set the code sent to the user
         // this will be validated against to check if user has permission to change
         // password

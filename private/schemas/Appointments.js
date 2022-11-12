@@ -5,6 +5,10 @@ const appointmentsSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
+    facility_id: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
+    },
     staff_id: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true

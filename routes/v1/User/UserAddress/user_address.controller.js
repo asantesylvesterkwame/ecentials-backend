@@ -4,7 +4,7 @@ const {
   addNewShippingAddress,
   getUserShippingAddresses,
 } = require("../../../../private/services/UserAddress/user_address.service");
-const verify = require("../../../../verifyToken");
+const { verify } = require("../../../../verifyToken");
 
 router.post("/add-user-shipping-address", verify, async (req, res, next) => {
   const user_id = req.user._id;

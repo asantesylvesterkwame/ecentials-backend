@@ -1,7 +1,6 @@
 const nodemailer = require("nodemailer");
-const EMAILBODY = require("../helpers/mail_body");
 
-const sendMail = (email, code) =>
+const sendMail = (email, mail_body) =>
   new Promise((resolve, reject) => {
     let transporter = nodemailer.createTransport({
       service: "gmail",
@@ -20,7 +19,7 @@ const sendMail = (email, code) =>
       from: "replyus.app@gmail.com",
       to: `${email}`,
       subject: "Ecentials",
-      html: EMAILBODY(code, "imgs/logo_ios.png", "not-me-password-reset"),
+      html: mail_body,
     };
 
     transporter.sendMail(mailOptions, (error, info) => {

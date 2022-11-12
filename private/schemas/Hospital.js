@@ -21,6 +21,14 @@ const hospitalSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    gps_lat: {
+        type: Number,
+        required: false
+    },
+    gps_lng: {
+        type: Number,
+        required: false
+    },
     images: []
 }, { timestamps: true });
 

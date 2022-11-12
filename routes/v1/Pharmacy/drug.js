@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const Drug = require('../../../private/schemas/Drug');
 const { searchDrugInSpecificPharmacy } = require('../../../private/services/Pharmacy/Drug/drug.service');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 
 // allows a verified pharmacy to add a new drug to their 

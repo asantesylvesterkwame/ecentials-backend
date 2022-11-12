@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 const Checkout = require('../../../private/schemas/Checkout');
-const verify = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken')
 
 
 // create a new checkout item for a user
