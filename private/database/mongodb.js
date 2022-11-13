@@ -10,7 +10,7 @@ module.exports = (db_name) => {
   // );
 
   return mongoose.connect(
-    `${process.env.DB_URI}`,
+    `mongodb+srv://ecentials:0Ef1RfIbYghJoKJK@cluster0.k0eejno.mongodb.net/?retryWrites=true&w=majority`,
     () => {
       console.log("MongoDB Connection Successful");
     },
