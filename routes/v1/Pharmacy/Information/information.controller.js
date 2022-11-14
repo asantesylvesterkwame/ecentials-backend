@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const { getPharmacyInformation } = require('../../../../private/services/Pharmacy/Information/information.service');
-const verify = require('../../../../verifyToken');
+const { verify } = require('../../../../verifyToken');
 
 
 // retrieve information about a pharmacy
