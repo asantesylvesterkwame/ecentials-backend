@@ -124,7 +124,8 @@ async function getPrimaryDoctorsForUser({ user_id }) {
           "specialisation": "$staff.specification",
           "experience": "$staff.experience",
           "about": "$staff.about",
-          "hospital": "$hospital.name"
+          "hospital": "$hospital.name",
+          "facility_id": "$hospital._id"
         }
       }
     ]);
