@@ -22,7 +22,8 @@ router.get('/fetch-personal-details', verify, async (req, res) => {
     }, {
         personal: 1,
         education: 1,
-        health: 1
+        health: 1,
+        profile_image: 1
     })
     if (!isUserPresent) return res.json({
         status: 400,
