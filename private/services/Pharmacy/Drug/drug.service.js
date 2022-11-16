@@ -55,8 +55,19 @@ async function fetchAllPharmacyDrugs({ req }) {
     }
 }
 
+// return a count of drugs/products in a pharmacy
+async function countPharmacyDrugs({ req }) {
+    try {
+        const count = await Drug.find({ ...req.body }).count()
+        return { message: "success", data: count }
+    } catch (error) {
+        return { message: "an error occurred, please try again" }
+    }
+}
+
 module.exports = {
     searchDrugInSpecificPharmacy,
     addDrugToInventory,
-    fetchAllPharmacyDrugs
+    fetchAllPharmacyDrugs,
+    countPharmacyDrugs,
 }
