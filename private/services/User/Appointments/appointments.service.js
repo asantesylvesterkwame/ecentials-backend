@@ -18,7 +18,10 @@ async function getUserAppointments({ user_id, status }) {
                 }
             },
             { 
-                $unwind: '$Staff'
+                $unwind: {
+                    path: '$Staff',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             {
                 $lookup: {
