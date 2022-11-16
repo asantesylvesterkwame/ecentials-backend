@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon private/server.js",
+    "lint:fix": "eslint --fix ./*.js",
     "test": "jest --no-cache --detectOpenHandles --runInBand"
   },
   "repository": {
@@ -27,6 +28,8 @@
   "homepage": "https://github.com/myecentials/ecentials-backend#readme",
   "dependencies": {
     "bcryptjs": "^2.4.3",
+    "concurrently": "^7.5.0",
+    "cors": "^2.8.5",
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "firebase": "^9.9.4",

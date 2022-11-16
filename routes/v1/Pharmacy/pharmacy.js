@@ -1,11 +1,16 @@
 const router = require('express').Router();
+const multer = require("multer")
+
 
 const { encryptPassword } = require('../../../private/helpers/functions');
 const Store = require('../../../private/schemas/Store');
 const { verify } = require('../../../verifyToken');
 const getDistance = require('../../../private/helpers/get_distance');
 const { isBusinessOwnerHavingPharmacy } = require('../../../private/services/Pharmacy/Information/information.service');
+const { createNewPharmacy } = require('../../../private/services/Pharmacy/Account/account.service');
 
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage }).single("document")
 
 // list all pharmacies
 router.get('', verify, async (req, res) => {
@@ -19,33 +24,11 @@ router.get('', verify, async (req, res) => {
 
 
 // create a new pharmacy
-router.post('/create-new-pharmacy', verify, async (req, res) => {
-    const owner_id = req.user._id;
-    const { 
-        store_pin, 
-        name, 
-        description, 
-        address, 
-        city, 
-        licence_no,
-        logo,
-        accept_nhis,
-        gps_lat,
-        gps_lng,
-     } = req.body;
-
-     if (!!name && !!licence_no && !!city) {
-         await Store.create({
-             owner_id, name, description, address, city, licence_no, logo, accept_nhis,
-             gps_lat, gps_lng, store_pin: encryptPassword(store_pin)
-         }, (err, result) => {
-             if (err) {
-                 return res.status(400).json({ message: 'Failed to create pharmacy.' });
-             }
-             return res.status(200).json({ message: 'success', data: result});
-         });
-     } else {
-         return res.status(403).json({ message: 'Please make sure the correct data is provided' });
+router.post('/create-new-pharmacy', verify, upload, async (req, res, next) => {
+     try {
+        return res.status(200).json(await createNewPharmacy({ req }))
+     } catch (error) {
+        next(error)
      }
 });
 

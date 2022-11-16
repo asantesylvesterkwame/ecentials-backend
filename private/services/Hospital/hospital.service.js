@@ -1,5 +1,5 @@
 const Hospital = require("../../schemas/Hospital");
-const {uploadImage} = require("../Firebase/imageUpload.service");
+const {uploadFile} = require("../Firebase/imageUpload.service");
 const getDistance = require('../../../private/helpers/get_distance');
 
 // upload hospital images
@@ -10,7 +10,7 @@ async function uploadHospitalImages({hospital_id, files}) {
         for (let i = 0; i < files.length; i++) {
             const file = files[i];
 
-            const imageUrl = await uploadImage(file);
+            const imageUrl = await uploadFile(file, "images");
 
             images.push(imageUrl);
         }
