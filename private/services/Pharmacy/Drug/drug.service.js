@@ -1,3 +1,4 @@
+const { async } = require("@firebase/util");
 const Drug = require("../../../schemas/Drug");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -44,7 +45,18 @@ async function addDrugToInventory({ req }) {
     }
 }
 
+// get all drugs/products associated to a pharmacy
+async function fetchAllPharmacyDrugs({ req }) {
+    try {
+        const drugs = await Drug.find({ ...req.body })
+        return { message: "success", data: drugs }
+    } catch (error) {
+        return { message: "an error occurred, please try again" }
+    }
+}
+
 module.exports = {
     searchDrugInSpecificPharmacy,
-    addDrugToInventory
+    addDrugToInventory,
+    fetchAllPharmacyDrugs
 }
