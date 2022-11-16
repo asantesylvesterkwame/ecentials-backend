@@ -2,7 +2,7 @@ const router = require('express').Router();
 const multer = require("multer")
 
 const Drug = require('../../../private/schemas/Drug');
-const { searchDrugInSpecificPharmacy, addDrugToInventory } = require('../../../private/services/Pharmacy/Drug/drug.service');
+const { searchDrugInSpecificPharmacy, addDrugToInventory, fetchAllPharmacyDrugs } = require('../../../private/services/Pharmacy/Drug/drug.service');
 const { verify } = require('../../../verifyToken')
 
 const storage = multer.memoryStorage()
@@ -10,15 +10,12 @@ const upload = multer({ storage }).single("picture")
 
 
 // list all drugs associated to a particular pharmacy or shop
-router.post('', verify, async (req, res) => {
-    const { store_id } = req.body;
-
-    await Drug.find({ store_id }, (err, result) => {
-        if (err) {
-            return res.status(400).json({ message: 'Failed to retrieve drugs. Try again later.' });
-        }
-        return res.status(200).json({ message: "ok", data: result });
-    }).clone();
+router.post('', verify, async (req, res, next) => {
+    try {
+        return res.status(200).json(await fetchAllPharmacyDrugs({ req }))
+    } catch (error) {
+        next(error)
+    }
 });
 
 // search for a drug using name, manufacturer, description
