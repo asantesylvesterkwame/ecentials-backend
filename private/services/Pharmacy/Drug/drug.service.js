@@ -1,5 +1,5 @@
 const Drug = require("../../../schemas/Drug");
-const { uploadImage } = require("../../Firebase/imageUpload.service");
+const { uploadFile } = require("../../Firebase/imageUpload.service");
 
 
 // This service allows a user to search for drugs
@@ -25,31 +25,12 @@ async function searchDrugInSpecificPharmacy({ search_text, store_id }) {
 }
 
 // add a drug / product to a pharmacy inventory
-async function addDrugToInventory({
-    store_id,
-    category_id,
-    name,
-    medicine_group,
-    price,
-    dosage,
-    manufacturer,
-    description,
-    expiry_date,
-    image
-}) {
+async function addDrugToInventory({ req }) {
     try {
-        const image_url = await uploadImage(image)
+        const image_url = await uploadFile(req.file, `drugs/${req.body.store_id}`)
 
         const result = await Drug.create({
-            store_id,
-            category_id,
-            name,
-            medicine_group,
-            price,
-            dosage,
-            manufacturer,
-            description,
-            expiry_date,
+            ...req.body,
             image: image_url
         })
 
@@ -59,7 +40,7 @@ async function addDrugToInventory({
 
         return { message: "failed to add drug, please try again" }
     } catch (error) {
-        return { message: "an error occurred, please try again" }
+        return { message: "an error occurred, please try again", error }
     }
 }
 
