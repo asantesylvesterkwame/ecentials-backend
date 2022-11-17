@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { verify } = require('../../../verifyToken');
 const Appointments = require('../../../private/schemas/Appointments');
-const { getUserAppointments } = require('../../../private/services/User/Appointments/appointments.service');
+const { getUserAppointments, cancelUserAppointment } = require('../../../private/services/User/Appointments/appointments.service');
 
 
 router.post('', verify, async (req, res, next) => {
@@ -60,6 +60,15 @@ router.post('/reschedule-appointment-date', verify, async (req, res) => {
         return res.status(200).json({ message: "success", data: result });
     } catch (error) {
         return res.status(400).json({ message: "An error occurred. Please try again later." });
+    }
+})
+
+// allow a verified user to cancel an appointment
+router.post('/cancel-an-appointment', verify, async (req, res, next) => {
+    try {
+        return res.status(200).json(await cancelUserAppointment({ req }))
+    } catch (error) {
+        next(error)
     }
 })
 
