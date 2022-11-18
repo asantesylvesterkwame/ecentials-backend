@@ -23,11 +23,12 @@ router.get('', verify, async (req, res) => {
 router.post('/create-order-item', verify, async (req, res) => {
     const user_id = req.user._id;
     const {
-        delivery_address,
+        store_id,
+        delivery_address_id,
         delivery_date, 
         shipping_fee, 
         grand_total,
-        shipment_summary
+        products_summary
     } = req.body;
 
     const order_code = await generateOrderCode();
@@ -37,7 +38,7 @@ router.post('/create-order-item', verify, async (req, res) => {
 
     try {
         await Orders.create({
-            user_id, order_code, invoice_number, delivery_address, delivery_date, shipping_fee, grand_total, shipment_summary
+            store_id, user_id, order_code, invoice_number, delivery_address_id, delivery_date, shipping_fee, grand_total, products_summary
         }, (err, result) => {
             if (err) {
                 return res.status(400).json({ message: "Failed to create checkout item.", data: err });

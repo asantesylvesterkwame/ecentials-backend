@@ -19,7 +19,7 @@ router.post('/add-new-drug', verify, async (req, res) => {
         manufacturer,
         views,
         discount,
-        nhis
+        nhis,
     } = req.body;
 
     if (!!name && !!manufacturer && !!description) {

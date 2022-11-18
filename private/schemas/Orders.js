@@ -1,10 +1,10 @@
 const mongoose = require("mongoose");
 
 const ordersSchema = new mongoose.Schema({
-    // store_id/*pharmacy id*/: {
-    //     type: mongoose.SchemaTypes.ObjectId,
-    //     required: true
-    // },
+    store_id: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true
+    },
     user_id: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true
@@ -45,7 +45,7 @@ const ordersSchema = new mongoose.Schema({
         type: Number, 
         required: true
     },
-    delivery_address: {
+    delivery_address_id: {
         type: String, 
         required: true
     },
@@ -62,7 +62,7 @@ const ordersSchema = new mongoose.Schema({
         type: Number, 
         required: true
     },
-    shipment_summary: [{
+    products_summary: [{
         drug_id: {
             type: mongoose.SchemaTypes.ObjectId,
             required: true,
@@ -75,10 +75,6 @@ const ordersSchema = new mongoose.Schema({
             type: Number,
             required: false
         },
-        pharmacy_id: {
-            type: mongoose.SchemaTypes.ObjectId,
-            required: true
-        }
     }],
 }, { timestamps: true });
 

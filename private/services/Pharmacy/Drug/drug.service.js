@@ -23,6 +23,22 @@ async function searchDrugInSpecificPharmacy({ search_text, store_id }) {
     }
 }
 
+//fetch drug name when provided with the drug id
+async function fetchDrugName(drug_id){
+    console.log(drug_id)
+    const drug_details = await Drug.find({_id: drug_id}, {name: 1})
+    if(drug_details){
+        //extracting drug name from drug details
+       return drug_details
+    }
+    else{
+        return {
+            message: "No drug with the provided id"
+        }
+    }
+}
+
 module.exports = {
     searchDrugInSpecificPharmacy,
+    fetchDrugName
 }
