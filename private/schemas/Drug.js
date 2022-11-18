@@ -4,17 +4,27 @@ const mongoose = require('mongoose');
 const drugSchema = new mongoose.Schema({
     store_id: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: true,
+        ref: "stores"
+    },
+    category_id: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true,
+        ref: "drugcategories"
     },
     name: {
         type: String,
         required: true
     },
-    prize: {
+    price: {
         type: Number,
         required: true
     },
     description: {
+        type: String,
+        required: true
+    },
+    medicine_group: {
         type: String,
         required: true
     },
@@ -26,10 +36,10 @@ const drugSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    dosage_form: {
-        type: String,
-        required: true
-    },
+    // dosage_form: {
+    //     type: String,
+    //     required: true
+    // },
     manufacturer: {
         type: String,
         required: true
@@ -46,7 +56,14 @@ const drugSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    images: [String]
+    expiry_date: {
+        type: Date,
+        required: true
+    },
+    image: {
+        type: String,
+        required: true
+    }
 }, { timestamps: true });
 
 module.exports = mongoose.model('Drug', drugSchema);
