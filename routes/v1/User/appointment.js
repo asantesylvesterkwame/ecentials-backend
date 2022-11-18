@@ -53,7 +53,7 @@ router.post('/reschedule-appointment-date', verify, async (req, res) => {
     const { appoint_id, date, time } = req.body;
 
     try {
-        const result = await Appointments.updateOne({ user_id, appoint_id }, { date, time });
+        const result = await Appointments.updateOne({ user_id, _id: appoint_id }, { date, time });
         if (result == null) {
             return res.status(200).json({ message: "Failed to reschedule appointment." })
         }

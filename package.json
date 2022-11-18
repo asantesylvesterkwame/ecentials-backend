@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "nodemon private/server.js",
+    "lint:fix": "eslint --fix ./*.js",
     "test": "jest --no-cache --detectOpenHandles --runInBand"
   },
   "repository": {
@@ -43,6 +44,7 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "eslint": "^8.24.0",
     "jest": "^29.2.0",
     "sinon": "^14.0.1",
     "supertest": "^6.3.0"
