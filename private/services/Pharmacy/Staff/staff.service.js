@@ -33,7 +33,7 @@ async function createPharmacyStaff({ req }) {
         if (result != null) {
             return { message: "success", data: result }
         }
-        
+
         return { message: "failed to add new staff, please try again." }
     } catch (error) {
         return { message: "an error occurred, please try again ", error }
@@ -45,7 +45,22 @@ function _generateEmployeeID(req) {
     return id + (Math.floor(Math.random()*1000) + 1).toString()
 }
 
+// get a count of the pharmacy staffs 
+async function getPharmacyStaffCount({ req }) {
+    try {
+        const staffCount = await Staff.find({ 
+            facility_id: req.body.facility_id, 
+            facility_type: req.body.facility_type 
+        }).count()
+
+        return { message: "success", count: staffCount }
+    } catch (error) {
+        return { message: "an error occurred, please try again." }
+    }
+}
+
 module.exports = {
     getPharmacyStaff,
-    createPharmacyStaff
+    createPharmacyStaff,
+    getPharmacyStaffCount
 }
