@@ -15,6 +15,17 @@ async function addDrugCategory({ name, status, pharmacy_id }) {
     }
 }
 
+// fetch all drug categories
+async function getDrugCategories({ pharmacy_id }) {
+    try {
+        const results = await DrugCategory.find({ pharmacy_id })
+        return { message: "success", data: results }
+    } catch (error) {
+        return { message: "an error occurred, please try again" }
+    }
+}
+
 module.exports = {
-    addDrugCategory
+    addDrugCategory,
+    getDrugCategories,
 }
