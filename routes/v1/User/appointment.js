@@ -33,12 +33,12 @@ router.post('/book-an-appointment', verify, async (req, res) => {
         date,
         time,
         status,
-        appoint_type
     } = req.body;
 
     await Appointments.create({
-        user_id, staff_id, date, time, status, appoint_type, facility_id
+        user_id, staff_id, date, time, status, facility_id
     }, (err, result) => {
+        console.log(err)
         if (err) {
             return res.status(400).json({ message: "Failed to book appointment. Try again later", err });
         }
