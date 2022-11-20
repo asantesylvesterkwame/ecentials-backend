@@ -99,10 +99,10 @@ const staffSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    // specification: {
-    //     type: String,
-    //     required: true
-    // },
+    specification: {
+        type: String,
+        required: false
+    },
     experience: {
         type: String,
         required: false
