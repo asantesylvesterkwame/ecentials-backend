@@ -112,11 +112,11 @@ const staffSchema = new mongoose.Schema({
         required: false,
         text: true
     },
-    // staff_type: {
-    //     type: String,
-    //     required: true,
-    //     text: true
-    // },
+    staff_type: {
+        type: String,
+        required: true,
+        text: true
+    },
     availability: {
         type: String,
         required: false
