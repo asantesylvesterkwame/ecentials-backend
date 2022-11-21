@@ -1,69 +1,76 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-
-const drugSchema = new mongoose.Schema({
+const drugSchema = new mongoose.Schema(
+  {
     store_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true,
-        ref: "stores"
+      type: mongoose.SchemaTypes.ObjectId,
+      required: true,
+      ref: "stores",
     },
     category_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true,
-        ref: "drugcategories"
+      type: mongoose.SchemaTypes.ObjectId,
+      required: true,
+      ref: "drugcategories",
     },
     name: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     price: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
+    },
+    selling_price: {
+      type: Number,
+      required: true,
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     medicine_group: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     dosage: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     quantity: {
-        type: Number,
-        required: false
+      type: Number,
+      required: false,
     },
     // dosage_form: {
     //     type: String,
     //     required: true
     // },
     manufacturer: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     views: {
-        type: Number,
-        required: false
+      type: Number,
+      required: false,
     },
     discount: {
-        type: Number,
-        required: false
+      type: Number,
+      required: false,
     },
     nhis: {
-        type: Number,
-        required: false
+      type: Boolean,
+      required: true,
+      default: false,
     },
     expiry_date: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true,
     },
     image: {
-        type: String,
-        required: true
-    }
-}, { timestamps: true });
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-module.exports = mongoose.model('Drug', drugSchema);
+module.exports = mongoose.model("Drug", drugSchema);
