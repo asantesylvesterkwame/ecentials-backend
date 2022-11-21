@@ -12,7 +12,7 @@ const { verify } = require('../../../verifyToken')
 // implementations to be change later
 router.get('/fetch-top-doctors', verify, async (req, res) => {
     try {
-        const doctors = await Staff.find({}).limit(5)
+        const doctors = await Staff.find({ staff_type: "doctor" }).limit(5)
         if (doctors == null) {
             return res.status(400).json({ message: "Could not fetch top doctors." });
         }

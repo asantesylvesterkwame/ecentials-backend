@@ -2,7 +2,7 @@ const router = require('express').Router();
 const multer = require("multer")
 
 const Drug = require('../../../private/schemas/Drug');
-const { searchDrugInSpecificPharmacy, addDrugToInventory, fetchAllPharmacyDrugs, countPharmacyDrugs } = require('../../../private/services/Pharmacy/Drug/drug.service');
+const { searchDrugInSpecificPharmacy, addDrugToInventory, fetchAllPharmacyDrugs, countPharmacyDrugs, getDrugInformation } = require('../../../private/services/Pharmacy/Drug/drug.service');
 const { verify } = require('../../../verifyToken')
 
 const storage = multer.memoryStorage()
@@ -37,31 +37,11 @@ router.post('/drug-search', verify, async (req, res) => {
 });
 
 // list details about a drug
-router.post('/view-drug-details', verify, async (req, res) => {
-    const { drug_id } = req.body;
-
+router.post('/view-drug-details', verify, async (req, res, next) => {
     try {
-        await Drug.findOne({ _id: drug_id }, async (err, result) => {
-            if (err) {
-                return res.status(400).json({ message: "Drug details not found" });
-            }
-
-            if (result) {
-                // await Drug.updateOne({ _id: drug_id }, {$inc : { views: 1 }}, (err, _) => {
-                //     if (err) {
-                //         return res.status(400).json({ message: "Something went wrong. Please try again later."})
-                //     }
-                //     return res.status(200).json({ message: "success", data: result });
-                // }).clone()
-                let update_view_count = await Drug.updateOne({ _id: drug_id }, {$inc : { views: 1 }})
-
-                if (update_view_count) {
-                    return res.status(200).json({ message: "success", data: result });
-                }
-            }
-        }).clone();
+        return res.status(200).json(await getDrugInformation({ req }))
     } catch (error) {
-        return res.status(400).json({ message: "An error occurred.", error })
+        next(error)
     }
 });
 

@@ -99,10 +99,10 @@ const staffSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    // specification: {
-    //     type: String,
-    //     required: true
-    // },
+    specification: {
+        type: String,
+        required: false
+    },
     experience: {
         type: String,
         required: false
@@ -112,11 +112,11 @@ const staffSchema = new mongoose.Schema({
         required: false,
         text: true
     },
-    // staff_type: {
-    //     type: String,
-    //     required: true,
-    //     text: true
-    // },
+    staff_type: {
+        type: String,
+        required: true,
+        text: true
+    },
     availability: {
         type: String,
         required: false

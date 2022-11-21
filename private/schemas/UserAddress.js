@@ -29,6 +29,10 @@ const userShippingAddressSchema = new mongoose.Schema({
     region: {
         type: String,
         required: false
+    },
+    primary_address: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
