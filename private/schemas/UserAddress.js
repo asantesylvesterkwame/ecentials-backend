@@ -33,6 +33,10 @@ const userShippingAddressSchema = new mongoose.Schema({
     primary_address: {
         type: Boolean,
         default: false
+    },
+    note: {
+        type: String,
+        required: false
     }
 }, { timestamps: true });
 
