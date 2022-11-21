@@ -45,6 +45,8 @@ async function getUserAppointments({ user_id, status }) {
                     "updatedAt": 1,
                     "staff_name": "$Staff.name",
                     "staff_photo": "$Staff.photo",
+                    "staff_first_name": "$Staff.first_name",
+                    "staff_last_name": "$Staff.last_name",
                     "specialization": "$Staff.specification",
                     "hospital_name": "$Hospital.name",
                 }
