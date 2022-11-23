@@ -44,8 +44,36 @@ function generateInvoiceNumber (oldInvoiceNumber) {
     return oldInvoiceNumber.substr(0, count.index) + (++count[0]);
 }
 
+async function createOrderItem(req, order_code, invoice_number) {
+    const user_id = req.user._id;
+    const {
+        store_id,
+        delivery_address_id,
+        delivery_date, 
+        shipping_fee, 
+        grand_total,
+        products_summary
+    } = req.body;
+    try {
+        await Orders.create({
+            store_id, user_id, order_code, invoice_number, delivery_address_id, delivery_date, shipping_fee, grand_total, products_summary
+        }, (err, result) => {
+            if (err) {
+                return "Failed to create checkout item";
+                // return res.status(400).json({ message: "Failed to create checkout item.", data: err });
+            }
+            return "Success";
+            // return res.status(200).json({ message: "success", data: result });
+        })
+    } catch (error) {
+        return "Failed to create checkout item";
+        // return res.status(400).json({ message: "Failed to create checkout item.", data: error });
+    }
+}
+
 module.exports = {
     generateOrderCode, 
     fetchLastInvoiceNumber, 
-    generateInvoiceNumber
+    generateInvoiceNumber, 
+    createOrderItem
 }

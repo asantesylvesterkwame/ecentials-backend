@@ -16,7 +16,7 @@ router.get('', verify, async (req, res) => {
             return res.status(400).json({message: "Failed to load orders."})
         }
         return res.status(200).json({message: 'success', data: result});
-    }).clone();
+    })
 });
 
 //create an order item. This is triggered when a user clicks on the checkout button
