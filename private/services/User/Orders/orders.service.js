@@ -44,30 +44,25 @@ function generateInvoiceNumber (oldInvoiceNumber) {
     return oldInvoiceNumber.substr(0, count.index) + (++count[0]);
 }
 
-async function createOrderItem(req, order_code, invoice_number) {
+async function createOrderItem({ req }) {
     const user_id = req.user._id;
-    const {
-        store_id,
-        delivery_address_id,
-        delivery_date, 
-        shipping_fee, 
-        grand_total,
-        products_summary
-    } = req.body;
+
+    const order_code = await generateOrderCode();
+    const last_no = await fetchLastInvoiceNumber();
+
+    const invoice_number = generateInvoiceNumber(last_no);
+
     try {
-        await Orders.create({
-            store_id, user_id, order_code, invoice_number, delivery_address_id, delivery_date, shipping_fee, grand_total, products_summary
-        }, (err, result) => {
-            if (err) {
-                return "Failed to create checkout item";
-                // return res.status(400).json({ message: "Failed to create checkout item.", data: err });
-            }
-            return "Success";
-            // return res.status(200).json({ message: "success", data: result });
+        const result = await Orders.create({
+            user_id, order_code, invoice_number, ...req.body
         })
+        if(result != null){
+            return { message: "success", data: result };
+        }
+        return { message: "Failed to create checkout item.", data: err };
+
     } catch (error) {
-        return "Failed to create checkout item";
-        // return res.status(400).json({ message: "Failed to create checkout item.", data: error });
+        return { message: "Failed to create checkout item.", data: error };
     }
 }
 

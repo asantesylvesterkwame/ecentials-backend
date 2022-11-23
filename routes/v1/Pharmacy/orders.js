@@ -7,6 +7,7 @@ const Drug = require('../../../private/schemas/Drug');
 const PaymentTransaction = require('../../../private/schemas/PaymentTransaction');
 const { verify } = require('../../../verifyToken')
 const { fetchUsersName } = require("../../../private/services/User/Account/account.service");
+const { cancelOrder } = require('../../../private/services/Pharmacy/Orders/orders.service');
 // const { fetchDrugName } = require("../../../private/services/Pharmacy/Drug/drug.service");
 
 
@@ -59,6 +60,15 @@ router.get('/fetch-specific-orders', verify, async (req, res) => {
         res.status(400).json({ message: e })
     }
 });
+
+//cancel an order placed to a particular pharmacy
+router.post('/cancel-an-order', verify, async (req, res) => {
+    try{
+        return res.status(200).json(await cancelOrder({req}))
+    }catch(error){
+        next(error);
+    }
+})
 
 // retrieve the total orders placed at a particular pharmacy/shop
 router.post('/total-orders', verify, async (req, res) => {
