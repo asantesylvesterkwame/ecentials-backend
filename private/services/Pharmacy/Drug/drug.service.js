@@ -1,6 +1,4 @@
-const mongoose = require('mongoose');
-
-const ObjectId = mongoose.Types.ObjectId
+const { async } = require("@firebase/util");
 const Drug = require("../../../schemas/Drug");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -67,59 +65,9 @@ async function countPharmacyDrugs({ req }) {
     }
 }
 
-// get information about a drug
-async function getDrugInformation({ req }) {
-    try {
-        const drug = await Drug.aggregate([
-            { $match: { _id: ObjectId(req.body.drug_id) } },
-            {
-                $lookup: {
-                    "from": "drugcategories",
-                    "localField": "category_id",
-                    "foreignField": "_id",
-                    "as": "category"
-                },
-            },
-            { 
-                $unwind: {
-                    path: '$category',
-                    preserveNullAndEmptyArrays: true
-                }
-            },
-            {
-                $lookup: {
-                    "from": "stores",
-                    "localField": "store_id",
-                    "foreignField": "_id",
-                    "as": "store"
-                },
-            },
-            { 
-                $unwind: {
-                    path: '$store',
-                    preserveNullAndEmptyArrays: true
-                }
-            },
-            // {
-            //     $addFields: {
-            //         "category_name": "$category.name",
-            //         "category_status": "$category.status",
-            //         "store_name": "$store.name",
-            //         "store_location": "$store_location",
-            //         "store_description": "$store.description"
-            //     }
-            // }
-        ])
-        return { message: "success", data: drug }
-    } catch (error) {
-        return { message: "an error occurred, please try again", error }
-    }
-}
-
 module.exports = {
     searchDrugInSpecificPharmacy,
     addDrugToInventory,
     fetchAllPharmacyDrugs,
     countPharmacyDrugs,
-    getDrugInformation
 }

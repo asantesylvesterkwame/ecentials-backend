@@ -1,7 +1,8 @@
 const router = require('express').Router();
 
 const Orders = require('../../../private/schemas/Orders');
-const { verify } = require('../../../verifyToken')
+const { verify } = require('../../../verifyToken');
+const { generateOrderCode, fetchLastInvoiceNumber, generateInvoiceNumber, createOrderItem } = require("../../../private/services/User/Orders/orders.service");
 
 
 // list all orders for a verified user
@@ -15,28 +16,16 @@ router.get('', verify, async (req, res) => {
             return res.status(400).json({message: "Failed to load orders."})
         }
         return res.status(200).json({message: 'success', data: result});
-    }).clone();
+    })
 });
 
-
-// list information about an order item for a verified user
-router.post('/order-item', verify, async (req, res) => {
-    user_id = req.user._id;
-    const { order_id } = req.body;
-
-    await Orders.findOne({
-        _id: order_id,
-        who_ordered: user_id, 
-    }, (err, result) => {
-        if (err) {
-            return res.status(400).json({message: 'Failed to load order item'});
-        }
-        data = []
-        if (result != null) {
-            data = result;
-        }
-        return res.status(200).json({message: 'success', data: data});
-    }).clone();
+//create an order item. This is triggered when a user clicks on the checkout button
+router.post('/create-order-item', verify, async (req, res, next) => {
+    try{
+        return res.status(200).json(await createOrderItem({req}))
+    }catch(error){
+        next(error);
+    }
 });
 
 module.exports = router;

@@ -5,47 +5,77 @@ const ordersSchema = new mongoose.Schema({
         type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
-    who_ordered: {
+    user_id: {
         type: mongoose.SchemaTypes.ObjectId,
         required: true
     },
-    who_ordered_type: {
+    order_code: {
         type: String,
-        required: true
+        required: false
     },
-    status: {
-        type: Number,
-        required: true
+    invoice_number:{
+        type: String, 
+        required: false
+    },
+    payment_type:{
+        type: String, 
+        required: false, 
+        default: "Momo"
+    },
+    payment_status: {
+        type: String, 
+        required: false, 
+        default: "Pending"
+    },
+    order_status: {
+        type: String,
+        required: false,
+        default: "New"
     },
     fulfilled: {
         type: Boolean,
-        required: true,
+        required: false,
         default:false
     },
-    order_item_id: {
-        type: mongoose.SchemaTypes.ObjectId,
+    // order_item_id: {
+    //     type: mongoose.SchemaTypes.ObjectId,
+    //     required: true
+    // },
+    grand_total:{
+        type: Number, 
         required: true
     },
-    item_type: {
-        type: String,
+    delivery_address_id: {
+        type: String, 
         required: true
     },
-    quantity: {
-        type: Number,
-        required: true
-    },
-    payment_method: {
-        type: String,
-        required: true
-    },
-    prize: {
-        type: Number,
-        required: true
+    delivery_date: {
+        type: String, 
+        required: true, 
     },
     delivery_method: {
-        type: Number,
+        type: String, 
+        required:false, 
+        default: "Delivery"
+    },
+    shipping_fee:{
+        type: Number, 
         required: true
-    }
+    },
+    products_summary: [{
+        drug_id: {
+            type: mongoose.SchemaTypes.ObjectId,
+            required: true,
+        },
+        quantity: {
+            type: Number,
+            required: false
+        },
+        prize: {
+            type: Number,
+            required: false
+        },
+    }],
 }, { timestamps: true });
 
 module.exports = mongoose.model("Orders", ordersSchema);
