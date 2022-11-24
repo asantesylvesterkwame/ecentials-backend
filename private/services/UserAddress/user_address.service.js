@@ -15,24 +15,11 @@ async function getUserShippingAddresses({ user_id }) {
 }
 
 // add a new address for a user
-async function addNewShippingAddress({
-  user_id,
-  name_of_recipient,
-  mobile,
-  street_name,
-  town,
-  district = "",
-  region = "",
-}) {
+async function addNewShippingAddress({ req }) {
   try {
     const result = await UserShippingAddress.create({
-      user_id,
-      name_of_recipient,
-      mobile,
-      street_name,
-      town,
-      district,
-      region,
+      user_id: req.user._id,
+      ...req.body,
     });
 
     if (result != null) {
@@ -44,7 +31,39 @@ async function addNewShippingAddress({
   }
 }
 
+async function updateShippingAddress({ req }) {
+  try {
+    const result = await UserShippingAddress.updateOne({
+      _id: req.body.address_id,
+      user_id: req.user._id
+    }, { ...req.body })
+
+    if (result.matchedCount > 0) {
+      return { message: "success" }
+    }
+
+    return { message: "failed to update shipping address, please try again" }
+  } catch (error) {
+    return { message: "an error occurred, please try again" }
+  }
+}
+
+async function deleteShippingAddress({ req }) {
+  try {
+    await UserShippingAddress.deleteOne({
+      _id: req.body.address_id,
+      user_id: req.user._id
+    })
+
+    return { message: "success" }
+  } catch (error) {
+    return { message: "an error occurred, please try again" }
+  }
+}
+
 module.exports = {
   getUserShippingAddresses,
   addNewShippingAddress,
+  updateShippingAddress,
+  deleteShippingAddress
 };

@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const { verify } = require('../../../verifyToken');
 const Appointments = require('../../../private/schemas/Appointments');
-const { getUserAppointments } = require('../../../private/services/User/Appointments/appointments.service');
+const { getUserAppointments, cancelUserAppointment } = require('../../../private/services/User/Appointments/appointments.service');
 
 
 router.post('', verify, async (req, res, next) => {
@@ -33,12 +33,12 @@ router.post('/book-an-appointment', verify, async (req, res) => {
         date,
         time,
         status,
-        appoint_type
     } = req.body;
 
     await Appointments.create({
-        user_id, staff_id, date, time, status, appoint_type, facility_id
+        user_id, staff_id, date, time, status, facility_id
     }, (err, result) => {
+        console.log(err)
         if (err) {
             return res.status(400).json({ message: "Failed to book appointment. Try again later", err });
         }
@@ -53,13 +53,22 @@ router.post('/reschedule-appointment-date', verify, async (req, res) => {
     const { appoint_id, date, time } = req.body;
 
     try {
-        const result = await Appointments.updateOne({ user_id, appoint_id }, { date, time });
+        const result = await Appointments.updateOne({ user_id, _id: appoint_id }, { date, time });
         if (result == null) {
             return res.status(200).json({ message: "Failed to reschedule appointment." })
         }
         return res.status(200).json({ message: "success", data: result });
     } catch (error) {
         return res.status(400).json({ message: "An error occurred. Please try again later." });
+    }
+})
+
+// allow a verified user to cancel an appointment
+router.post('/cancel-an-appointment', verify, async (req, res, next) => {
+    try {
+        return res.status(200).json(await cancelUserAppointment({ req }))
+    } catch (error) {
+        next(error)
     }
 })
 

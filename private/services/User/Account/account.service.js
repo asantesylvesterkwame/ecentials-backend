@@ -13,7 +13,7 @@ async function uploadProfileImage({ req }) {
         })
 
         if (result != null) {
-            return { message: "success" }
+            return { message: "success", image_url }
         }
         return { message: "failed to update profile image, try again" }
     } catch (error) {

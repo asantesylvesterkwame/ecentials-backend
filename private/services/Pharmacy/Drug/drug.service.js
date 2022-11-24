@@ -1,4 +1,6 @@
+const { async } = require("@firebase/util");
 const Drug = require("../../../schemas/Drug");
+const { uploadFile } = require("../../Firebase/imageUpload.service");
 
 
 // This service allows a user to search for drugs
@@ -23,22 +25,49 @@ async function searchDrugInSpecificPharmacy({ search_text, store_id }) {
     }
 }
 
-//fetch drug name when provided with the drug id
-async function fetchDrugName(drug_id){
-    console.log(drug_id)
-    const drug_details = await Drug.find({_id: drug_id}, {name: 1})
-    if(drug_details){
-        //extracting drug name from drug details
-       return drug_details
-    }
-    else{
-        return {
-            message: "No drug with the provided id"
+// add a drug / product to a pharmacy inventory
+async function addDrugToInventory({ req }) {
+    try {
+        const image_url = await uploadFile(req.file, `drugs/${req.body.store_id}`)
+
+        const result = await Drug.create({
+            ...req.body,
+            image: image_url
+        })
+
+        if (result) {
+            return { message: "success", data: result }
         }
+
+        return { message: "failed to add drug, please try again" }
+    } catch (error) {
+        return { message: "an error occurred, please try again", error }
+    }
+}
+
+// get all drugs/products associated to a pharmacy
+async function fetchAllPharmacyDrugs({ req }) {
+    try {
+        const drugs = await Drug.find({ ...req.body })
+        return { message: "success", data: drugs }
+    } catch (error) {
+        return { message: "an error occurred, please try again" }
+    }
+}
+
+// return a count of drugs/products in a pharmacy
+async function countPharmacyDrugs({ req }) {
+    try {
+        const count = await Drug.find({ ...req.body }).count()
+        return { message: "success", data: count }
+    } catch (error) {
+        return { message: "an error occurred, please try again" }
     }
 }
 
 module.exports = {
     searchDrugInSpecificPharmacy,
-    fetchDrugName
+    addDrugToInventory,
+    fetchAllPharmacyDrugs,
+    countPharmacyDrugs,
 }

@@ -11,7 +11,7 @@ const appointmentsSchema = new mongoose.Schema({
     },
     staff_id: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: false
     },
     date: {
         type: Date,

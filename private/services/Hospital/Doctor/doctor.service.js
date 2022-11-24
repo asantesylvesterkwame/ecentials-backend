@@ -120,11 +120,13 @@ async function getPrimaryDoctorsForUser({ user_id }) {
         $project: {
           "_id": 0,
           "staff_id": "$staff._id",
-          "staff_name": "$staff.name",
+          "staff_first_name": "$staff.first_name",
+          "staff_last_name": "$staff.last_name",
           "specialisation": "$staff.specification",
           "experience": "$staff.experience",
           "about": "$staff.about",
-          "hospital": "$hospital.name"
+          "hospital": "$hospital.name",
+          "facility_id": "$hospital._id"
         }
       }
     ]);

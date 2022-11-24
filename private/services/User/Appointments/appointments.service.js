@@ -18,7 +18,10 @@ async function getUserAppointments({ user_id, status }) {
                 }
             },
             { 
-                $unwind: '$Staff'
+                $unwind: {
+                    path: '$Staff',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             {
                 $lookup: {
@@ -41,8 +44,12 @@ async function getUserAppointments({ user_id, status }) {
                     "createdAt": 1,
                     "updatedAt": 1,
                     "staff_name": "$Staff.name",
+                    "staff_photo": "$Staff.photo",
+                    "staff_first_name": "$Staff.first_name",
+                    "staff_last_name": "$Staff.last_name",
                     "specialization": "$Staff.specification",
                     "hospital_name": "$Hospital.name",
+                    "hospital_images": "$Hospital.images"
                 }
             }
         ])
@@ -52,6 +59,27 @@ async function getUserAppointments({ user_id, status }) {
     }
 }
 
+// cancel an appointment 
+async function cancelUserAppointment({ req }) {
+    try {
+        const result = await Appointments.updateOne({ 
+            _id: req.body.appoint_id, 
+            user_id: req.user._id 
+        }, {
+            "status": "cancelled"
+        })
+
+        if (result.modifiedCount > 0) {
+            return { message: "success" }
+        }
+
+        return { message: "failed to cancel appointment, please try again" }
+    } catch (error) {
+        return { message: "an error occurred, please try again" }
+    }
+}
+
 module.exports = {
-    getUserAppointments
+    getUserAppointments,
+    cancelUserAppointment,
 }
