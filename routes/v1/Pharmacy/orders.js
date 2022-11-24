@@ -12,12 +12,12 @@ const { cancelOrder } = require('../../../private/services/Pharmacy/Orders/order
 
 
 // fetch all orders for a pharmacy 
-router.get('/fetch-all-orders', verify, async (req, res) => {
+router.post('/fetch-all-orders', verify, async (req, res) => {
     const {store_id} = req.body;
     // console.log(pharmacy_id);
 
     try{
-        const orders = await Orders.find({store_id}, {_id:1, order_code:1, payment_type:1, payment_status:1, grand_total:1, order_status:1})
+        const orders = await Orders.find({store_id}, {_id:1, order_code:1, payment_type:1, payment_status:1, grand_total:1, order_status:1, createdAt: 1})
 
         if(orders) return res.status(200).json({ message: "success", data: orders })
     }
@@ -26,7 +26,7 @@ router.get('/fetch-all-orders', verify, async (req, res) => {
     }
 });
 
-router.get('/fetch-specific-orders', verify, async (req, res) => {
+router.post('/fetch-specific-orders', verify, async (req, res) => {
     const {_id} = req.body;
     try{
         const orders = await Orders.find({_id}, {user_id: 1, invoice_number: 1, payment_type: 1, order_code: 1, products_summary: 1})
