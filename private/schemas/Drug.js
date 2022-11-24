@@ -58,7 +58,6 @@ const drugSchema = new mongoose.Schema(
     },
     nhis: {
       type: Boolean,
-      required: true,
       default: false,
     },
     expiry_date: {
