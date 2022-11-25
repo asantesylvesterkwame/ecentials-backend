@@ -17,15 +17,6 @@ async function getUserShippingAddresses({ user_id }) {
 // add a new address for a user
 async function addNewShippingAddress({ req }) {
   try {
-    // check if there is a primary shipping address set for incoming
-    // request
-    if (req.body.primary_address) {
-      await UserShippingAddress.updateMany({
-        user_id: req.user._id,
-        primary_address: true
-      }, {$set: { primary_address: false }})
-    }
-    
     const result = await UserShippingAddress.create({
       user_id: req.user._id,
       ...req.body,
