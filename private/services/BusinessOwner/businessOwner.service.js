@@ -109,7 +109,8 @@ async function loginBusinessOwner({ account_id, password }) {
         },
       },
     ]);
-    if (result != null) {
+    if (result != null && result.length > 0) {
+      console.log(result.length)
       // compare the passwords to see if they are the same
       const isValidPassword = await bcrypt.compareSync(
         password,

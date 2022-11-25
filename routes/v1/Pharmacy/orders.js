@@ -15,7 +15,7 @@ const {
 // const { fetchDrugName } = require("../../../private/services/Pharmacy/Drug/drug.service");
 
 // fetch all orders for a pharmacy
-router.get("/fetch-all-orders", verify, async (req, res) => {
+router.post("/fetch-all-orders", verify, async (req, res) => {
   const { store_id } = req.body;
   // console.log(pharmacy_id);
 
@@ -29,6 +29,7 @@ router.get("/fetch-all-orders", verify, async (req, res) => {
         payment_status: 1,
         grand_total: 1,
         order_status: 1,
+        createdAt: 1,
       }
     );
 
@@ -39,7 +40,7 @@ router.get("/fetch-all-orders", verify, async (req, res) => {
   }
 });
 
-router.get("/fetch-specific-orders", verify, async (req, res) => {
+router.post("/fetch-specific-orders", verify, async (req, res) => {
   const { _id } = req.body;
   try {
     const orders = await Orders.find(

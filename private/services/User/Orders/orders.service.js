@@ -21,6 +21,8 @@ async function fetchLastInvoiceNumber () {
     const result = await Orders.find({}, {_id: 0, invoice_number: 1}).sort( { _id : -1 }).limit(1);
     data = []
     data = result;
+    // console.log(data)
+    // console.log(data.length)
 
     if(data.length == 0){
         return "Ecen/" + year + "/" + month + "/" + day + "/001";
@@ -30,13 +32,14 @@ async function fetchLastInvoiceNumber () {
             return data[index].invoice_number;
         }
         // data.forEach(element => {
-        //     console.log(element);
+            // console.log(result);
         // });
         // return data;
     }
 }
 
 function generateInvoiceNumber (oldInvoiceNumber) {
+
     var count = oldInvoiceNumber.match(/\d*$/);
 
     // Take the substring up until where the integer was matched
@@ -51,7 +54,6 @@ async function createOrderItem({ req }) {
     const last_no = await fetchLastInvoiceNumber();
 
     const invoice_number = generateInvoiceNumber(last_no);
-
     try {
         const result = await Orders.create({
             user_id, order_code, invoice_number, ...req.body
