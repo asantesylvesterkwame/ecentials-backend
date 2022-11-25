@@ -6,7 +6,7 @@ async function uploadProfileImage({ req }) {
     try {
         const image_url = await uploadFile(req.file, "profileImages")
 
-        const result = await User.updateOne({
+        const result = await User.updateOne({ 
             _id: req.user._id 
         }, {
             profile_image: image_url
@@ -21,26 +21,6 @@ async function uploadProfileImage({ req }) {
     }
 }
 
-//fetch users name when provided with the user id
-async function fetchUsersName(user_id){
-    const user_details = await User.find({_id: user_id})
-    if(user_details){
-        var theName = "";
-        //extracting users name from personal details
-        user_details.forEach(user_element => {
-            theName = user_element.personal.name
-        })
-        
-        return theName;
-    }
-    else{
-        return {
-            message: "No user with the provided user id"
-        }
-    }
-}
-
 module.exports = {
-    uploadProfileImage, 
-    fetchUsersName
+    uploadProfileImage
 }

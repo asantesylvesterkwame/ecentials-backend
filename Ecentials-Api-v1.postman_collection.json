@@ -3,7 +3,7 @@
 		"_postman_id": "0f9ebdc4-0ec8-488e-9e90-0e9e52282e69",
 		"name": "Ecentials-Api-v1",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "7541074"
+		"_exporter_id": "9797981"
 	},
 	"item": [
 		{
@@ -722,7 +722,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"email\": \"norbert@ecentials.com\",\n    \"password\": \"Norbert@ecentials1\"\n}",
+									"raw": "{\n    \"email\": \"kumi123@gmail.com\",\n    \"password\": \"oneKumi2016#\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1506,7 +1506,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"prescription_id\": \"6321f79ec7eb444f83f4601e\"\n}",
+									"raw": "{\n    \"prescription_id\": \"62f0f50caad3b51550c455ad\"\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1731,39 +1731,6 @@
 										"api",
 										"v1",
 										"pharmacies"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "search-nearby-hospitals",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"search_text\": \"peace\",\n    \"user_latitude\": 59.3225525,\n    \"user_longitude\": 13.4619422\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospitals/search-nearby-hospitals",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospitals",
-										"search-nearby-hospitals"
 									]
 								}
 							},
@@ -2143,13 +2110,13 @@
 								"header": [
 									{
 										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzU2YmE2NWNhNGZmMGMzZDY0NmJmNTUiLCJpYXQiOjE2NjY5MDkyOTd9.3ZY-_uoYYjJR2xmE5tfbeISf0iCdrFT9OapP8KjN7MI",
+										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
 										"type": "text"
 									}
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"store_pin\": \"5289\",\n    \"name\": \"Hope Pharmacy\",\n    \"description\": \"Your health is our concern\",\n    \"address\": \"George Bush Street\",\n    \"city\": \"Kumasi\",\n    \"licence_no\": \"AR040FA93\",\n    \"logo\": \"https://www.google.com\",\n    \"accept_nhis\": false,\n    \"gps_lat\": 92.00,\n    \"gps_lng\": 12.0\n}",
+									"raw": "{\n    \"store_pin\": \"4893\",\n    \"name\": \"Dinkunim Pharmacy\",\n    \"description\": \"Your health is our concern\",\n    \"address\": \"George Bush Street\",\n    \"city\": \"Accra\",\n    \"licence_no\": \"AR040FA93\",\n    \"logo\": \"https://www.google.com\",\n    \"accept_nhis\": false,\n    \"gps_lat\": 92.00,\n    \"gps_lng\": 12.0\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2252,79 +2219,6 @@
 							"response": []
 						}
 					]
-				},
-				{
-					"name": "Drug Category",
-					"item": [
-						{
-							"name": "add-drug-category",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzU2YmE2NWNhNGZmMGMzZDY0NmJmNTUiLCJpYXQiOjE2NjY5MDkyOTd9.3ZY-_uoYYjJR2xmE5tfbeISf0iCdrFT9OapP8KjN7MI",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"Oral\",\n    \"status\": \"Active\",\n    \"pharmacy_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/drug-category/add-drug-category",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"drug-category",
-										"add-drug-category"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "fetch-drug-categories",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzU2YmE2NWNhNGZmMGMzZDY0NmJmNTUiLCJpYXQiOjE2NjY5MDkyOTd9.3ZY-_uoYYjJR2xmE5tfbeISf0iCdrFT9OapP8KjN7MI",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"pharmacy_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/drug-category/fetch-drug-categories",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"drug-category",
-										"fetch-drug-categories"
-									]
-								}
-							},
-							"response": []
-						}
-					]
 				}
 			]
 		},
@@ -2357,209 +2251,6 @@
 										"hospital",
 										"staff",
 										"fetch-top-doctors"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-doctors-in-a-hospital",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"hospital_id\": \"62fc17c3194568bd5797f8f4\",\n    \"staff_type\": \"doctor\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospital/staffs/get-doctors-in-hospital",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospital",
-										"staffs",
-										"get-doctors-in-hospital"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-doctor-details",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"hospital_id\": \"62fc17c3194568bd5797f8f4\",\n    \"doctor_id\": \"6345e345ccb58ac54e7a5843\",\n    \"staff_type\": \"doctor\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospital/staffs/get-doctor-details",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospital",
-										"staffs",
-										"get-doctor-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-reviews",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"recipient_id\": \"6345e345ccb58ac54e7a5843\",\n    \"recipient_type\": \"doctor\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospital/staffs/get-doctor-reviews",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospital",
-										"staffs",
-										"get-doctor-reviews"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-user-primary-doctors",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/hospital/staffs/get-primary-doctors",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospital",
-										"staffs",
-										"get-primary-doctors"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "add-primary-doctor",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"doctor_id\": \"6345e345ccb58ac54e7a5843\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospital/staffs/add-primary-doctor",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospital",
-										"staffs",
-										"add-primary-doctor"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "search-doctor",
-							"request": {
-								"method": "GET",
-								"header": []
-							},
-							"response": []
-						},
-						{
-							"name": "remove-primary-doctor",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"doctor_id\": \"6359bc6fc9d651a4852d1f27\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospital/staffs/remove-primary-doctor",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospital",
-										"staffs",
-										"remove-primary-doctor"
 									]
 								}
 							},
@@ -2778,102 +2469,6 @@
 									"path": [
 										"labs",
 										"fetch-top-doctors-in-labs"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "new-endpoint",
-							"request": {
-								"method": "GET",
-								"header": []
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Business Owner",
-			"item": [
-				{
-					"name": "Account",
-					"item": [
-						{
-							"name": "create-business-owner-account",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"full_name\": \"Apam Kofi\",\n    \"email\": \"lateofrederick@yahoo.com\",\n    \"password\": \"#nevermindKumi2013\",\n    \"phone_number\": \"345690932\",\n    \"address\": \"27th street, Osu\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/business-owner/create-business-owner",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"business-owner",
-										"create-business-owner"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "login-business-owner",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"password\": \"#nevermindKumi2013\",\n    \"account_id\": \"AN30954\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/business-owner/login-business-owner",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"business-owner",
-										"login-business-owner"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "check-if-owner-has-pharmacy",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MzU2YmE2NWNhNGZmMGMzZDY0NmJmNTUiLCJpYXQiOjE2NjY5MDkyOTd9.3ZY-_uoYYjJR2xmE5tfbeISf0iCdrFT9OapP8KjN7MI",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacies/check-whether-owner-has-pharmacy",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacies",
-										"check-whether-owner-has-pharmacy"
 									]
 								}
 							},

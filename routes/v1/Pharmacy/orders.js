@@ -1,5 +1,6 @@
 const router = require("express").Router();
 
+<<<<<<< HEAD
 const Orders = require("../../../private/schemas/Orders");
 const Users = require("../../../private/schemas/User");
 const Drug = require("../../../private/schemas/Drug");
@@ -13,12 +14,18 @@ const {
   cancelOrder,
 } = require("../../../private/services/Pharmacy/Orders/orders.service");
 // const { fetchDrugName } = require("../../../private/services/Pharmacy/Drug/drug.service");
+=======
+const Orders = require('../../../private/schemas/Orders');
+const PaymentTransaction = require('../../../private/schemas/PaymentTransaction');
+const { verify } = require('../../../verifyToken')
+>>>>>>> 8b586fcc4df1b452bce3c2200dd25e9206b05b94
 
 // fetch all orders for a pharmacy
 router.post("/fetch-all-orders", verify, async (req, res) => {
   const { store_id } = req.body;
   // console.log(pharmacy_id);
 
+<<<<<<< HEAD
   try {
     const orders = await Orders.find(
       { store_id },
@@ -94,6 +101,8 @@ router.post("/cancel-an-order", verify, async (req, res) => {
   }
 });
 
+=======
+>>>>>>> 8b586fcc4df1b452bce3c2200dd25e9206b05b94
 // retrieve the total orders placed at a particular pharmacy/shop
 router.post("/total-orders", verify, async (req, res) => {
   const { store_id } = req.body;

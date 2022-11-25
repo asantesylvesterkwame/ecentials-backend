@@ -109,21 +109,20 @@ async function loginBusinessOwner({ account_id, password }) {
         },
       },
     ]);
-    if (result != null && result.length > 0) {
-      console.log(result.length)
-      // compare the passwords to see if they are the same
-      const isValidPassword = await bcrypt.compareSync(
-        password,
-        result[0].owner_password
-      );
-      if (!isValidPassword) {
-        return { message: "wrong password, please try again" };
-      }
-      // create and assign a token
-      const token = jwt.sign({ _id: result[0].owner_id }, process.env.SECRET);
-      return { token, owner_id: result[0].owner_id };
-    }
-    return { message: "wrong password or account id, please try again" };
+    // if (result != null) {
+    //   // compare the passwords to see if they are the same
+    //   const isValidPassword = await bcrypt.compareSync(
+    //     password,
+    //     result[0].owner_password
+    //   );
+    //   if (!isValidPassword) {
+    //     return { message: "wrong password, please try again" };
+    //   }
+    //   // create and assign a token
+    //   const token = jwt.sign({ _id: result[0].owner_id }, process.env.SECRET);
+    //   return { token, owner_id: result[0].owner_id };
+    // }
+    // return { message: "wrong password or account id, please try again" };
   } catch (error) {
     return { message: "an error occurred, please try again" };
   }
