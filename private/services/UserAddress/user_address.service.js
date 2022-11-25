@@ -17,6 +17,13 @@ async function getUserShippingAddresses({ user_id }) {
 // add a new address for a user
 async function addNewShippingAddress({ req }) {
   try {
+    if (req.body.primary_address) {
+      await UserShippingAddress.updateMany({
+        user_id: req.user._id,
+        primary_address: false
+      })
+    }
+    
     const result = await UserShippingAddress.create({
       user_id: req.user._id,
       ...req.body,
