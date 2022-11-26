@@ -70,6 +70,9 @@ async function countPharmacyDrugs({ req }) {
 // get information about a drug
 async function getDrugInformation({ req }) {
     try {
+        // this update code would be reviewed and refactored
+        await Drug.updateOne({ _id: req.body.drug_id }, { $inc: { views: 1 }});
+
         const drug = await Drug.aggregate([
             { $match: { _id: ObjectId(req.body.drug_id) } },
             {
@@ -116,10 +119,50 @@ async function getDrugInformation({ req }) {
     }
 }
 
+// list popular drugs
+async function getPopularDrugs() {
+    try {
+        const result = await Drug.aggregate([
+            {
+                $lookup: {
+                    "from": "drugcategories",
+                    "localField": "category_id",
+                    "foreignField": "_id",
+                    "as": "category"
+                },
+            },
+            { 
+                $unwind: {
+                    path: '$category',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $lookup: {
+                    "from": "stores",
+                    "localField": "store_id",
+                    "foreignField": "_id",
+                    "as": "store"
+                },
+            },
+            { 
+                $unwind: {
+                    path: '$store',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+        ]).sort({ views: -1 }).limit(5)
+        return { message: "success", data: result }
+    } catch (error) {
+        return { message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
     searchDrugInSpecificPharmacy,
     addDrugToInventory,
     fetchAllPharmacyDrugs,
     countPharmacyDrugs,
-    getDrugInformation
+    getDrugInformation,
+    getPopularDrugs,
 }
