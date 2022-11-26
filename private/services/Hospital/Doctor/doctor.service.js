@@ -122,6 +122,7 @@ async function getPrimaryDoctorsForUser({ user_id }) {
           "staff_id": "$staff._id",
           "staff_first_name": "$staff.first_name",
           "staff_last_name": "$staff.last_name",
+          "staff_image": "$staff.photo",
           "specialisation": "$staff.specification",
           "experience": "$staff.experience",
           "about": "$staff.about",
