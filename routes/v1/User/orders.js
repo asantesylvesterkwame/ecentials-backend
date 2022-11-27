@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 const Orders = require('../../../private/schemas/Orders');
 const { verify } = require('../../../verifyToken');
-const { generateOrderCode, fetchLastInvoiceNumber, generateInvoiceNumber, createOrderItem } = require("../../../private/services/User/Orders/orders.service");
+const { createOrderItem } = require("../../../private/services/User/Orders/orders.service");
 
 
 // list all orders for a verified user
