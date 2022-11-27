@@ -11,7 +11,6 @@ router.use('/api/v1/user/cart', require('./User/cart'))
 router.use('/api/v1/user/checkout', require('./User/checkout'))
 router.use('/api/v1/user/bookmarks', require('./User/bookmark'))
 router.use('/api/v1/user/appointments', require('./User/appointment'))
-router.use('/api/v1/user/wallet', require('./User/Wallet/wallet.controller'))
 router.use('/api/v1/user/shipping-address', require('./User/UserAddress/user_address.controller'))
 
 // pharmacy related details endpoints
@@ -37,5 +36,8 @@ router.use('/api/v1/labs', require('./Lab/lab.controller'))
 // business owner endpoints
 router.use('/api/v1/business-owner', require('./BusinessOwner/businessOwner.controller'))
 
+// paystack initialization endpoints
+router.use('/api/v1/wallet', require('./Wallet/wallet.controller'))
+router.use('/api/v1/wallet/paystack', require('./Wallet/Paystack/paystack.controller'))
 
 module.exports = router
