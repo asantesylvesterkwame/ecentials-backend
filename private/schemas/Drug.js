@@ -51,6 +51,7 @@ const drugSchema = new mongoose.Schema(
     views: {
       type: Number,
       required: false,
+      default: 0,
     },
     discount: {
       type: Number,
