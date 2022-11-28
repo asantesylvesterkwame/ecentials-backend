@@ -7,7 +7,7 @@ const Store = require('../../../private/schemas/Store');
 const { verify } = require('../../../verifyToken');
 const getDistance = require('../../../private/helpers/get_distance');
 const { isBusinessOwnerHavingPharmacy } = require('../../../private/services/Pharmacy/Information/information.service');
-const { createNewPharmacy } = require('../../../private/services/Pharmacy/Account/account.service');
+const { createNewPharmacy, updatePharmacyInformation } = require('../../../private/services/Pharmacy/Account/account.service');
 
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage }).single("document")
@@ -110,6 +110,15 @@ router.get('/check-whether-owner-has-pharmacy', verify, async (req, res, next) =
         next(error);
     }
 });
+
+// update pharmacy information
+router.post('/update-pharmacy-information', verify, async (req, res, next) => {
+    try {
+        return res.status(200).json(await updatePharmacyInformation({ req }))
+    } catch (error) {
+        next(error)
+    }
+})
 
 module.exports = router;
     
