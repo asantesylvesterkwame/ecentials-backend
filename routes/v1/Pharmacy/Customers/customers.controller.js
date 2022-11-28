@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { verify } = require("jsonwebtoken");
+const { verify } = require("../../../../../ecentials-backend/verifyToken");
 const {
   createCustomer,
 } = require("../../../../private/services/Pharmacy/Customers/customer.service");
@@ -15,7 +15,7 @@ router.post("/add-new-customer", verify, async (req, res, next) => {
 
 // Fetch customer information
 router.post("/fetch-customers", verify, async (req, res, next) => {
-  const { facilty_id } = req.body;
+  const { facility_id } = req.body;
   try {
     return res.status(200).json(await fetchCustomers({ facility_id }));
   } catch (error) {
