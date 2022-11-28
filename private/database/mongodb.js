@@ -16,4 +16,11 @@ module.exports = (db_name) => {
   //   },
   //   (e) => console.error(e)
   // );
+  // return mongoose.connect(
+  //   `mongodb://localhost/${db_name}`,
+  //   () => {
+  //     console.log("MongoDB Connection Successful");
+  //   },
+  //   (e) => console.error(e)
+  // );
 };
