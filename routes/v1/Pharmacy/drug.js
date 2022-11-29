@@ -2,7 +2,7 @@ const router = require('express').Router();
 const multer = require("multer")
 
 const Drug = require('../../../private/schemas/Drug');
-const { searchDrugInSpecificPharmacy, addDrugToInventory, fetchAllPharmacyDrugs, countPharmacyDrugs, getDrugInformation, getPopularDrugs } = require('../../../private/services/Pharmacy/Drug/drug.service');
+const { searchDrugInSpecificPharmacy, addDrugToInventory, fetchAllPharmacyDrugs, countPharmacyDrugs, getDrugInformation, getPopularDrugs, updateDrugDetail } = require('../../../private/services/Pharmacy/Drug/drug.service');
 const { verify } = require('../../../verifyToken')
 
 const storage = multer.memoryStorage()
@@ -85,4 +85,14 @@ router.post('/count-drugs-in-pharmacy', verify, async (req, res, next) => {
         next(error)
     }
 })
+
+// update drug information
+router.post("/update-drug-information", verify, upload, async (req, res, next) => {
+    try {
+        return res.status(200).json(await updateDrugDetail({ req }))
+    } catch (error) {
+        next(error)
+    }
+})
+
 module.exports = router;

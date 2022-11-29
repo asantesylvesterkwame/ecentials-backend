@@ -24,6 +24,23 @@ async function createNewPharmacy({
     }
 }
 
+async function updatePharmacyInformation({ req }) {
+    try {
+        const result = await Store.updateOne({
+            _id: req.body.store_id,
+        }, { ...req.body })
+
+        if (result.modifiedCount > 0) {
+            return { status: "success", message: 'update pharmacy information successfully' }
+        }
+
+        return { status: 'fail', message: 'failed to update pharmacy information' }
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
     createNewPharmacy,
+    updatePharmacyInformation
 }

@@ -158,6 +158,36 @@ async function getPopularDrugs() {
     }
 }
 
+async function updateDrugDetail({ req }) {
+    try {
+        let image_url, result;
+        
+        if (req.file) {
+            image_url = await uploadFile(req.file, `drugs/${req.body.store_id}`)
+
+            result = await Drug.updateOne({
+                _id: req.body.drug_id
+            }, {
+                ...req.body,
+                image: image_url
+            })
+        } else {
+            result = await Drug.updateOne({
+                _id: req.body.drug_id
+            }, {
+                ...req.body
+            })
+        }
+
+        if (result.matchedCount > 0) {
+            return { message: "success" }
+        }
+        return { message: 'failed to update drug' }
+    } catch (error) {
+        return { message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
     searchDrugInSpecificPharmacy,
     addDrugToInventory,
@@ -165,4 +195,5 @@ module.exports = {
     countPharmacyDrugs,
     getDrugInformation,
     getPopularDrugs,
+    updateDrugDetail
 }
