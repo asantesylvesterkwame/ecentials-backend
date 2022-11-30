@@ -27,12 +27,7 @@ const labSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    images: [
-        {
-            image: Buffer,
-            contentType: String,
-        }
-    ]
+    images: []
 }, { timestamps: true });
 
 module.exports = mongoose.model('Lab', labSchema);
