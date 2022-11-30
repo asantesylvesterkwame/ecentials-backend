@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { verify } = require("../../../../../ecentials-backend/verifyToken");
+const { verify } = require("../../../../verifyToken");
 const {
   createWholesaler,
   fetchWholesaler,
