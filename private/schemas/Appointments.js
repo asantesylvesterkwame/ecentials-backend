@@ -25,6 +25,10 @@ const appointmentsSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    facility_type: {
+        type: String,
+        required: false
+    }
     // appointment_type: {
     //     type: String,
     //     required: true
