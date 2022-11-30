@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { verify } = require("../../../../../ecentials-backend/verifyToken");
 const {
   createCustomer,
+  fetchCustomers,
 } = require("../../../../private/services/Pharmacy/Customers/customer.service");
 
 // Add customers to pharmacy

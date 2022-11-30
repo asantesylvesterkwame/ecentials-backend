@@ -27,6 +27,14 @@ router.use(
   "/api/v1/pharmacy/customers",
   require("./Pharmacy/Customers/customers.controller")
 );
+router.use(
+  "/api/v1/pharmacy/wholesaler",
+  require("./Pharmacy/Wholesaler/wholesaler.controller")
+);
+router.use(
+  "/api/v1/pharmacy/sales",
+  require("./Pharmacy/Sales/sales.controller")
+);
 router.use("/api/v1/pharmacy/orders", require("./Pharmacy/orders"));
 router.use("/api/v1/pharmacy/staff", require("./Pharmacy/staff.controller"));
 router.use(
