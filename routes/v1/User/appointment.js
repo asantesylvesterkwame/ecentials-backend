@@ -35,10 +35,15 @@ router.post('/book-an-appointment', verify, async (req, res) => {
         status,
     } = req.body;
 
+    let current_date = new Date().toJSON().slice(0, 10)
+
+    if (new Date(date) < new Date(current_date)) {
+        return res.status(400).json({ message: 'provide a current or future date' })
+    }
+
     await Appointments.create({
         user_id, staff_id, date, time, status, facility_id
     }, (err, result) => {
-        console.log(err)
         if (err) {
             return res.status(400).json({ message: "Failed to book appointment. Try again later", err });
         }

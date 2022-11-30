@@ -9,6 +9,7 @@ async function getUserAppointments({ user_id, status }) {
     try {
         const results = await Appointments.aggregate([
             {$match: { user_id: ObjectId(user_id), status }},
+            { $sort: { date: 1 } },
             {
                 $lookup: {
                     from: 'staffs',
