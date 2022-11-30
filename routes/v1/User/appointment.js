@@ -8,7 +8,7 @@ const { getUserAppointments, cancelUserAppointment } = require('../../../private
 router.post('', verify, async (req, res, next) => {
     const user_id = req.user._id;
 
-    const { status } = req.body;
+    const { status, facility_type } = req.body;
 
     // Appointments.find({ user_id, status }, (err, result) => {
     //     if (err) {
@@ -17,7 +17,7 @@ router.post('', verify, async (req, res, next) => {
     //     return res.status(200).send({ message: 'success', data: result });
     // }).clone();
     try {
-        return res.status(200).json(await getUserAppointments({ user_id, status }));
+        return res.status(200).json(await getUserAppointments({ user_id, status, facility_type }));
     } catch (error) {
         next(error);
     }
@@ -33,6 +33,7 @@ router.post('/book-an-appointment', verify, async (req, res) => {
         date,
         time,
         status,
+        facility_type
     } = req.body;
 
     let current_date = new Date().toJSON().slice(0, 10)
@@ -42,7 +43,7 @@ router.post('/book-an-appointment', verify, async (req, res) => {
     }
 
     await Appointments.create({
-        user_id, staff_id, date, time, status, facility_id
+        user_id, staff_id, date, time, status, facility_id, facility_type
     }, (err, result) => {
         if (err) {
             return res.status(400).json({ message: "Failed to book appointment. Try again later", err });
