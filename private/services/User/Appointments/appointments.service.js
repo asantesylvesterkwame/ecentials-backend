@@ -5,10 +5,10 @@ const Appointments = require("../../../schemas/Appointments");
 
 // fetch all user appointments using status
 // status can be upcoming, completed, canceled
-async function getUserAppointments({ user_id, status }) {
+async function getUserAppointments({ user_id, status, facility_type }) {
     try {
         const results = await Appointments.aggregate([
-            {$match: { user_id: ObjectId(user_id), status }},
+            {$match: { user_id: ObjectId(user_id), status, facility_type }},
             { $sort: { date: 1 } },
             {
                 $lookup: {
@@ -33,7 +33,24 @@ async function getUserAppointments({ user_id, status }) {
                 }
             },
             { 
-                $unwind: '$Hospital'
+                $unwind: {
+                    path: '$Hospital',
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $lookup: {
+                    from: "lab",
+                    localField: "facility_id",
+                    foreignField: "_id",
+                    as: "Lab"
+                }
+            },
+            { 
+                $unwind: {
+                    path: '$Lab',
+                    preserveNullAndEmptyArrays: true
+                }
             },
             {
                 $project: {
@@ -50,7 +67,9 @@ async function getUserAppointments({ user_id, status }) {
                     "staff_last_name": "$Staff.last_name",
                     "specialization": "$Staff.specification",
                     "hospital_name": "$Hospital.name",
-                    "hospital_images": "$Hospital.images"
+                    "hospital_images": "$Hospital.images",
+                    "lab_name": "$Lab.name",
+                    "lab_images": "$Lab.images"
                 }
             }
         ])
