@@ -1,4 +1,4 @@
-const Customer = require("../../../schemas/Customers");
+const Wholesaler = require("../../../schemas/Wholesaler");
 
 // Create new customer
 async function createWholesaler({ req }) {
