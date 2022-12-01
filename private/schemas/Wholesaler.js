@@ -5,7 +5,7 @@ const WholesalerSchema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     required: true,
   },
-  name: { type: String, required: true },
+  name: { type: String, unique: true, required: true },
   email: {
     type: String,
   },
