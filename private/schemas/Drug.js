@@ -56,6 +56,7 @@ const drugSchema = new mongoose.Schema(
     discount: {
       type: Number,
       required: false,
+      default: 0,
     },
     nhis: {
       type: String,
