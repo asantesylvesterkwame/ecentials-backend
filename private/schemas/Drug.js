@@ -39,6 +39,7 @@ const drugSchema = new mongoose.Schema(
     quantity: {
       type: Number,
       required: false,
+      default: 0,
     },
     // dosage_form: {
     //     type: String,
