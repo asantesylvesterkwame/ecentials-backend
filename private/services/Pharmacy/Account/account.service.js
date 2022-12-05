@@ -26,9 +26,20 @@ async function createNewPharmacy({
 
 async function updatePharmacyInformation({ req }) {
     try {
+        let logo_url
+        
+        let update_data = {
+            ...req.body
+        }
+
+        if (req.file) {
+            logo_url = await uploadFile(req.file, `${req.body.store_id}/logo`)
+            update_data.logo = logo_url
+        }
+
         const result = await Store.updateOne({
             _id: req.body.store_id,
-        }, { ...req.body })
+        }, { ...update_data })
 
         if (result.modifiedCount > 0) {
             return { status: "success", message: 'update pharmacy information successfully' }
