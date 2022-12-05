@@ -66,6 +66,10 @@ const storeSchema = new mongoose.Schema({
     business_registration_document: {
         type: String,
         required: true
+    },
+    courier_type: {
+        type: String,
+        required: false
     }
 }, { timestamps: true });
 
