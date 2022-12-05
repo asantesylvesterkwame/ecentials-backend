@@ -12,6 +12,8 @@ const { createNewPharmacy, updatePharmacyInformation } = require('../../../priva
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage }).single("document")
 
+const logo = multer({ storage }).single('logo')
+
 // list all pharmacies
 router.get('', verify, async (req, res) => {
     await Store.find({}, (err, result) => {
@@ -112,7 +114,7 @@ router.get('/check-whether-owner-has-pharmacy', verify, async (req, res, next) =
 });
 
 // update pharmacy information
-router.post('/update-pharmacy-information', verify, async (req, res, next) => {
+router.post('/update-pharmacy-information', verify, logo, async (req, res, next) => {
     try {
         return res.status(200).json(await updatePharmacyInformation({ req }))
     } catch (error) {
