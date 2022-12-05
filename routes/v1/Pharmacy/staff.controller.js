@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const multer = require('multer')
 
-const { getPharmacyStaff, createPharmacyStaff, getPharmacyStaffCount } = require('../../../private/services/Pharmacy/Staff/staff.service');
+const { getPharmacyStaff, createPharmacyStaff, getPharmacyStaffCount, updatePharmacyStaffInformation } = require('../../../private/services/Pharmacy/Staff/staff.service');
 const { verify } = require("../../../verifyToken");
 
 const storage = multer.memoryStorage()
@@ -34,6 +34,15 @@ router.post('/add-new-staff', verify, upload, async (req, res, next) => {
 router.post('/get-staff-count', verify, upload, async (req, res, next) => {
     try {
         return res.status(200).json(await getPharmacyStaffCount({ req }))
+    } catch (error) {
+        next(error)
+    }
+})
+
+// update staff information
+router.post('/update-staff-information', verify, upload, async (req, res, next) => {
+    try {
+        return res.status(200).json(await updatePharmacyStaffInformation({ req }))
     } catch (error) {
         next(error)
     }
