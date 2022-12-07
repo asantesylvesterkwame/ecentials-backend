@@ -53,7 +53,6 @@ async function searchForLab({search_text}) {
             "$or": [
                 {name: { $regex: search_text, '$options' : 'i' }},
                 {address: { $regex: search_text, '$options' : 'i' }},
-                {gps_address: { $regex: search_text, '$options' : 'i' }},
             ]
         });
 

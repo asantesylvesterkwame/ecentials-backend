@@ -53,7 +53,7 @@ router.post('/fetch-top-doctors-in-labs', verify, async (req, res, next) => {
 router.post('/search-for-lab', verify, async (req, res, next) => {
     const { search_text } = req.body;
     try {
-        return res.status(200).json(await searchForLab(search_text));
+        return res.status(200).json(await searchForLab({ search_text }));
     } catch (error) {
         next(error);
     }
