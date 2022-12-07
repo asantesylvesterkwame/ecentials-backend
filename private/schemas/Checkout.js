@@ -39,6 +39,27 @@ const checkoutSchema = new mongoose.Schema({
     total: {
         type: Number,
         required: true
+    },
+    discount: {
+        type: Number,
+        required: false,
+    },
+    pharmacy_image: {
+        type: String,
+        required: false
+    },
+    nhis: {
+        type: Boolean,
+        required: false,
+        default: false
+    },
+    location: {
+        type: String,
+        required: false
+    },
+    pickup_mode: {
+        type: String,
+        required: false
     }
 }, { timestamps: true });
 
