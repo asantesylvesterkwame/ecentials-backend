@@ -37,22 +37,20 @@ router.post('/create-new-pharmacy', verify, upload, async (req, res, next) => {
 
 // allow a user to search for a pharmacy using keywords,
 // name, city, address
-router.post('/search-for-pharmacy', verify, async (req, res) => {
+router.post('/search-for-pharmacy', verify, async (req, res, next) => {
     const { search_text } = req.body;
 
-    await Store.find({ 
-        "$or": [
-            {name: { $regex: search_text, '$options' : 'i' }},
-            {description: { $regex: search_text, '$options' : 'i' }},
-            {address: { $regex: search_text, '$options' : 'i' }}
-        ]
-     }, (err, result) => {
-         if (err) {
-             return res.status(400).json({ message: 'Could not find pharmacy. Try again later.'})
-         }
+     try {
+        const result = await Store.find({
+            "$or": [
+                {name: { $regex: search_text, '$options' : 'i' }},
+                {description: { $regex: search_text, '$options' : 'i' }},
+            ]
+         })
          return res.status(200).json({ message: "success", data: result })
-     }).clone();
-
+     } catch (error) {
+        next(error)
+     }
 });
 
 
