@@ -195,6 +195,49 @@ async function updateDrugDetail({ req }) {
   }
 }
 
+// list top drugs in a pharmacy
+async function getPopularDrugsInPharmacy({ req }) {
+    try {
+        const result = await Drug.aggregate([
+            { $match: { store_id: ObjectId(req.body.store_id) }},
+            {
+                $lookup: {
+                  from: "drugcategories",
+                  localField: "category_id",
+                  foreignField: "_id",
+                  as: "category",
+                },
+            },
+            {
+                $unwind: {
+                    path: "$category",
+                    preserveNullAndEmptyArrays: true,
+                },
+            },
+            {
+                $lookup: {
+                    from: "stores",
+                    localField: "store_id",
+                    foreignField: "_id",
+                    as: "store",
+                },
+            },
+            {
+                $unwind: {
+                  path: "$store",
+                  preserveNullAndEmptyArrays: true,
+                },
+            },
+        ])
+        .sort({ views: -1 })
+        .limit(100);
+
+        return { status: 'success', message: 'successfully found drugs', data: result}
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
   searchDrugInSpecificPharmacy,
   addDrugToInventory,
@@ -203,4 +246,5 @@ module.exports = {
   getDrugInformation,
   getPopularDrugs,
   updateDrugDetail,
+  getPopularDrugsInPharmacy
 };
