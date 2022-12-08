@@ -40,7 +40,7 @@ async function getUserAppointments({ user_id, status, facility_type }) {
             },
             {
                 $lookup: {
-                    from: "lab",
+                    from: "labs",
                     localField: "facility_id",
                     foreignField: "_id",
                     as: "Lab"
@@ -67,8 +67,10 @@ async function getUserAppointments({ user_id, status, facility_type }) {
                     "staff_last_name": "$Staff.last_name",
                     "specialization": "$Staff.specification",
                     "hospital_name": "$Hospital.name",
+                    "hospital_id": "$Hosptial._id",
                     "hospital_images": "$Hospital.images",
                     "lab_name": "$Lab.name",
+                    "lab_id": "$Lab._id",
                     "lab_images": "$Lab.images"
                 }
             }
