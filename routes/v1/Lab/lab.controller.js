@@ -1,7 +1,12 @@
-const { createNewLab, fetchAllLabs, searchForLab, getTopRatedDoctors } = require("../../../private/services/Lab/lab.service");
+const multer = require("multer");
+
+const { createNewLab, fetchAllLabs, searchForLab, getTopRatedDoctors, uploadLabDocument } = require("../../../private/services/Lab/lab.service");
 const { verify } = require("../../../verifyToken");
 
 const router = require("express").Router();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage }).single("document");
 
 // this route creates a new lab using
 // data from the request body
@@ -58,5 +63,20 @@ router.post('/search-for-lab', verify, async (req, res, next) => {
         next(error);
     }
 });
+
+// upload lab document
+router.post('/new-lab-document', verify, upload, async (req, res, next) => {
+  try {
+    const result = await uploadLabDocument({ req })
+
+    if (result.status === 'success') {
+      return res.status(201).json(result)
+    }
+
+    return res.status(400).json(result)
+  } catch (error) {
+    next(error)
+  }
+})
 
 module.exports = router;

@@ -1,5 +1,7 @@
 const Lab = require("../../schemas/Lab");
+const LabFile = require("../../schemas/LabFile");
 const Staff = require("../../schemas/Staff");
+const { uploadFile } = require("../Firebase/imageUpload.service");
 
 // create a new lab using information about the lab
 async function createNewLab({
@@ -81,9 +83,30 @@ async function getTopRatedDoctors({ facility_type }) {
     }
 }
 
+// upload lab document
+async function uploadLabDocument({ req }) {
+    try {
+        const image = await uploadFile(req.file, `labFiles/${req.user._id}`)
+        
+        const result = await LabFile.create({
+            user_id: req.user._id,
+            lab_id: req.body.lab_id,
+            image
+        })
+        return { 
+            status: 'success', 
+            message: 'document uploaded successfully',
+            data: result
+        }
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
     createNewLab,
     fetchAllLabs,
     searchForLab,
-    getTopRatedDoctors
+    getTopRatedDoctors,
+    uploadLabDocument
 }
