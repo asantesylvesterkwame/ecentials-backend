@@ -58,18 +58,43 @@ const ordersSchema = new mongoose.Schema({
         required:false, 
         default: "Delivery"
     },
+    coordinates:{
+        type: Array, 
+        required: false,
+    },
     shipping_fee:{
         type: Number, 
         required: true
+    },
+    note: {
+        type: String, 
+        required: false, 
     },
     products_summary: [{
         drug_id: {
             type: mongoose.SchemaTypes.ObjectId,
             required: true,
         },
+        drug_name: {
+            type: String, 
+            required: true
+        },
+        drug_image: {
+            type: String, 
+            required: true
+        },
         quantity: {
             type: Number,
             required: false
+        },
+        nhis:{
+            type: String, 
+            required: true
+        },
+        discount: {
+            type: Number, 
+            required: false, 
+            default: 0.0
         },
         prize: {
             type: Number,

@@ -46,7 +46,7 @@ function generateInvoiceNumber (oldInvoiceNumber) {
 
 async function createOrderItem(req) {
     const user_id = req.user._id;
-    console.log(req.body);
+    // console.log(req.body);
     try{
         const order = req.body
         order.forEach(async element =>{
@@ -60,14 +60,16 @@ async function createOrderItem(req) {
             var delivery_address_id = element.delivery_address_id
             var delivery_date = element.delivery_date
             var delivery_method = element.delivery_method
+            var coordinates = element.coordinates
             var shipping_fee = element.shipping_fee
+            var note = element.note
             var grand_total = element.grand_total
             var products_summary = element.products_summary
 
             // console.log(order.length)
             await Orders.create({
                 user_id, order_code, invoice_number, store_id, delivery_address_id, 
-                delivery_date, delivery_method, shipping_fee, grand_total, products_summary
+                delivery_date, delivery_method, coordinates, shipping_fee, note, grand_total, products_summary
             })     
         })
         return { message: "Order created successfully"};
