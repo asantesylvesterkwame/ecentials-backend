@@ -22,7 +22,7 @@ router.get('', verify, async (req, res) => {
 //create an order item. This is triggered when a user clicks on the checkout button
 router.post('/create-order-item', verify, async (req, res, next) => {
     try{
-        return res.status(200).json(await createOrderItem({req}))
+        return res.status(200).json(await createOrderItem(req))
     }catch(error){
         next(error);
     }

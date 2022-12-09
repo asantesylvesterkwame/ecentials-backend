@@ -44,23 +44,33 @@ function generateInvoiceNumber (oldInvoiceNumber) {
     return oldInvoiceNumber.substr(0, count.index) + (++count[0]);
 }
 
-async function createOrderItem({ req }) {
+async function createOrderItem(req) {
     const user_id = req.user._id;
+    console.log(req.body);
+    try{
+        const order = req.body
+        order.forEach(async element =>{
+            // console.log(element.delivery_date)
+    
+            const order_code = await generateOrderCode();
+            const last_no = await fetchLastInvoiceNumber();
+    
+            const invoice_number = generateInvoiceNumber(last_no);
+            var store_id = element.store_id
+            var delivery_address_id = element.delivery_address_id
+            var delivery_date = element.delivery_date
+            var delivery_method = element.delivery_method
+            var shipping_fee = element.shipping_fee
+            var grand_total = element.grand_total
+            var products_summary = element.products_summary
 
-    const order_code = await generateOrderCode();
-    const last_no = await fetchLastInvoiceNumber();
-
-    const invoice_number = generateInvoiceNumber(last_no);
-
-    try {
-        const result = await Orders.create({
-            user_id, order_code, invoice_number, ...req.body
+            // console.log(order.length)
+            await Orders.create({
+                user_id, order_code, invoice_number, store_id, delivery_address_id, 
+                delivery_date, delivery_method, shipping_fee, grand_total, products_summary
+            })     
         })
-        if(result != null){
-            return { message: "success", data: result };
-        }
-        return { message: "Failed to create checkout item.", data: err };
-
+        return { message: "Order created successfully"};
     } catch (error) {
         return { message: "Failed to create checkout item.", data: error };
     }

@@ -47,7 +47,7 @@ const ordersSchema = new mongoose.Schema({
     },
     delivery_address_id: {
         type: String, 
-        required: true
+        required: false
     },
     delivery_date: {
         type: String, 
