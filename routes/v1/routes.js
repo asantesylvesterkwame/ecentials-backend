@@ -69,4 +69,7 @@ router.use(
   require("./Wallet/Paystack/paystack.controller")
 );
 
+// reviews endpoint
+router.use('/api/v1/reviews', require('./Reviews/reviews.controller'))
+
 module.exports = router;
