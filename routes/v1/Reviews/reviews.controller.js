@@ -3,7 +3,7 @@ const router = require('express').Router()
 const { addNewReview } = require('../../../private/services/Reviews/reviews.service');
 const { verify } = require("../../../verifyToken");
 
-router.post('/add-new-reviewer', verify, async (req, res, next) => {
+router.post('/add-new-review', verify, async (req, res, next) => {
     try {
         const result = await addNewReview({ req })
 
