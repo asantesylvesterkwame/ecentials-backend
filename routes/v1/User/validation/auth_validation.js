@@ -52,6 +52,14 @@ const passwordValidation = data => {
     return passwordschema.validate(data)
 }
 
+const refreshTokenBodyValidation = (data) => {
+    const schema = Joi.object({
+        refreshToken: Joi.string().required().label("Refresh Token"),
+    });
+    return schema.validate(data);
+}
+
 module.exports.registerValidation = registerValidation
 module.exports.emailValidation = emailValidation
 module.exports.passwordValidation = passwordValidation
+module.exports.refreshTokenBodyValidation = refreshTokenBodyValidation
