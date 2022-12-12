@@ -12,12 +12,18 @@ const jwt = require('jsonwebtoken') //for jwt webtoken to check if user is logge
 const {encryptPassword} = require('../../../private/helpers/functions')
 
 //validations are added to this file using the holi/joi library
-const {registerValidation, emailValidation, passwordValidation} = require('./validation/auth_validation')
+const {
+    registerValidation, 
+    emailValidation, 
+    passwordValidation,
+    refreshTokenBodyValidation
+} = require('./validation/auth_validation')
 
 const verify = require('../../../verifyToken')
 const sendMail = require('../../../private/services/send_email')
 const RecoveryCode = require('../../../private/schemas/RecoveryCode')
 const EMAILBODY = require('../../../private/helpers/mail_body')
+const { generateTokens, verifyRefreshToken } = require('../../../private/helpers/user_token')
 
 dotenv.config()
 
@@ -65,11 +71,15 @@ router.post('/login', async (req, res) => {
     if(!user || !validPass) return res.json({status: 400, message: "Invalid credentials"})
 
     //create and assign a token
-    const token = jwt.sign({_id: user._id}, process.env.SECRET)
-    res.header('auth-token', token).json(
+    // const token = jwt.sign({_id: user._id}, process.env.SECRET)
+    const { accessToken, refreshToken } = await generateTokens(user)
+
+    res.header('auth-token', accessToken).json(
         {
             email,
-            token,
+            // token,
+            accessToken,
+            refreshToken,
             "id": user._id,
             "name": user.personal.name
         }
@@ -164,5 +174,33 @@ router.post('/verify_code', async (req, res) => {
         return res.status(400).json({message: "something went wrong", data: error});
     }
 }); 
+
+// get new access token 
+router.post('/get-new-access-token', async (req, res, next) => {
+    const { error } = refreshTokenBodyValidation(req.body)
+
+    if (error)
+        return res
+            .status(400)
+            .json({ error: true, message: error.details[0].message });
+
+    verifyRefreshToken(req.body.refreshToken)
+        .then(({ tokenDetails }) => {
+            const payload = { _id: tokenDetails._id }
+            
+            const accessToken = jwt.sign(
+                payload,
+                process.env.SECRET,
+                { expiresIn: "14m" }
+            )
+
+            res.status(200).json({
+                status: 'success',
+                accessToken,
+                message: "Access token created successfully",
+            })
+        })
+        .catch((err) => res.status(400).json(err))
+})
 
 module.exports = router
