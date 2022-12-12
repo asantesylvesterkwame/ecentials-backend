@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { DRUG_RETURN_DATA } = require("../../../helpers/constants");
 
 const ObjectId = mongoose.Types.ObjectId;
 const Drug = require("../../../schemas/Drug");
@@ -102,15 +103,11 @@ async function getDrugInformation({ req }) {
           preserveNullAndEmptyArrays: true,
         },
       },
-      // {
-      //     $addFields: {
-      //         "category_name": "$category.name",
-      //         "category_status": "$category.status",
-      //         "store_name": "$store.name",
-      //         "store_location": "$store_location",
-      //         "store_description": "$store.description"
-      //     }
-      // }
+      {
+        $project: {
+          ...DRUG_RETURN_DATA
+        }
+      }
     ]);
     return { message: "success", data: drug };
   } catch (error) {
@@ -150,6 +147,11 @@ async function getPopularDrugs() {
           preserveNullAndEmptyArrays: true,
         },
       },
+      {
+        $project: {
+          ...DRUG_RETURN_DATA
+        }
+      }
     ])
       .sort({ views: -1 })
       .limit(5);
@@ -228,6 +230,11 @@ async function getPopularDrugsInPharmacy({ req }) {
                   preserveNullAndEmptyArrays: true,
                 },
             },
+            {
+              $project: {
+                ...DRUG_RETURN_DATA
+              }
+            }
         ])
         .sort({ views: -1 })
         .limit(100);
