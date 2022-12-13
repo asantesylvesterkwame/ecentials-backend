@@ -80,6 +80,8 @@ router.post('/login', async (req, res) => {
             // token,
             accessToken,
             refreshToken,
+            'accessTokenExpiresAt': 840,
+            'refreshTokenExpireAt': 2592000,
             "id": user._id,
             "name": user.personal.name
         }
