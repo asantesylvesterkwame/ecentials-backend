@@ -23,6 +23,38 @@ const DRUG_RETURN_DATA = {
     "store_logo": "$store.logo"
 }
 
+const STORE_AND_CATEGORY_LOOKUP = [
+    {
+        $lookup: {
+          from: "drugcategories",
+          localField: "category_id",
+          foreignField: "_id",
+          as: "category",
+        },
+    },
+    {
+        $unwind: {
+            path: "$category",
+            preserveNullAndEmptyArrays: true,
+        },
+    },
+    {
+        $lookup: {
+            from: "stores",
+            localField: "store_id",
+            foreignField: "_id",
+            as: "store",
+        },
+    },
+    {
+        $unwind: {
+          path: "$store",
+          preserveNullAndEmptyArrays: true,
+        },
+    },
+]
+
 module.exports = {
-    DRUG_RETURN_DATA
+    DRUG_RETURN_DATA,
+    STORE_AND_CATEGORY_LOOKUP
 }
