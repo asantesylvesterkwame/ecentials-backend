@@ -11,6 +11,7 @@ const {
   getPopularDrugs,
   updateDrugDetail,
   getPopularDrugsInPharmacy,
+  searchDrug,
 } = require("../../../private/services/Pharmacy/Drug/drug.service");
 const { verify } = require("../../../verifyToken");
 
@@ -27,27 +28,17 @@ router.post("", verify, async (req, res, next) => {
 });
 
 // search for a drug using name, manufacturer, description
-router.post("/drug-search", verify, async (req, res) => {
-  const { search_text } = req.body;
-
-  await Drug.find(
-    {
-      $or: [
-        { name: { $regex: search_text } },
-        { description: { $regex: search_text } },
-        { manufacturer: { $regex: search_text } },
-      ],
-    },
-    {},
-    (err, result) => {
-      if (err) {
-        return res
-          .status(400)
-          .json({ message: "Could not find drug. Try again later." });
-      }
-      return res.status(200).json({ message: "success", data: result });
+router.post("/drug-search", verify, async (req, res, next) => {
+  try {
+    const result = await searchDrug(req)
+    
+    if (result.status === 'success') {
+      return res.status(200).json(result)
     }
-  ).clone();
+    return res.status(400).json(result)
+  } catch (error) {
+    next(error)
+  }
 });
 
 // list details about a drug
