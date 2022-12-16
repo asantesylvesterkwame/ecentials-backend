@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
     }, 
     personal: {
         name: String, 
-        phone: Number, 
+        phone: String, 
         gender: String, 
         address: String, 
         occupation: String, 
