@@ -8,7 +8,8 @@ const bookmarkSchema = new mongoose.Schema({
     },
     item_id: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: true,
+        unique: true
     },
     bookmark_type: {
         type: String,
