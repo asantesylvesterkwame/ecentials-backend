@@ -2,6 +2,7 @@ const router = require('express').Router();
 
 
 const Bookmark = require('../../../private/schemas/Bookmark');
+const { getBookmarkDetails } = require('../../../private/services/User/Bookmark/bookmark.service');
 const { verify } = require('../../../verifyToken')
 
 
@@ -51,4 +52,16 @@ router.delete('/remove-bookmark-item', verify, async (req, res) => {
     }).clone();
 });
 
+router.post('/get-bookmark-detail', verify, async (req, res, next) => {
+    try {
+        const result = await getBookmarkDetails(req)
+
+        if (result.status === 'success') {
+            return res.status(200).json(result)
+        }
+        return res.status(400).json(result)
+    } catch (error) {
+        next(error)
+    }
+})
 module.exports = router;
