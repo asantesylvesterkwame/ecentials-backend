@@ -50,7 +50,19 @@ async function addDrugToInventory({ req }) {
 // get all drugs/products associated to a pharmacy
 async function fetchAllPharmacyDrugs({ req }) {
   try {
-    const drugs = await Drug.find({ ...req.body });
+    const drugs = await Drug.aggregate([
+      {
+        $match: {
+          store_id: ObjectId(req.body.store_id)
+        }
+      },
+      ...STORE_AND_CATEGORY_LOOKUP,
+      {
+        $project: {
+          ...DRUG_RETURN_DATA
+        }
+      }
+    ])
     return { message: "success", data: drugs };
   } catch (error) {
     return { message: "an error occurred, please try again" };
