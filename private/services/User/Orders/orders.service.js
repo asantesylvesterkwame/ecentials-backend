@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const Orders = require('../../../../private/schemas/Orders');
+const Drug = require('../../../schemas/Drug');
 
 async function generateOrderCode () {
     const orderInitial = "ORDER";
@@ -70,7 +71,16 @@ async function createOrderItem(req) {
             await Orders.create({
                 user_id, order_code, invoice_number, store_id, delivery_address_id, 
                 delivery_date, delivery_method, coordinates, shipping_fee, note, grand_total, products_summary
-            })     
+            })
+            
+            products_summary.forEach(async (item) => {
+                // reduce total drug stock
+                await Drug.updateOne({ 
+                    _id: item.drug_id
+                }, {
+                    $inc: { total_stock: -item.quantity }
+                })
+            })
         })
         return { message: "Order created successfully"};
     } catch (error) {
