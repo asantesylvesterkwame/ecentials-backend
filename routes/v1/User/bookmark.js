@@ -2,7 +2,7 @@ const router = require('express').Router();
 
 
 const Bookmark = require('../../../private/schemas/Bookmark');
-const { getBookmarkDetails } = require('../../../private/services/User/Bookmark/bookmark.service');
+const { getBookmarkDetails, getBookmarkItems } = require('../../../private/services/User/Bookmark/bookmark.service');
 const { verify } = require('../../../verifyToken')
 
 
@@ -24,17 +24,17 @@ router.post('/add-new-bookmark-item', verify, async (req, res) => {
 
 
 // list all specific bookmarked items for a user
-router.post('/list-bookmark-items', verify, async (req, res) => {
-    const user_id = req.user._id;
+router.post('/list-bookmark-items', verify, async (req, res, next) => {
+    try {
+        const result = await getBookmarkItems(req)
 
-    const { bookmark_type } = req.body;
-
-    await Bookmark.find({ user_id, bookmark_type }, (err, result) => {
-        if (err) {
-            return res.status(400).json({ message: "Failed to fetch bookmarks." });
+        if (result.status === 'success') {
+            return res.status(200).json(result)
         }
-        return res.status(200).json({ message: "success", data: result });
-    }).clone();
+        return res.status(400).json(result)
+    } catch (error) {
+        next(error)
+    }
 }); 
 
 
