@@ -47,6 +47,7 @@ async function getReviews({ req }) {
                     'message': 1,
                     'reviewer_id': 1,
                     'reviewer_name': '$User.personal.name',
+                    'reviewer_image': '$User.profile_image',
                     'createdAt': 1
                 }
             }
