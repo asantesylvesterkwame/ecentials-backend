@@ -77,11 +77,11 @@ const ordersSchema = new mongoose.Schema({
         },
         drug_name: {
             type: String, 
-            required: true
+            required: false
         },
         drug_image: {
             type: String, 
-            required: true
+            required: false
         },
         quantity: {
             type: Number,
@@ -89,7 +89,7 @@ const ordersSchema = new mongoose.Schema({
         },
         nhis:{
             type: String, 
-            required: true
+            required: false
         },
         discount: {
             type: Number, 
