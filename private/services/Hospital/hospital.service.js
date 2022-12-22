@@ -58,8 +58,22 @@ async function searchNearbyHospital({search_text, user_latitude, user_longitude}
     }
 }
 
+// get hospital details
+async function getHospitalDetails(req) {
+    try {
+        const result = await Hospital.find({ _id: req.body.hospital_id })
+        return { 
+            status: 'success', 
+            message: 'successfully retrieved hospital',
+            data: result
+        }
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred, please try again' }
+    }
+}
 
 module.exports = {
     uploadHospitalImages,
     searchNearbyHospital,
+    getHospitalDetails,
 }
