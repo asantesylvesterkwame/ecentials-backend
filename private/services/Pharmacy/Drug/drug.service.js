@@ -9,14 +9,24 @@ const { uploadFile } = require("../../Firebase/imageUpload.service");
 // in a specific pharmacy using keywords
 async function searchDrugInSpecificPharmacy({ search_text, store_id }) {
   try {
-    const results = await Drug.find({
-      $or: [
-        { name: { $regex: search_text } },
-        { description: { $regex: search_text } },
-        { manufacturer: { $regex: search_text } },
-      ],
-      store_id,
-    });
+    const results = await Drug.aggregate([
+      {
+        $match: {
+          $or: [
+            { name: { $regex: search_text, '$options' : 'i' } },
+            { description: { $regex: search_text, '$options' : 'i' } },
+            { manufacturer: { $regex: search_text, '$options' : 'i' } },
+          ],
+          store_id: ObjectId(store_id)
+        }
+      },
+      ...STORE_AND_CATEGORY_LOOKUP,
+      {
+        $project: {
+          ...DRUG_RETURN_DATA
+        }
+      }
+    ])
 
     if (results) {
       return { message: "success", data: results };
