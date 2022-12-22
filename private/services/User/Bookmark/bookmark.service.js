@@ -5,7 +5,20 @@ const Bookmark = require("../../../schemas/Bookmark")
 
 async function getBookmarkDetails(req) {
     try {
-        const result = await Bookmark.findById(req.body.bookmark_id)
+        // const result = await Bookmark.findById(req.body.bookmark_id)
+        const result = await Bookmark.aggregate([
+            {
+                $match: {
+                    _id: ObjectId(req.body.bookmark_id),
+                }
+            },
+            ...BOOKMARK_LOOKUP,
+            {
+                $project: {
+                    ...BOOKMARK_RETURN_DATA 
+                }
+            }
+        ])
         
         return { status: 'success', message: 'bookmark data retrieved', data: result}
     } catch (error) {
