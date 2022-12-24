@@ -30,13 +30,13 @@ async function generateTokens(user) {
         const payload = { _id: user._id, roles: user.roles };
         const accessToken = jwt.sign(
             payload,
-            process.env.SECRET,
+            "secret",
             { expiresIn: "14m" }
         )
 
         const refreshToken = jwt.sign(
             payload,
-            process.env.SECRET,
+            "secret",
             { expiresIn: "30d" }
         )
 
