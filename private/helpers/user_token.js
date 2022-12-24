@@ -46,7 +46,7 @@ async function generateTokens(user) {
         await new UserToken({ user_id: user._id, token: refreshToken }).save()
         return Promise.resolve({ accessToken, refreshToken })
     } catch (error) {
-        return Promise.reject(err);
+        return Promise.reject(error);
     }
 }
 
