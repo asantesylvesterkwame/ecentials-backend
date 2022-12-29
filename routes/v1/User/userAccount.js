@@ -46,7 +46,7 @@ router.post('/addEdit-personal-details', verify, async (req, res) => {
         "personal.address": req.body.address,
         "personal.occupation": req.body.occupation,
         "personal.dob": req.body.dob,
-        "personal.ghana_card_no": req.body.ghana_card_no,
+        "personal.ghana_card_no": req.body.ghana_card_number,
         "personal.height": req.body.height,
         "personal.weight": req.body.weight,
     }
