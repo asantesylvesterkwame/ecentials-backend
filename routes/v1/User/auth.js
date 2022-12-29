@@ -192,7 +192,7 @@ router.post('/get-new-access-token', async (req, res, next) => {
             
             const accessToken = jwt.sign(
                 payload,
-                process.env.SECRET,
+                "secret",
                 { expiresIn: "14m" }
             )
 
