@@ -141,6 +141,11 @@ async function getDrugInformation({ req }) {
 async function getPopularDrugs() {
   try {
     const result = await Drug.aggregate([
+      { 
+        $match: { 
+          total_stock: { $gt: 0 }
+        }
+      },
       {
         $lookup: {
           from: "drugcategories",
