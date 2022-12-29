@@ -4,7 +4,7 @@ const UserToken = require('../schemas/UserToken')
 
 
 const verifyRefreshToken = (refreshToken) => {
-    const privateKey = process.env.SECRET
+    const privateKey = "secret"
 
     return new Promise((resolve, reject) => {
         UserToken.findOne({ token: refreshToken }, (err, doc) => {
