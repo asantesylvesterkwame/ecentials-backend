@@ -1,6 +1,6 @@
 const multer = require("multer");
 
-const { createNewLab, fetchAllLabs, searchForLab, getTopRatedDoctors, uploadLabDocument } = require("../../../private/services/Lab/lab.service");
+const { createNewLab, fetchAllLabs, searchForLab, getTopRatedDoctors, uploadLabDocument, getLabDetails } = require("../../../private/services/Lab/lab.service");
 const { verify } = require("../../../verifyToken");
 
 const router = require("express").Router();
@@ -73,6 +73,19 @@ router.post('/new-lab-document', verify, upload, async (req, res, next) => {
       return res.status(201).json(result)
     }
 
+    return res.status(400).json(result)
+  } catch (error) {
+    next(error)
+  }
+})
+
+router.post('/get-lab-information', verify, async (req, res, next) => {
+  try {
+    const result = await getLabDetails(req)
+
+    if (result.status === 'success') {
+      return res.status(200).json(result)
+    }
     return res.status(400).json(result)
   } catch (error) {
     next(error)
