@@ -29,7 +29,12 @@ const hospitalSchema = new mongoose.Schema({
         type: Number,
         required: false
     },
-    images: []
+    images: [],
+    owner_id: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: false,
+        ref: "businessowners"
+    },
 }, { timestamps: true });
 
 module.exports = mongoose.model("Hospital", hospitalSchema);
