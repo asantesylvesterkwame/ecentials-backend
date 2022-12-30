@@ -103,10 +103,25 @@ async function uploadLabDocument({ req }) {
     }
 }
 
+// get lab information
+async function getLabDetails(req) {
+    try {
+        const result = await Lab.findById(req.body.lab_id)
+
+        if (result) {
+            return { status: 'success', message: 'lab details retrieved', data: result}
+        }
+        return { status: 'failed', message: 'lab details not found' }
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
     createNewLab,
     fetchAllLabs,
     searchForLab,
     getTopRatedDoctors,
-    uploadLabDocument
+    uploadLabDocument,
+    getLabDetails
 }
