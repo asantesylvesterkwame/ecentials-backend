@@ -94,4 +94,8 @@ router.post('/fetch-hospital-information', verify, async (req, res, next) => {
         next(error)
     }
 })
+
+router.get('/check-if-user-has-hospital', verify, async (req, res,next) => {
+    
+})
 module.exports = router;
