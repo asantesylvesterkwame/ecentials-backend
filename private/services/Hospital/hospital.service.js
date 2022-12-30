@@ -72,8 +72,23 @@ async function getHospitalDetails(req) {
     }
 }
 
+// check if user has a hospital
+async function isBusinessOwnerHavingHospital(req) {
+    try {
+        const result = await Hospital.find({ owner_id: req.user._id })
+
+        if (result.length > 0) {
+            return { status: 'success', message: 'user has a hospital', data: result}
+        }
+        return { status: 'failed', message: 'user has no hospital'}
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
     uploadHospitalImages,
     searchNearbyHospital,
     getHospitalDetails,
+    isBusinessOwnerHavingHospital
 }
