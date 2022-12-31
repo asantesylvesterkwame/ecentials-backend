@@ -82,6 +82,9 @@ async function getDoctorReviews({ recipient_id, recipient_type }) {
           "message": 1,
           "rating": 1,
           "reviewer_name": "$Reviewer.personal.name",
+          "reviewer_image": "$Reviewer.profile_image",
+          "reviewer_id": "$Reviewer._id",
+          "createdAt": 1
         }
       }
     ]);
