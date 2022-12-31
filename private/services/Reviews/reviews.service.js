@@ -62,7 +62,18 @@ async function getReviews({ req }) {
         return { status: 'error', message: 'an error occurred, please try again' }
     }
 }
+
+async function deleteReview(req) {
+    try {
+        await Ratings.findByIdAndDelete(req.body.review_id)
+        return { status: 'success', message: 'review deleted successfully' }
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred, please try again' }
+    }
+}
+
 module.exports = {
     addNewReview,
-    getReviews
+    getReviews,
+    deleteReview
 }
