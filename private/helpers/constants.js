@@ -132,6 +132,9 @@ const BOOKMARK_RETURN_DATA = {
     "hospital_opening_hours": "$hospital.opening_hours",
     "hospital_phone_number": "$hospital.phone_number",
     "hospital_image": "$hospital.images",
+    "hospital_gps_address": "$hospital.gps_address",
+    "hospital_gps_lng": "$hospital.gps_lng",
+    "hospital_gps_lat": "$hospital.gps_lat",
     "store_id": "$store._id",
     "store_name": "$store.name",
     "store_location": "$store.location",
@@ -145,6 +148,7 @@ const BOOKMARK_RETURN_DATA = {
     "lab_address": "$lab.address",
     "lab_opening_hours": "$lab.opening_hours",
     "lab_phone_number": "$lab.phone_number",
+    "lab_gps_address": "$lab.gps_address"
 }
 
 module.exports = {
