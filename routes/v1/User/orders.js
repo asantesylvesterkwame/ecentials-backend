@@ -9,7 +9,7 @@ const { createOrderItem } = require("../../../private/services/User/Orders/order
 router.get('', verify, async (req, res) => {
     const user_id = req.user._id;
 
-    await Orders.find({ who_ordered: user_id }, (err, result) => {
+    await Orders.find({ user_id }, (err, result) => {
         if (err) {
             return res.status(400).json({message: "Failed to load orders."})
         }
