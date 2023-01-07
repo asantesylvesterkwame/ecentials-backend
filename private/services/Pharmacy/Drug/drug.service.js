@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const { DRUG_RETURN_DATA, STORE_AND_CATEGORY_LOOKUP } = require("../../../helpers/constants");
+const DefaultDrug = require("../../../schemas/DefaultDrug");
 
 const ObjectId = mongoose.Types.ObjectId;
 const Drug = require("../../../schemas/Drug");
@@ -298,6 +299,30 @@ async function searchDrug(req) {
   }
 }
 
+async function searchDefaultDrugs(req) {
+  try {
+    const result = await DefaultDrug.aggregate([
+      {
+        $match: {
+          $or: [
+            { name: { $regex: req.body.search_text, '$options' : 'i' } },
+            { drug_code: { $regex: req.body.search_text, '$options' : 'i' } },
+            { unit_of_pricing: { $regex: req.body.search_text, '$options' : 'i' } },
+            { dosage_form: { $regex: req.body.search_text, '$options' : 'i' } },
+          ]
+        }
+      },
+    ])
+    return { 
+      status: 'success', 
+      message: 'successfully retrieved default drugs', 
+      data: result 
+    }
+  } catch (error) {
+    return { status: 'error', message: 'an error occurred, please try again' }
+  }
+}
+
 module.exports = {
   searchDrugInSpecificPharmacy,
   addDrugToInventory,
@@ -307,5 +332,6 @@ module.exports = {
   getPopularDrugs,
   updateDrugDetail,
   getPopularDrugsInPharmacy,
-  searchDrug
+  searchDrug,
+  searchDefaultDrugs
 };
