@@ -12,6 +12,7 @@ const {
   updateDrugDetail,
   getPopularDrugsInPharmacy,
   searchDrug,
+  searchDefaultDrugs,
 } = require("../../../private/services/Pharmacy/Drug/drug.service");
 const { verify } = require("../../../verifyToken");
 
@@ -123,6 +124,18 @@ router.post('/top-popular-drugs-in-pharmacy', verify, async (req, res, next) => 
     } catch (error) {
         next(error)
     }
+})
+
+router.post('/search-default-drugs', verify, async (req, res, next) => {
+  try {
+    const result = await searchDefaultDrugs(req)
+    if (result.status === 'success') {
+      return res.status(200).json(result)
+    }
+    return res.status(400).json(result)
+  } catch (error) {
+    next(error)
+  }
 })
 
 module.exports = router;
