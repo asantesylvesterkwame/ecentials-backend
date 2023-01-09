@@ -1,24 +1,10 @@
 const Vehicle = require("../../../schemas/Vehicle")
 
 // create a new ambulance
-async function createNewAmbulance({
-  driver_id,
-  facility_id,
-  name,
-  licence_no,
-  brand = null,
-  color = null,
-  insurance = false,
-}) {
+async function createNewAmbulance(req) {
     try {
         const results = await Vehicle.create({
-            driver_id,
-            facility_id,
-            name,
-            licence_no,
-            brand,
-            color,
-            insurance
+            ...req.body
         });
 
         if (results != null) {
@@ -42,8 +28,21 @@ async function getTotalAmbulanceCount() {
     }
 }
 
+async function getAmbulances() {
+    try {
+        const result = await Vehicle.find({})
+        return { 
+            status: 'success', 
+            message: 'successfully fetched vehicles',
+            data: result
+        }
+    } catch (error) {
+        return { status: 'error', message: 'an error occurred.' }
+    }
+}
 
 module.exports = {
     createNewAmbulance,
     getTotalAmbulanceCount,
+    getAmbulances
 }
