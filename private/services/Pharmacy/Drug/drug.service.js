@@ -323,6 +323,19 @@ async function searchDefaultDrugs(req) {
   }
 }
 
+async function fetchDefaultDrugs() {
+  try {
+    const result = await DefaultDrug.find({})
+    return { 
+      status: 'success', 
+      message: 'drugs fetched successful', 
+      data: result 
+    }
+  } catch (error) {
+    return { status: 'error', message: 'an error occurred' }
+  }
+}
+
 module.exports = {
   searchDrugInSpecificPharmacy,
   addDrugToInventory,
@@ -333,5 +346,6 @@ module.exports = {
   updateDrugDetail,
   getPopularDrugsInPharmacy,
   searchDrug,
-  searchDefaultDrugs
+  searchDefaultDrugs,
+  fetchDefaultDrugs
 };
