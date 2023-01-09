@@ -119,7 +119,7 @@ async function loginBusinessOwner({ account_id, password }) {
         return { message: "wrong password, please try again" };
       }
       // create and assign a token
-      const token = jwt.sign({ _id: result[0].owner_id }, process.env.SECRET);
+      const token = jwt.sign({ _id: result[0].owner_id }, "secret");
       return { token, owner_id: result[0].owner_id };
     }
     return { message: "wrong password or account id, please try again" };
