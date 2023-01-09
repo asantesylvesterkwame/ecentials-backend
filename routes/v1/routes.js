@@ -56,6 +56,9 @@ router.use("/api/v1/hospital/staff", require("./Hospital/staff"));
 // lab related endpoints
 router.use("/api/v1/labs", require("./Lab/lab.controller"));
 
+// ambulance related endpoints
+router.use("/api/v1/ambulance", require("./Ambulance/vehicle.controller"))
+
 // business owner endpoints
 router.use(
   "/api/v1/business-owner",
