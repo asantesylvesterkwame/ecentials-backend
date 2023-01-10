@@ -16,9 +16,9 @@ async function createWholesaler({ req }) {
 }
 
 // Fetch Wholesalers information
-async function fetchWholesaler({ facility_id }) {
+async function fetchWholesaler() {
   try {
-    const result = await Wholesaler.find({ facility_id });
+    const result = await Wholesaler.find();
     return { message: "success", data: result };
   } catch (error) {
     return { message: "an error occurred, please try again" };
