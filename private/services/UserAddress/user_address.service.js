@@ -40,6 +40,14 @@ async function addNewShippingAddress({ req }) {
 
 async function updateShippingAddress({ req }) {
   try {
+
+    if (req.body.primary_address) {
+      await UserShippingAddress.updateMany({
+        user_id: req.user._id,
+        primary_address: false
+      })
+    }
+    
     const result = await UserShippingAddress.updateOne({
       _id: req.body.address_id,
       user_id: req.user._id
