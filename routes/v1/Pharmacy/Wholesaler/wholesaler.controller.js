@@ -14,11 +14,10 @@ router.post("/add-new-wholesaler", async (req, res, next) => {
   }
 });
 
-// Fetch customer information
+// Fetch Wholesaler information
 router.post("/fetch-wholesalers", async (req, res, next) => {
-  const { facility_id } = req.body;
   try {
-    return res.status(200).json(await fetchWholesaler({ facility_id }));
+    return res.status(200).json(await fetchWholesaler());
   } catch (error) {
     next(error);
   }
