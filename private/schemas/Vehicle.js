@@ -7,7 +7,7 @@ const vehicleSchema = new mongoose.Schema({
     },
     facility_id: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: false
     },
     name: {
         type: String,
