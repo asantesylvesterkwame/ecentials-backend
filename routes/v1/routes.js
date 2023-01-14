@@ -36,6 +36,10 @@ router.use(
   require("./Pharmacy/Sales/sales.controller")
 );
 router.use("/api/v1/pharmacy/orders", require("./Pharmacy/orders"));
+router.use(
+  "/api/v1/pharmacy/invoice",
+  require("./Pharmacy/Invoice/invoice.controller")
+);
 router.use("/api/v1/pharmacy/staff", require("./Pharmacy/staff.controller"));
 router.use(
   "/api/v1/pharmacy/information",
@@ -44,6 +48,10 @@ router.use(
 router.use(
   "/api/v1/pharmacy/drug-category",
   require("./Pharmacy/DrugCategory/drugCategory.controller")
+);
+router.use(
+  "/api/v1/pharmacy/returns",
+  require("./Pharmacy/Returns/returns.controller")
 );
 
 // pescription related endpoints
@@ -57,7 +65,7 @@ router.use("/api/v1/hospital/staff", require("./Hospital/staff"));
 router.use("/api/v1/labs", require("./Lab/lab.controller"));
 
 // ambulance related endpoints
-router.use("/api/v1/ambulance", require("./Ambulance/vehicle.controller"))
+router.use("/api/v1/ambulance", require("./Ambulance/vehicle.controller"));
 
 // business owner endpoints
 router.use(
@@ -73,6 +81,6 @@ router.use(
 );
 
 // reviews endpoint
-router.use('/api/v1/reviews', require('./Reviews/reviews.controller'))
+router.use("/api/v1/reviews", require("./Reviews/reviews.controller"));
 
 module.exports = router;
