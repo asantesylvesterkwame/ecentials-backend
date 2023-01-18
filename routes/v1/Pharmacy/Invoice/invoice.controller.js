@@ -3,6 +3,7 @@ const { verify } = require("../../../../verifyToken");
 
 const {
   fetchInvoice,
+  addInvoice,
 } = require("../../../../private/services/Pharmacy/Invoice/invoice.service");
 
 // FETCH POS INVOICE
@@ -18,7 +19,7 @@ router.post("", verify, async (req, res, next) => {
 // ADD INVOICE
 router.post("/add-invoice", verify, async (req, res, next) => {
   try {
-    return res.status(200).json(await AddInvoice({ req }));
+    return res.status(200).json(await addInvoice({ req }));
   } catch (error) {
     next(error);
   }

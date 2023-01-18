@@ -24,12 +24,14 @@ router.post("/fetch-all-orders", verify, async (req, res) => {
       { store_id },
       {
         _id: 1,
+        user_id: 1,
         order_code: 1,
         payment_type: 1,
         payment_status: 1,
         grand_total: 1,
         order_status: 1,
-      }
+      },
+      await fetchUsersName(user_id)
     );
 
     if (orders)

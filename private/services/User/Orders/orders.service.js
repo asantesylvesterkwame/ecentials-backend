@@ -1,14 +1,16 @@
 const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
 const Drug = require("../../../schemas/Drug");
+const Invoice = require("../../../schemas/Invoice");
 
-async function generateOrderCode() {
-  const orderInitial = "ORDER";
+async function generateOrderCode(orderInitial, pharmacyInitial) {
   let initials = orderInitial.slice(0, 2).toUpperCase();
+  let pharmacy = pharmacyInitial.slice(0, 2).toUpperCase();
+  let randomDigits1 = (Math.floor(Math.random() * 9) + 9).toString();
+  let randomDigits2 = (Math.floor(Math.random() * 999) + 99).toString();
+  let randomDigits3 = (Math.floor(Math.random() * 999) + 99).toString();
 
-  let randomDigits = (Math.floor(Math.random() * 90000) + 100000).toString();
-
-  return initials + "-" + randomDigits;
+  return initials + +randomDigits1 + +randomDigits2 + +randomDigits3 + pharmacy;
 }
 
 async function fetchLastInvoiceNumber() {
@@ -19,14 +21,14 @@ async function fetchLastInvoiceNumber() {
   const month = today.getMonth();
   const year = today.getFullYear();
 
-  const result = await Orders.find({}, { _id: 0, invoice_number: 1 })
+  const result = await Invoice.find({}, { _id: 0, invoice_number: 1 })
     .sort({ _id: -1 })
     .limit(1);
   data = [];
   data = result;
 
   if (data.length == 0) {
-    return "Ecen/" + year + "/" + month + "/" + day + "/001";
+    return "Ecen" + year + month + day + "001";
   } else {
     for (var index = 0; index < data.length; index++) {
       return data[index].invoice_number;
@@ -38,12 +40,21 @@ async function fetchLastInvoiceNumber() {
   }
 }
 
-function generateInvoiceNumber(oldInvoiceNumber) {
-  var count = oldInvoiceNumber.match(/\d*$/);
+function generateInvoiceNumber() {
+  // var count = oldInvoiceNumber.match(/\d*$/);
 
-  // Take the substring up until where the integer was matched
-  // Concatenate it to the matched count incremented by 1
-  return oldInvoiceNumber.substr(0, count.index) + ++count[0];
+  // // Take the substring up until where the integer was matched
+  // // Concatenate it to the matched count incremented by 1
+  // return oldInvoiceNumber.substr(0, count.index) + ++count[0];
+  const today = new Date();
+
+  let day = today.getDate();
+  let month = today.getMonth() + 1;
+  const year = today.getFullYear().toString().substring(2);
+  month = month.toString().length === 1 ? "0" + month : month;
+  day = day.toString().length === 1 ? "0" + day : day;
+  let randomDigits = (Math.floor(Math.random() * 99999) + 100000).toString();
+  return "ec" + year + month + day + randomDigits;
 }
 
 async function createOrderItem(req) {
@@ -54,7 +65,7 @@ async function createOrderItem(req) {
     order.forEach(async (element) => {
       // console.log(element.delivery_date)
 
-      const order_code = await generateOrderCode();
+      const order_code = await generateOrderCode("ORDER");
       const last_no = await fetchLastInvoiceNumber();
 
       const invoice_number = generateInvoiceNumber(last_no);

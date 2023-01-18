@@ -1,14 +1,11 @@
 const mongoose = require("mongoose");
 
-const ordersSchema = new mongoose.Schema(
+const invoiceSchema = new mongoose.Schema(
   {
     store_id: {
       type: mongoose.SchemaTypes.ObjectId,
       required: true,
-    },
-    user_id: {
-      type: mongoose.SchemaTypes.ObjectId,
-      required: false,
+      ref: "Orders",
     },
     customer_name: {
       type: String,
@@ -16,43 +13,35 @@ const ordersSchema = new mongoose.Schema(
     },
     order_code: {
       type: String,
-      required: false,
+      required: true,
     },
     invoice_number: {
       type: String,
-      required: false,
+      required: true,
     },
     payment_type: {
       type: String,
-      required: false,
-      default: "Momo",
+      required: true,
+      default: "Cash",
     },
     payment_status: {
       type: String,
-      required: false,
+      required: true,
       default: "Paid",
     },
     order_status: {
       type: String,
       required: false,
-      default: "New",
+      default: "Done",
     },
     fulfilled: {
       type: Boolean,
-      required: false,
-      default: false,
+      required: true,
+      default: true,
     },
-    // order_item_id: {
-    //     type: mongoose.SchemaTypes.ObjectId,
-    //     required: true
-    // },
     grand_total: {
       type: Number,
       required: true,
-    },
-    delivery_address_id: {
-      type: String,
-      required: false,
     },
     delivery_date: {
       type: String,
@@ -61,19 +50,7 @@ const ordersSchema = new mongoose.Schema(
     delivery_method: {
       type: String,
       required: false,
-      default: "Delivery",
-    },
-    coordinates: {
-      type: Array,
-      required: false,
-    },
-    shipping_fee: {
-      type: Number,
-      required: true,
-    },
-    note: {
-      type: String,
-      required: false,
+      default: "Pickup",
     },
     products_summary: [
       {
@@ -112,4 +89,4 @@ const ordersSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Orders", ordersSchema);
+module.exports = mongoose.model("Invoice", invoiceSchema);
