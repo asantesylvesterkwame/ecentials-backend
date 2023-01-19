@@ -1,14 +1,14 @@
 const Invoice = require("../../../schemas/Invoice");
 const Orders = require("../../../schemas/Orders");
 
-async function fetchSalesPayment(req) {
+async function fetchSalesPayment({ req }) {
   try {
     const invoices = Invoice.find({ fulfilled: true, ...req.body });
     const orders = Orders.find({ fulfilled: true, ...req.body });
     const [
       invoicesRes,
       ordersRes
-    ] = Promise.all([invoices.exec(), orders.exec()]);
+    ] = await Promise.all([invoices.exec(), orders.exec()]);
 
     return { 
       status: 'success', 
@@ -16,6 +16,7 @@ async function fetchSalesPayment(req) {
       data: [...invoicesRes, ...ordersRes] 
     };
   } catch (error) {
+    console.log(error);
     return { status: 'error', message: 'an error occurred, please try again' };
   }
 }
