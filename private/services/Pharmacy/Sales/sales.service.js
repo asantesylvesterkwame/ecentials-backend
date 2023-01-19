@@ -16,7 +16,6 @@ async function fetchSalesPayment({ req }) {
       data: [...invoicesRes, ...ordersRes] 
     };
   } catch (error) {
-    console.log(error);
     return { status: 'error', message: 'an error occurred, please try again' };
   }
 }
