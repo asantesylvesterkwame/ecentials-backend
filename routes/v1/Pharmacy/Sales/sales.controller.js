@@ -6,9 +6,12 @@ const {
 
 // Fetch Orders that are fulfilled (SALES)
 router.post("/sales-payment", verify, async (req, res, next) => {
-  const { store_id } = req.body;
   try {
-    return res.status(200).json(await fetchSalesPayment({ store_id }));
+    const result = await fetchSalesPayment(req);
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result)
   } catch (error) {
     next(error);
   }
