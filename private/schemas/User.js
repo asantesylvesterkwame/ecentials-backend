@@ -40,7 +40,9 @@ const userSchema = new mongoose.Schema({
         dob: String,
         ghana_card_no: String,
         height: Number,
-        weight: Number, 
+        weight: Number,
+        height_unit: String,
+        weight_unit: String, 
         date: {
             type: Date, 
             default: Date.now
