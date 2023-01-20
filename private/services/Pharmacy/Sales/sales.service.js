@@ -1,11 +1,11 @@
 const Invoice = require("../../../schemas/Invoice");
 const Orders = require("../../../schemas/Orders");
 
-async function fetchSalesPayment(req) {
+async function fetchSalesPayment({ req }) {
   try {
     const invoices = Invoice.find({ fulfilled: true, ...req.body });
     const orders = Orders.find({ fulfilled: true, ...req.body });
-    const [invoicesRes, ordersRes] = Promise.all([
+    const [invoicesRes, ordersRes] = await Promise.all([
       invoices.exec(),
       orders.exec(),
     ]);
