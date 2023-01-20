@@ -5,7 +5,7 @@ const Invoice = require("../../../schemas/Invoice");
 
 async function generateOrderCode(orderInitial, pharmacyInitial) {
   let initials = orderInitial.slice(0, 2).toUpperCase();
-  let pharmacy = pharmacyInitial.slice(0, 2).toUpperCase();
+  let pharmacy = await pharmacyInitial.slice(0, 2).toUpperCase();
   let randomDigits1 = (Math.floor(Math.random() * 9) + 9).toString();
   let randomDigits2 = (Math.floor(Math.random() * 999) + 99).toString();
   let randomDigits3 = (Math.floor(Math.random() * 999) + 99).toString();
@@ -58,14 +58,15 @@ function generateInvoiceNumber() {
 }
 
 async function createOrderItem(req) {
-  const user_id = req.user._id;
+  const user_id = req.user_id;
+  const name = req.body[0].name;
   // console.log(req.body);
   try {
     const order = req.body;
     order.forEach(async (element) => {
       // console.log(element.delivery_date)
 
-      const order_code = await generateOrderCode("ORDER");
+      const order_code = await generateOrderCode("ORDER", name);
       const last_no = await fetchLastInvoiceNumber();
 
       const invoice_number = generateInvoiceNumber(last_no);
