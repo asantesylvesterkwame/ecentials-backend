@@ -10,9 +10,7 @@ const {
 async function fetchInvoice({ store_id }) {
   try {
     const result = await Invoice.find({ store_id });
-    const results = result.filter(
-      ({ delivery_method }) => delivery_method == "Pickup"
-    );
+
     return { message: "success", data: result };
   } catch (error) {
     return { message: "an error occurred, please try again" };
