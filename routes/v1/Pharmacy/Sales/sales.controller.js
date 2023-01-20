@@ -8,10 +8,10 @@ const {
 router.post("/sales-payment", verify, async (req, res, next) => {
   try {
     const result = await fetchSalesPayment({ req });
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(200).json(result);
     }
-    return res.status(400).json(result)
+    return res.status(400).json(result);
   } catch (error) {
     next(error);
   }
