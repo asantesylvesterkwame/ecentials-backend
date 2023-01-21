@@ -6,7 +6,7 @@ async function fetchInvoice({ store_id }) {
     const results = result.filter(
       ({ delivery_method }) => delivery_method == "Pickup"
     );
-    return { message: "success", data: result };
+    return { message: "success", data: results };
   } catch (error) {
     return { message: "an error occurred, please try again" };
   }
