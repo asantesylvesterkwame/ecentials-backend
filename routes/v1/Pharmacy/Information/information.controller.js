@@ -6,7 +6,7 @@ const {
 const { verify } = require("../../../../verifyToken");
 
 // retrieve information about a pharmacy
-router.post("/fetch-pharmacy-information", async (req, res, next) => {
+router.post("/fetch-pharmacy-information", verify, async (req, res, next) => {
   const { pharmacy_id } = req.body;
 
   try {

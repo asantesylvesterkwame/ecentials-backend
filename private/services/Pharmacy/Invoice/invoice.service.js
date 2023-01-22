@@ -1,15 +1,47 @@
+const Drug = require("../../../schemas/Drug");
+const Invoice = require("../../../schemas/Invoice");
 const Orders = require("../../../schemas/Orders");
+const {
+  generateOrderCode,
+  generateInvoiceNumber,
+  fetchLastInvoiceNumber,
+} = require("../../User/Orders/orders.service");
 
 async function fetchInvoice({ store_id }) {
   try {
-    const result = await Orders.find({ store_id });
-    const results = result.filter(
-      ({ delivery_method }) => delivery_method == "Pickup"
-    );
-    return { message: "success", data: results };
+    const result = await Invoice.find({ store_id });
+
+    return { message: "success", data: result };
   } catch (error) {
     return { message: "an error occurred, please try again" };
   }
 }
 
-module.exports = { fetchInvoice };
+async function addInvoice({ req }) {
+  const { name } = req.body;
+  try {
+    const order_code = await generateOrderCode("INVOICE", name);
+    const invoice_number = generateInvoiceNumber();
+    await Invoice.create({
+      ...req.body,
+      order_code,
+      invoice_number,
+    });
+    const { products_summary } = req.body;
+    products_summary.forEach(
+      async ({ drug_id, quantity }) =>
+        await Drug.updateOne(
+          {
+            _id: drug_id,
+          },
+          { $inc: { total_stock: -quantity } }
+        )
+    );
+
+    return { message: "success" };
+  } catch (error) {
+    return { message: "Failed to add invoice.", data: error };
+  }
+}
+
+module.exports = { fetchInvoice, addInvoice };

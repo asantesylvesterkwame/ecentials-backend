@@ -49,6 +49,8 @@ router.post('/addEdit-personal-details', verify, async (req, res) => {
         "personal.ghana_card_no": req.body.ghana_card_number,
         "personal.height": req.body.height,
         "personal.weight": req.body.weight,
+        "personal.height_unit": req.body.height_unit,
+        "personal.weight_unit": req.body.weight_unit,
     }
 
     const add_details = await User.updateOne({

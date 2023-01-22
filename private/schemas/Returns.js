@@ -6,6 +6,10 @@ const returnsSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    store_id: {
+      type: mongoose.SchemaTypes.ObjectId,
+      required: true,
+    },
   },
   { timestamps: true }
 );
