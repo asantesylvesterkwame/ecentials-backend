@@ -8,12 +8,9 @@ const ordersSchema = new mongoose.Schema(
     },
     user_id: {
       type: mongoose.SchemaTypes.ObjectId,
-      required: false,
+      required: true,
     },
-    customer_name: {
-      type: String,
-      required: false,
-    },
+    
     order_code: {
       type: String,
       required: false,

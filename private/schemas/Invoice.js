@@ -10,6 +10,7 @@ const invoiceSchema = new mongoose.Schema(
     customer_name: {
       type: String,
       required: false,
+      default: "N/A"
     },
     order_code: {
       type: String,

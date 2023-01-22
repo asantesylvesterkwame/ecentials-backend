@@ -13,32 +13,32 @@ async function generateOrderCode(orderInitial, pharmacyInitial) {
   return initials + +randomDigits1 + +randomDigits2 + +randomDigits3 + pharmacy;
 }
 
-async function fetchLastInvoiceNumber() {
-  // pharmacy_id = req.user._id;
-  const today = new Date();
+// async function fetchLastInvoiceNumber() {
+//   // pharmacy_id = req.user._id;
+//   const today = new Date();
 
-  const day = today.getDate();
-  const month = today.getMonth();
-  const year = today.getFullYear();
+//   const day = today.getDate();
+//   const month = today.getMonth();
+//   const year = today.getFullYear();
 
-  const result = await Invoice.find({}, { _id: 0, invoice_number: 1 })
-    .sort({ _id: -1 })
-    .limit(1);
-  data = [];
-  data = result;
+//   const result = await Invoice.find({}, { _id: 0, invoice_number: 1 })
+//     .sort({ _id: -1 })
+//     .limit(1);
+//   data = [];
+//   data = result;
 
-  if (data.length == 0) {
-    return "Ecen" + year + month + day + "001";
-  } else {
-    for (var index = 0; index < data.length; index++) {
-      return data[index].invoice_number;
-    }
-    // data.forEach(element => {
-    //     console.log(element);
-    // });
-    // return data;
-  }
-}
+//   if (data.length == 0) {
+//     return "Ecen" + year + month + day + "001";
+//   } else {
+//     for (var index = 0; index < data.length; index++) {
+//       return data[index].invoice_number;
+//     }
+//     // data.forEach(element => {
+//     //     console.log(element);
+//     // });
+//     // return data;
+//   }
+// }
 
 function generateInvoiceNumber() {
   // var count = oldInvoiceNumber.match(/\d*$/);
@@ -58,7 +58,7 @@ function generateInvoiceNumber() {
 }
 
 async function createOrderItem(req) {
-  const user_id = req.user_id;
+  const user_id = req.body[0].user_id;
   const name = req.body[0].name;
   // console.log(req.body);
   try {
@@ -67,9 +67,9 @@ async function createOrderItem(req) {
       // console.log(element.delivery_date)
 
       const order_code = await generateOrderCode("ORDER", name);
-      const last_no = await fetchLastInvoiceNumber();
+      // const last_no = await fetchLastInvoiceNumber();
 
-      const invoice_number = generateInvoiceNumber(last_no);
+      const invoice_number = generateInvoiceNumber();
       var store_id = element.store_id;
       var delivery_address_id = element.delivery_address_id;
       var delivery_date = element.delivery_date;
@@ -85,6 +85,7 @@ async function createOrderItem(req) {
         order_code,
         invoice_number,
         store_id,
+        user_id,
         delivery_address_id,
         delivery_date,
         delivery_method,
@@ -115,7 +116,7 @@ async function createOrderItem(req) {
 
 module.exports = {
   generateOrderCode,
-  fetchLastInvoiceNumber,
+
   generateInvoiceNumber,
   createOrderItem,
 };

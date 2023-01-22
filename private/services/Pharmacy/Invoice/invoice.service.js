@@ -4,12 +4,12 @@ const Orders = require("../../../schemas/Orders");
 const {
   generateOrderCode,
   generateInvoiceNumber,
-  fetchLastInvoiceNumber,
+  // fetchLastInvoiceNumber,
 } = require("../../User/Orders/orders.service");
 
 async function fetchInvoice({ store_id }) {
   try {
-    const result = await Invoice.find({ store_id });
+    const result = await Invoice.find({ store_id }).sort({"createdAt": -1});
 
     return { message: "success", data: result };
   } catch (error) {
@@ -22,7 +22,7 @@ async function addInvoice({ req }) {
   try {
     const order_code = await generateOrderCode("INVOICE", name);
     const invoice_number = generateInvoiceNumber();
-    const result = await Invoice.create({
+    await Invoice.create({
       ...req.body,
       order_code,
       invoice_number,
