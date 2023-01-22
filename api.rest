@@ -2,7 +2,17 @@ POST http://localhost:3001/api/v1/pharmacy/invoice
 Content-Type: application/json
 
 {
-    "store_id": "63b56594797715634099aef2"
+  "store_id": "63b56594797715634099aef2"
+}
+
+
+###
+
+POST http://localhost:3001/api/v1/pharmacy/orders/fetch-all-orders
+Content-Type: application/json
+
+{
+  "store_id": "63b56594797715634099aef2"
 }
 
 
@@ -19,7 +29,7 @@ Content-Type: application/json
       "fulfilled": true,
       "customer_name": "Andrews Opoku",
       "name": "Peevis Pharmacy",
-      "grand_total": 100,
+      "grand_total": 200,
       "delivery_date": "26/12/2022",
       "delivery_method": "Pickup",
       "products_summary": [
@@ -45,3 +55,48 @@ Content-Type: application/json
         }
       ] 
 }
+
+###
+
+POST http://localhost:3001/api/v1/user/orders/create-order-item
+Content-Type: application/json
+
+[
+  {
+    "name": "Peevis Pharmacy",
+    "user_id": "63b56594797715634099aef2",
+    "store_id": "63b56594797715634099aef2",
+      "payment_type": "Cash",
+      "payment_status": "Paid",
+      "order_status": "Done",
+      "fulfilled": false,
+      "name": "Peevis Pharmacy",
+      "grand_total": 200,
+      "delivery_date": "26/12/2022",
+      "delivery_method": "Delivery",
+      "shipping_fee": 20,
+      "products_summary": [
+        {
+          "drug_id": "636f769c7f3ae53af5e8641e",
+          "drug_name": "Famadem",
+          "drug_image": "https://dfddfd.com",
+          "quantity": 1,
+          "nhis": "NHIS",
+          "discount": 12,
+          "prize": 100,
+          "_id": "63c962b5f5e78a9f82636173"
+        },
+        {
+          "drug_id": "636f769c7f3ae53af5e8642e",
+          "drug_name": "Paracetamol",
+          "drug_image": "https://dfddfd.com",
+          "quantity": 2,
+          "nhis": "NHIS",
+          "discount": 10,
+          "prize": 50,
+          "_id": "63c962b5f5e78a9f82636174"
+        }
+      ] 
+}
+
+]
