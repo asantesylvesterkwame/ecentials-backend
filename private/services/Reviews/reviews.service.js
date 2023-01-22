@@ -51,7 +51,7 @@ async function getReviews({ req }) {
                     'createdAt': 1
                 }
             }
-        ])
+        ]).sort({createdAt: -1})
 
         return { 
             status: 'success', 
