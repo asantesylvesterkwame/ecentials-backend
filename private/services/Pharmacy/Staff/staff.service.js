@@ -1,6 +1,7 @@
 const { encryptPassword } = require("../../../helpers/functions");
 const Staff = require("../../../schemas/Staff");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
+const ObjectId = require('mongoose').Types.ObjectId;
 
 // get all the staff registered to a pharmacy
 async function getPharmacyStaff({ facility_id }) {
@@ -110,9 +111,29 @@ async function updatePharmacyStaffInformation({ req}) {
   }
 }
 
+// terminate a staff
+async function terminateStaff(req) {
+  try {
+    const result = await Staff.updateOne(
+      { 
+        facility_id: ObjectId(req.body.facility_id),
+        _id: ObjectId(req.body.staff_id)
+      }, 
+      {$set: { is_active: false } }
+    );
+    if (result.modifiedCount > 0) {
+      return { status: 'success', message: 'staff successfully terminated' };
+    }
+    return { status: 'failed', message: 'failed to terminate staff' };
+  } catch (error) {
+    return { status: 'error', message: 'error occurred, please try again' };
+  }
+}
+
 module.exports = {
   getPharmacyStaff,
   createPharmacyStaff,
   getPharmacyStaffCount,
-  updatePharmacyStaffInformation
+  updatePharmacyStaffInformation,
+  terminateStaff
 };
