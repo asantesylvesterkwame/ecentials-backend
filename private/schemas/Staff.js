@@ -132,6 +132,10 @@ const staffSchema = new mongoose.Schema(
       default: "Staff",
     },
     privileges: [],
+    is_active: {
+      type: Boolean,
+      default: false
+    }
   },
   { timestamps: true }
 );
