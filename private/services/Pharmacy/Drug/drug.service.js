@@ -336,6 +336,15 @@ async function fetchDefaultDrugs() {
   }
 }
 
+async function deleteDrug(req) {
+  try {
+    await Drug.findByIdAndDelete(req.body.drug_id);
+    return { status: 'success', message: 'drug deleted successfully' }
+  } catch (error) {
+    return { status: 'failed', message: 'an error occurred while deleting drug'}
+  }
+}
+
 module.exports = {
   searchDrugInSpecificPharmacy,
   addDrugToInventory,
@@ -347,5 +356,6 @@ module.exports = {
   getPopularDrugsInPharmacy,
   searchDrug,
   searchDefaultDrugs,
-  fetchDefaultDrugs
+  fetchDefaultDrugs,
+  deleteDrug
 };
