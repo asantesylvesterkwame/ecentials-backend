@@ -14,6 +14,7 @@ const {
   searchDrug,
   searchDefaultDrugs,
   fetchDefaultDrugs,
+  deleteDrug,
 } = require("../../../private/services/Pharmacy/Drug/drug.service");
 const { verify } = require("../../../verifyToken");
 
@@ -148,6 +149,18 @@ router.get('/fetch-default-drugs', verify, async (req, res, next) => {
     return res.status(400).json(result)
   } catch (error) {
     next(error)
+  }
+})
+
+router.delete('/delete-drug', verify, async (req, res, next) => {
+  try {
+    const result = await deleteDrug(req);
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
   }
 })
 
