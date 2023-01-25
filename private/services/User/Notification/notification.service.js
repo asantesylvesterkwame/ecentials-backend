@@ -2,7 +2,7 @@ const User = require("../../../schemas/User");
 
 async function setFCMToken(req) {
     try {
-        const result = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
             req.user._id,
             {
                 $set: {
