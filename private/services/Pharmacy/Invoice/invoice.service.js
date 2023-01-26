@@ -19,7 +19,7 @@ async function fetchInvoice({ store_id }) {
 
 async function addInvoice({ req }) {
   const { name } = req.body;
-  console.log(name);
+
   try {
     const order_code = await generateOrderCode("INVOICE", name);
     const invoice_number = generateInvoiceNumber();

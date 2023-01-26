@@ -56,7 +56,7 @@ async function fetchReturns({ store_id }) {
       newResults.push(await Invoice.find({ ...result.invoice_number }));
       // console.log(result.invoice_number);
     }
-    return { message: "success", data: newResults[0] };
+    return { message: "success", data: results };
   } catch (error) {
     return { message: error };
   }

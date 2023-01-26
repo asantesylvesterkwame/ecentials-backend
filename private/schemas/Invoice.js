@@ -10,7 +10,7 @@ const invoiceSchema = new mongoose.Schema(
     customer_name: {
       type: String,
       required: false,
-      default: "N/A"
+      default: "N/A",
     },
     order_code: {
       type: String,
@@ -45,7 +45,7 @@ const invoiceSchema = new mongoose.Schema(
       required: true,
     },
     delivery_date: {
-      type: String,
+      type: Date,
       required: true,
     },
     delivery_method: {

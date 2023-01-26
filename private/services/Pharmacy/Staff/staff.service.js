@@ -1,7 +1,7 @@
 const { encryptPassword } = require("../../../helpers/functions");
 const Staff = require("../../../schemas/Staff");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
-const ObjectId = require('mongoose').Types.ObjectId;
+const ObjectId = require("mongoose").Types.ObjectId;
 
 // get all the staff registered to a pharmacy
 async function getPharmacyStaff({ facility_id }) {
@@ -69,45 +69,54 @@ async function getPharmacyStaffCount({ req }) {
 }
 
 // update pharmacy staff information
-async function updatePharmacyStaffInformation({ req}) {
+async function updatePharmacyStaffInformation({ req }) {
   try {
     let update_data = {
-      ...req.body
-    }
+      ...req.body,
+    };
 
-    if (req.files['photo']) {
-      const photo_url = await uploadFile(req.files["photo"][0],
-      `pharmacyStaff/${req.body.employee_id}`
+    if (req.files["photo"]) {
+      const photo_url = await uploadFile(
+        req.files["photo"][0],
+        `pharmacyStaff/${req.body.employee_id}`
       );
-      update_data.photo = photo_url
+      update_data.photo = photo_url;
     }
 
-    if (req.files['cv']) {
-      const cv_url = await uploadFile(req.files["cv"][0],
-      `pharmacyStaff/${req.body.employee_id}`
+    if (req.files["cv"]) {
+      const cv_url = await uploadFile(
+        req.files["cv"][0],
+        `pharmacyStaff/${req.body.employee_id}`
       );
-      update_data.cv = cv_url
+      update_data.cv = cv_url;
     }
 
-    if (req.files['certificate']) {
-      const certificate_url = await uploadFile(req.files["certificate"][0],
-      `pharmacyStaff/${req.body.employee_id}`
+    if (req.files["certificate"]) {
+      const certificate_url = await uploadFile(
+        req.files["certificate"][0],
+        `pharmacyStaff/${req.body.employee_id}`
       );
-      update_data.certificate = certificate_url
+      update_data.certificate = certificate_url;
     }
 
-    const result = await Staff.updateOne({
-      facility_id: req.body.facility_id,
-      employee_id: req.body.employee_id
-    }, { ...update_data })
+    const result = await Staff.updateOne(
+      {
+        facility_id: req.body.facility_id,
+        employee_id: req.body.employee_id,
+      },
+      { ...update_data }
+    );
 
     if (result.modifiedCount > 0) {
-      return { status: 'success', message: 'update staff information successful' }
+      return {
+        status: "success",
+        message: "update staff information successful",
+      };
     }
 
-    return { status: 'failed', message: 'failed to update staff information' }
+    return { status: "failed", message: "failed to update staff information" };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred, please try again' }
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
@@ -115,18 +124,18 @@ async function updatePharmacyStaffInformation({ req}) {
 async function terminateStaff(req) {
   try {
     const result = await Staff.updateOne(
-      { 
+      {
         facility_id: ObjectId(req.body.facility_id),
-        _id: ObjectId(req.body.staff_id)
-      }, 
-      {$set: { is_active: false } }
+        _id: ObjectId(req.body.staff_id),
+      },
+      { $set: { is_active: false } }
     );
     if (result.modifiedCount > 0) {
-      return { status: 'success', message: 'staff successfully terminated' };
+      return { status: "success", message: "staff successfully terminated" };
     }
-    return { status: 'failed', message: 'failed to terminate staff' };
+    return { status: "failed", message: "failed to terminate staff" };
   } catch (error) {
-    return { status: 'error', message: 'error occurred, please try again' };
+    return { status: "error", message: "error occurred, please try again" };
   }
 }
 
@@ -135,5 +144,5 @@ module.exports = {
   createPharmacyStaff,
   getPharmacyStaffCount,
   updatePharmacyStaffInformation,
-  terminateStaff
+  terminateStaff,
 };
