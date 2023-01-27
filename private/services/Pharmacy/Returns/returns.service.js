@@ -5,6 +5,7 @@ const Returns = require("../../../schemas/Returns");
 
 async function addReturns({ req }) {
   const { invoice_number, store_id } = req.body;
+  console.log(invoice_number, store_id);
   try {
     const invoices = Invoice.find({
       store_id,
@@ -19,6 +20,7 @@ async function addReturns({ req }) {
     const newData = [...invoicesRes, ...ordersRes];
     if (newData.length === 0) {
       return {
+        status: "success",
         message: `No order found with the invoice number ${invoice_number}`,
       };
     } else {
@@ -37,7 +39,7 @@ async function addReturns({ req }) {
           );
         });
       } else {
-        return { status: "failed", message: "Order already returned" };
+        return { status: "success", message: "Order already returned" };
       }
     }
     return {
