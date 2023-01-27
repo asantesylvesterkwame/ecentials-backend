@@ -3,6 +3,7 @@ const router = require('express').Router();
 const { verify } = require('../../../../verifyToken');
 const Notification = require('../../../../private/schemas/Notification');
 const User = require('../../../../private/schemas/User');
+const { setFCMToken } = require('../../../../private/services/User/Notification/notification.service');
 
 
 // creates a new notification for a verified user
@@ -66,6 +67,18 @@ router.post('/fetch-user-notifications', verify, async (req, res) => {
     }
     catch(e){
         res.status(400).json({ message: e })
+    }
+})
+
+router.post('/set-fcm-token', verify, async (req, res, next) => {
+    try {
+        const result = await setFCMToken(req);
+        if (result.status === 'success') {
+            return res.status(200).json(result);
+        }
+        return res.status(400).json(result);
+    } catch (error) {
+        next(error);
     }
 })
 
