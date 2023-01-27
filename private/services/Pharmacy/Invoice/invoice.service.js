@@ -9,7 +9,7 @@ const {
 
 async function fetchInvoice({ store_id }) {
   try {
-    const result = await Invoice.find({ store_id }).sort({"createdAt": -1});
+    const result = await Invoice.find({ store_id }).sort({ createdAt: -1 });
 
     return { message: "success", data: result };
   } catch (error) {
@@ -19,6 +19,7 @@ async function fetchInvoice({ store_id }) {
 
 async function addInvoice({ req }) {
   const { name } = req.body;
+
   try {
     const order_code = await generateOrderCode("INVOICE", name);
     const invoice_number = generateInvoiceNumber();

@@ -6,8 +6,11 @@ const Returns = require("../../../schemas/Returns");
 async function addReturns({ req }) {
   const { invoice_number, store_id } = req.body;
   try {
-    const invoices = Invoice.find({ invoice_number });
-    const orders = Orders.find({ invoice_number });
+    const invoices = Invoice.find({
+      store_id,
+      invoice_number,
+    });
+    const orders = Orders.find({ store_id, invoice_number });
     const [invoicesRes, ordersRes] = await Promise.all([
       invoices.exec(),
       orders.exec(),
@@ -56,7 +59,7 @@ async function fetchReturns({ store_id }) {
       newResults.push(await Invoice.find({ ...result.invoice_number }));
       // console.log(result.invoice_number);
     }
-    return { message: "success", data: newResults[0] };
+    return { message: "success", data: results };
   } catch (error) {
     return { message: error };
   }

@@ -29,8 +29,7 @@ router.post("/fetch-all-orders", async (req, res) => {
         payment_status: 1,
         grand_total: 1,
         order_status: 1,
-      },
-     
+      }
     );
 
     if (orders)
