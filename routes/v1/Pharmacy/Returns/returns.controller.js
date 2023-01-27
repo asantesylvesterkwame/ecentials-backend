@@ -18,7 +18,7 @@ router.post("/add-return", verify, async (req, res, next) => {
 });
 
 // fetch Returns
-router.post("", async (req, res, next) => {
+router.post("", verify, async (req, res, next) => {
   const { store_id } = req.body;
   try {
     return res.status(200).json(await fetchReturns({ store_id }));
