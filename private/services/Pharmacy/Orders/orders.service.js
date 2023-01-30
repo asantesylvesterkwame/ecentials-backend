@@ -32,9 +32,42 @@ async function cancelOrder({ req }) {
       return { message: "success", data: result };
     }
 
-    return { message: "Failed to cancel checkout item.", data: err };
+    return { message: "Failed to cancel order item.", data: err };
   } catch (error) {
-    return { message: "Failed to create checkout item.", data: error };
+    return { message: "Failed to cancel checkout item.", data: error };
+  }
+}
+
+async function approveOrder({ req }) {
+  const { order_code } = req.body;
+
+  try {
+    const result = await Orders.updateOne(
+      { order_code },
+      { $set: { order_status: "Approved" } }
+    );
+    const user = await _getUser(order_code);
+
+    const sendNotification = sendFCMessage(
+      user.user_token,
+      "Order approved",
+      req.body.message
+    );
+    const createNotification = _createNewNotification(
+      user.user_id,
+      "Order approved",
+      req.body.message
+    );
+    
+    Promise.all([sendNotification, createNotification]).catch((e) => { throw new Error(e) })
+
+    if (result.modifiedCount > 0) {
+      return { status: 'success', message: "order successfully approved", data: result };
+    }
+
+    return { status:'failed', message: "Failed to approve order.", data: err };
+  } catch (error) {
+    return { status: 'error', message: 'an error occurred, please try again' };
   }
 }
 
@@ -83,4 +116,5 @@ async function _createNewNotification(user_id, title, message) {
 
 module.exports = {
   cancelOrder,
+  approveOrder
 };

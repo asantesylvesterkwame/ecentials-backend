@@ -10,7 +10,7 @@ const {
   fetchUsersName,
 } = require("../../../private/services/User/Account/account.service");
 const {
-  cancelOrder,
+  cancelOrder, approveOrder,
 } = require("../../../private/services/Pharmacy/Orders/orders.service");
 // const { fetchDrugName } = require("../../../private/services/Pharmacy/Drug/drug.service");
 
@@ -88,6 +88,19 @@ router.post("/fetch-specific-orders", verify, async (req, res) => {
 router.post("/cancel-an-order", async (req, res, next) => {
   try {
     return res.status(200).json(await cancelOrder({ req }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+// approve an order placed to a particular pharmacy
+router.post('/approve-order', verify, async (req, res, next) => {
+  try {
+    const result = await approveOrder({ req });
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
   } catch (error) {
     next(error);
   }
