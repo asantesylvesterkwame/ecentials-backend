@@ -85,7 +85,7 @@ router.post("/fetch-specific-orders", verify, async (req, res) => {
 });
 
 //cancel an order placed to a particular pharmacy
-router.post("/cancel-an-order", async (req, res) => {
+router.post("/cancel-an-order", async (req, res, next) => {
   try {
     return res.status(200).json(await cancelOrder({ req }));
   } catch (error) {
