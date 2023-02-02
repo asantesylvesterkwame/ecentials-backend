@@ -17,9 +17,9 @@ admin.initializeApp({
     //   "client_x509_cert_url": process.env.SERVICE_CLIENT_X509_CERT_URL
     // }
     {
-      privateKey: process.env.SERVICE_PRIVATE_KEY,
-      projectId: process.env.SERVICE_PROJECT_ID,
-      clientEmail: process.env.SERVICE_CLIENT_EMAIL,
+      privateKey: process.env._SERVICE_PRIVATE_KEY,
+      projectId: process.env._SERVICE_PROJECT_ID,
+      clientEmail: process.env._SERVICE_CLIENT_EMAIL,
     }
   ),
 });
