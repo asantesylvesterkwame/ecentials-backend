@@ -72,7 +72,7 @@ async function _sendEmail({ email, accountID, bussinerOwnerID }) {
         { account_id: accountID, business_owner: bussinerOwnerID },
         (err, _) => {
           if (err) {
-            throw Error("failed to save account id");
+            throw new Error("failed to save account id");
           }
         }
       );
@@ -97,37 +97,79 @@ async function loginBusinessOwner({ account_id, password }) {
         },
       },
       {
-        $unwind: "$owner",
+        $unwind: {
+          path: "$owner",
+          preserveNullAndEmptyArrays: true
+        },
+      },
+      {
+        $lookup: {
+          from: "staffs",
+          localField: "staff",
+          foreignField: "_id",
+          as: "staff",
+        },
+      },
+      {
+        $unwind: {
+          path: "$staff",
+          preserveNullAndEmptyArrays: true
+        },
       },
       {
         $project: {
           _id: 1,
           account_id: 1,
-          business_owner: 1,
           owner_id: "$owner._id",
           owner_password: "$owner.password",
+          staff_id: "$staff._id",
+          staff_password: "$staff.password",
+          staff_privileges: '$staff.privileges',
+          staff_facility: '$staff.facility_id',
+          staff_terminated: '$staff.terminated'
         },
       },
     ]);
-    if (result != null) {
-      // compare the passwords to see if they are the same
-      const isValidPassword = await bcrypt.compareSync(
-        password,
-        result[0].owner_password
-      );
-      if (!isValidPassword) {
-        return { message: "wrong password, please try again" };
-      }
-      // create and assign a token
-      const token = jwt.sign({ _id: result[0].owner_id }, "secret");
-      return { token, owner_id: result[0].owner_id };
-    }
-    return { message: "wrong password or account id, please try again" };
+    return await _getLoggedInUserType(result, password);
+    
   } catch (error) {
     return { message: "an error occurred, please try again" };
   }
 }
 
+async function _getLoggedInUserType(result, password) {
+  if (!result) return { status: 'failed', message: 'please provide correct credentials' }
+
+  let isValidPassword = false;
+  let token;
+
+  if (result[0].owner_id) {
+    // user logged in is the owner
+    isValidPassword = await bcrypt.compareSync(
+      password,
+      result[0].owner_password
+    );
+    token = jwt.sign({ _id: result[0].owner_id }, "secret");
+  } else if (result[0].staff_id) {
+
+    // check if staff is inactive / terminated
+    if (result[0].staff_terminated) {
+      return { status: 'failed', message: 'you do not have access right' }
+    }
+
+    isValidPassword = await bcrypt.compareSync(
+      password,
+      result[0].staff_password
+    );
+    token = jwt.sign({ _id: result[0].staff_id }, "secret");
+  }
+
+  if (!isValidPassword) {
+    return { status: 'failed', message: "wrong password, please try again" };
+  }
+  
+  return { token, data: result[0] }
+}
 module.exports = {
   createBusinessOwner,
   loginBusinessOwner,

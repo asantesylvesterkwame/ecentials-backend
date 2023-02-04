@@ -132,7 +132,7 @@ const staffSchema = new mongoose.Schema(
       default: "Staff",
     },
     privileges: [],
-    is_active: {
+    terminated: {
       type: Boolean,
       default: false
     }

@@ -8,7 +8,11 @@ const accountID = new mongoose.Schema({
     },
     business_owner: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: false
+    },
+    staff: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: false,
     }
 });
 
