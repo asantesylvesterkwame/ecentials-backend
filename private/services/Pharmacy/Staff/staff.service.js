@@ -2,6 +2,10 @@ const { encryptPassword } = require("../../../helpers/functions");
 const Staff = require("../../../schemas/Staff");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 const ObjectId = require("mongoose").Types.ObjectId;
+const AccountID = require("../../../schemas/AccountID");
+const StaffAccount = require("../../../helpers/staff_account_created");
+const sendMail = require("../../send_email");
+
 
 // get all the staff registered to a pharmacy
 async function getPharmacyStaff({ facility_id }) {
@@ -37,9 +41,16 @@ async function createPharmacyStaff({ req }) {
       cv: cv_url,
       certificate: certificate_url,
       password: encryptPassword(req.body.password),
+      employee_id,
     });
 
     if (result != null) {
+      await _sendEmail({
+        email: req.body.email, 
+        accountID: employee_id,
+        staffID: result._id
+      });
+
       return { message: "success", data: result };
     }
 
@@ -52,6 +63,30 @@ async function createPharmacyStaff({ req }) {
 function _generateEmployeeID(req) {
   let id = req.body.first_name.substring(0, 1) + req.body.last_name;
   return id + (Math.floor(Math.random() * 1000) + 1).toString();
+}
+
+async function _sendEmail({ email, accountID, staffID }) {
+  let mail_body = StaffAccount(
+    accountID,
+    "imgs/logo_ios.png",
+    "not-me-password-reset"
+  );
+  sendMail(email, mail_body)
+    .then((result) => {
+      // create a record for the accountID which would be later
+      // used for verification.
+      AccountID.create(
+        { account_id: accountID, staff: staffID },
+        (err, _) => {
+          if (err) {
+            throw new Error("failed to save account id");
+          }
+        }
+      );
+    })
+    .catch((err) => {
+      throw Error("failed to send mail");
+    });
 }
 
 // get a count of the pharmacy staffs
@@ -128,7 +163,7 @@ async function terminateStaff(req) {
         facility_id: ObjectId(req.body.facility_id),
         _id: ObjectId(req.body.staff_id),
       },
-      { $set: { is_active: false } }
+      { $set: { terminated: true } }
     );
     if (result.modifiedCount > 0) {
       return { status: "success", message: "staff successfully terminated" };
