@@ -9,7 +9,7 @@ const drugSchema = new mongoose.Schema(
     },
     category_id: {
       type: mongoose.SchemaTypes.ObjectId,
-      required: true,
+      required: false,
       ref: "drugcategories",
     },
     name: {
