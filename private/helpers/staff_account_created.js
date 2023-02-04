@@ -144,7 +144,7 @@ const StaffAccount = (account_id, appLogo, notMeLink) =>{
                                                                     <h1
                                                                         style="margin: 0; color: #000000; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 38px; font-weight: 700; letter-spacing: normal; line-height: 150%; text-align: center; margin-top: 0; margin-bottom: 0;">
                                                                         <span class="tinyMce-placeholder"
-                                                                            style="color: #fcfaf7;">New Business Account
+                                                                            style="color: #fcfaf7;">New Employee Account
                                                                             Setup</span></h1>
                                                                 </td>
                                                             </tr>
@@ -217,7 +217,7 @@ const StaffAccount = (account_id, appLogo, notMeLink) =>{
                                                                     style="padding-bottom:10px;padding-top:35px;text-align:center;width:100%;">
                                                                     <h3
                                                                         style="margin: 0; color: #000000; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 25px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
-                                                                        <strong><span class="tinyMce-placeholder">Account ID:
+                                                                        <strong><span class="tinyMce-placeholder">Employee ID:
                                                                                 ${account_id}</span></strong></h3>
                                                                 </td>
                                                             </tr>
@@ -235,7 +235,7 @@ const StaffAccount = (account_id, appLogo, notMeLink) =>{
                                                                             <p
                                                                                 style="margin: 0; text-align: center; font-size: 17px; mso-line-height-alt: 25.5px;">
                                                                                 <span style="font-size:17px;">Please use this
-                                                                                    account id to login into your account.
+                                                                                    account id with your password to login into your account.
                                                                                     </span></p>
                                                                         </div>
                                                                     </div>
