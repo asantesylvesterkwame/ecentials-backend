@@ -114,9 +114,29 @@ async function createOrderItem(req) {
   }
 }
 
+async function cancelOrder(req) {
+  try {
+    const result = await Orders.updateOne({
+      user_id: req.user._id,
+      _id: req.body.order_id
+    }, {
+      $set: {
+        order_status: "Cancelled"
+      }
+    });
+    if (result.modifiedCount > 0) {
+      return { status: 'success', message: 'order cancelled successfully' }
+    }
+    return { status: 'failed', message: 'failed to cancel order' }
+  } catch (error) {
+    return { status: 'error', message: 'an error occurred, please try again' }
+  }
+}
+
 module.exports = {
   generateOrderCode,
 
   generateInvoiceNumber,
   createOrderItem,
+  cancelOrder
 };
