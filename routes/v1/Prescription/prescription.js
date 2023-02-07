@@ -5,7 +5,7 @@ const multer = require("multer");
 const Prescription = require("../../../private/schemas/Prescription");
 const { verify } = require("../../../verifyToken");
 const {
-  uploadPrescription, getUserPrescription, deleteUserPrescription,
+  uploadPrescription, getUserPrescription, deleteUserPrescription, getPrescriptionsSentToPharmacy,
 } = require("../../../private/services/Prescription/user_prescription.service");
 
 const storage = multer.memoryStorage();
@@ -73,7 +73,7 @@ router.get('/user-prescriptions', verify, async (req, res, next) => {
 router.delete('/remove-user-prescription', verify, async (req, res, next) => {
   const user_id = req.user._id;
   const { prescription_id } = req.body;
-  console.log(user_id);
+  
   try {
     return res.status(200).json(await deleteUserPrescription({ prescription_id, user_id }));
   } catch (error) {
@@ -81,5 +81,16 @@ router.delete('/remove-user-prescription', verify, async (req, res, next) => {
   }
 });
 
+router.post('/get-prescriptions-for-pharmacy', verify, async (req, res, next) => {
+  try {
+    const result = await getPrescriptionsSentToPharmacy(req);
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
