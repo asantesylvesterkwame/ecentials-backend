@@ -4,6 +4,8 @@ const Prescription = require("../../schemas/Prescription");
 const { uploadFile } = require("../Firebase/imageUpload.service");
 const { getPharmacyDetails } = require("../Pharmacy/Information/information.service");
 
+const ObjectId = require('mongoose').Types.ObjectId;
+
 // pescription to pharmacy
 async function uploadPrescription({ user_id, store_id, file }) {
   try {
@@ -55,9 +57,46 @@ async function deleteUserPrescription({ prescription_id, user_id }) {
   }
 }
 
+// get all prescriptions sent to a particular pharmacy
+async function getPrescriptionsSentToPharmacy(req) {
+  try {
+    const result = await Prescription.aggregate([
+      { $match: { store_id: ObjectId(req.body.store_id) }},
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'user_id',
+          foreignField: '_id',
+          as: 'user'
+        }
+      },
+      {
+        $unwind: {
+          path: '$user',
+          preserveNullAndEmptyArrays: true
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          status: 1,
+          image: 1,
+          "user_name": '$user.personal.name',
+          "user_phone": '$user.personal.phone',
+          'user_email': '$user.email',
+          'user_address': '$user.personal.address'
+        }
+      }
+    ])
+    return { status: 'success', message: 'retrieved successfully', data: result };
+  } catch (error) {
+    return { status: 'error', message: 'an error occurred, please try again' };
+  }
+}
 
 module.exports = {
   uploadPrescription,
   getUserPrescription,
-  deleteUserPrescription
+  deleteUserPrescription,
+  getPrescriptionsSentToPharmacy
 };
