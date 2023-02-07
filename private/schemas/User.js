@@ -27,7 +27,10 @@ const userSchema = new mongoose.Schema({
         type: Number, 
         required: false
     },
-   
+    has_shop: {
+        type: Number,
+        required: false,
+    }, 
     personal: {
         name: String, 
         phone: String, 
@@ -45,7 +48,22 @@ const userSchema = new mongoose.Schema({
             default: Date.now
         } 
     },
-   
+    health: {
+        pin: String, 
+        blood_group: String, 
+        genotype: String, 
+        alergies: Array, 
+        medical_id_no: String, 
+        pulse_rate: Number, 
+        respiration_rate: Number, 
+        blood_pressure: String, 
+        temperature: Number, 
+        nhis_no: String,
+        date: {
+            type: Date, 
+            default: Date.now
+        }
+    },
     // education: [mongoose.SchemaTypes.ObjectId],
     education: [{
         school_name: {
@@ -72,7 +90,8 @@ const userSchema = new mongoose.Schema({
     fcm_token: {
         type: String,
         required: false
-    }
+    },
+    primary_doctors: []
 })
 
 module.exports = mongoose.model("User", userSchema)
