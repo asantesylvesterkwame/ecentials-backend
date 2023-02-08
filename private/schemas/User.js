@@ -49,7 +49,7 @@ const userSchema = new mongoose.Schema({
         } 
     },
     health: {
-        pin: String, 
+        pin: Number, 
         blood_group: String, 
         genotype: String, 
         alergies: Array, 
