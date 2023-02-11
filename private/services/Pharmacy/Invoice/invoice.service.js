@@ -30,10 +30,10 @@ async function addInvoice({ req }) {
     });
     const { products_summary } = req.body;
     products_summary.forEach(
-      async ({ drug_id, quantity }) =>
+      async ({ _id, quantity }) =>
         await Drug.updateOne(
           {
-            _id: drug_id,
+            _id: _id,
           },
           { $inc: { total_stock: -quantity } }
         )
