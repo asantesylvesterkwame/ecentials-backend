@@ -53,7 +53,7 @@ const ordersSchema = new mongoose.Schema(
     },
     delivery_date: {
       type: String,
-      required: true,
+      required: false,
     },
     delivery_method: {
       type: String,
@@ -66,7 +66,7 @@ const ordersSchema = new mongoose.Schema(
     },
     shipping_fee: {
       type: Number,
-      required: true,
+      required: false,
     },
     note: {
       type: String,
