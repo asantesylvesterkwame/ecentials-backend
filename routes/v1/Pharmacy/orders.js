@@ -10,7 +10,7 @@ const {
   fetchUsersName,
 } = require("../../../private/services/User/Account/account.service");
 const {
-  cancelOrder, approveOrder,
+  cancelOrder, approveOrder, updateOrderStatus, createOrderForUser,
 } = require("../../../private/services/Pharmacy/Orders/orders.service");
 // const { fetchDrugName } = require("../../../private/services/Pharmacy/Drug/drug.service");
 
@@ -176,5 +176,29 @@ router.post("/fetch-sales", verify, async (req, res) => {
     return res.status(200).json({ message: "success", data: result });
   }).clone();
 });
+
+router.post('/update-order-status', verify, async (req, res, next) => {
+  try {
+    const result = await updateOrderStatus(req);
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post('/create-order-for-user', verify, async (req, res, next) => {
+  try {
+    const result = await createOrderForUser({ req });
+    if (result.status === 'success') {
+      return res.status(201).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
+})
 
 module.exports = router;
