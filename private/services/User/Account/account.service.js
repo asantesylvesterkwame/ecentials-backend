@@ -40,7 +40,17 @@ async function fetchUsersName(user_id){
     }
 }
 
+async function findUserById(id) {
+    try {
+        const result = User.findById(id);
+        return result
+    } catch (error) {
+        throw new Error('failed to load user')
+    }
+}
+
 module.exports = {
     uploadProfileImage, 
-    fetchUsersName
+    fetchUsersName,
+    findUserById
 }
