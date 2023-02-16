@@ -81,6 +81,7 @@ async function getPrescriptionsSentToPharmacy(req) {
           _id: 1,
           status: 1,
           image: 1,
+          "user_id": '$user._id',
           "user_name": '$user.personal.name',
           "user_phone": '$user.personal.phone',
           'user_email': '$user.email',
