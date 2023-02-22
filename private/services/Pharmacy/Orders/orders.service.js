@@ -49,7 +49,7 @@ async function approveOrder({ req }) {
       { $set: { order_status: "Approved" } }
     );
     const user = await _getUser(order_code);
-
+    
     const sendNotification = sendFCMessage(
       user.user_token,
       "Order approved",
@@ -147,10 +147,14 @@ async function createOrderForUser({ req }) {
 
     const user = await findUserById(req.body.user_id);
 
+    const data = {
+      "launch_url":"prescription_pay",
+    }
     const sendNotification = sendFCMessage(
       user.fcm_token,
       "Order approved",
-      "your order has been approved, please update relevant information"
+      "your order has been approved, please update relevant information",
+      data
     );
 
     const createNotification = _createNewNotification(
