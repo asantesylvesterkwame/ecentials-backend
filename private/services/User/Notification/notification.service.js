@@ -14,13 +14,14 @@ async function setFCMToken(req) {
   }
 }
 
-async function sendFCMessage(fcmToken, title, message) {
+async function sendFCMessage(fcmToken, title, message, data={}) {
   try {
     var payload = {
       notification: {
         title: title,
         body: message,
       },
+      data
     };
     admin.messaging().sendToDevice(fcmToken, payload, {
       priority: "high",
