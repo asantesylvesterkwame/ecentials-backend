@@ -3,6 +3,10 @@ const router = require('express').Router();
 const { verify } = require('../../../verifyToken');
 const Appointments = require('../../../private/schemas/Appointments');
 const { getUserAppointments, cancelUserAppointment } = require('../../../private/services/User/Appointments/appointments.service');
+const sendMail = require('../../../private/services/send_email');
+const { findUserById } = require('../../../private/services/User/Account/account.service');
+const BaseTemplate = require('../../../private/helpers/base_mail');
+const getFacility = require('../../../private/helpers/get_facility');
 
 
 router.post('', verify, async (req, res, next) => {
@@ -25,7 +29,7 @@ router.post('', verify, async (req, res, next) => {
 
 
 // create a new user appointment
-router.post('/book-an-appointment', verify, async (req, res) => {
+router.post('/book-an-appointment', verify, async (req, res, next) => {
     const user_id = req.user._id;
     const {
         staff_id,
@@ -42,14 +46,34 @@ router.post('/book-an-appointment', verify, async (req, res) => {
         return res.status(400).json({ message: 'provide a current or future date' })
     }
 
-    await Appointments.create({
-        user_id, staff_id, date, time, status, facility_id, facility_type
-    }, (err, result) => {
-        if (err) {
-            return res.status(400).json({ message: "Failed to book appointment. Try again later", err });
-        }
-        return res.status(200).json({ message: "success", data: result });
-    });
+    try {
+        await Appointments.create({
+            user_id, staff_id, date, time, status, facility_id, facility_type
+        }, async (err, result) => {
+            if (err) {
+                return res.status(400).json({ message: "Failed to book appointment. Try again later", err });
+            }
+            
+            const user_email = await findUserById(user_id);
+            const facility_name = await getFacility(facility_id, facility_type);
+            const appointment_date = new Date(date);
+            
+            const email_body = BaseTemplate(
+                'New Appointment Scheduled',
+                'Appointment details',
+                `Facility name: ${facility_name.name}, 
+                    date: ${appointment_date.toDateString()} at ${appointment_date.toLocaleTimeString()}`,
+                "imgs/logo_ios.png",
+                "not-me-password-reset"
+            );
+
+            await sendMail(user_email.email, email_body);
+                
+            return res.status(200).json({ message: "success", data: result });
+        });
+    } catch (error) {
+        next(error);
+    }
 });
 
 
