@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
+const { default: sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
 const Notification = require("../../../schemas/Notification");
 const { findUserById } = require("../../User/Account/account.service");
 const {
@@ -124,6 +125,15 @@ async function updateOrderStatus(req) {
     );
 
     if (result.modifiedCount > 0) {
+      const user = await _getUser(order_code);
+      
+      sendAndCreateNotification(
+        user.user_token,
+        user.user_id,
+        "Order status",
+        `your order status: ${req.body.order_status}`
+      );
+      
       return { status: 'success', message: 'order status updated successfully' }
     }
     return { status: 'failed', message: 'failed to update order status' }
