@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
-const { default: sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
+const { sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
 const Notification = require("../../../schemas/Notification");
 const { findUserById } = require("../../User/Account/account.service");
 const {

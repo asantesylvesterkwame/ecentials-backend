@@ -3,7 +3,7 @@ const {
 } = require("../services/User/Notification/notification.service");
 const Notification = require("../schemas/Notification");
 
-export default async function sendAndCreateNotification(
+async function sendAndCreateNotification(
   user_token,
   user_id,
   title,
@@ -34,3 +34,5 @@ async function _createNewNotification(user_id, title, message) {
     throw new Error(error);
   }
 }
+
+module.exports = sendAndCreateNotification;
