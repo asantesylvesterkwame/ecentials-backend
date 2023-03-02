@@ -270,7 +270,7 @@ router.post('/health-pin', verify, async (req, res) => {
                 _id: user_id
             }, {
                 $set: {
-                    "health.pin": encryptPassword(pin)
+                    "health.pin": encryptPassword(pin.toString())
                 }
             })
             return res.json({
@@ -279,7 +279,7 @@ router.post('/health-pin', verify, async (req, res) => {
             })
         }
         //compare them
-        const validPin = await bcrypt.compareSync(pin, checkIfExists.health.pin)
+        const validPin = await bcrypt.compareSync(pin.toString(), checkIfExists.health.pin)
         if (!validPin) return res.json({
             status: 400,
             message: "Invalid pin"
