@@ -10,7 +10,10 @@ const {
   fetchUsersName,
 } = require("../../../private/services/User/Account/account.service");
 const {
-  cancelOrder, approveOrder, updateOrderStatus, createOrderForUser,
+  cancelOrder,
+  approveOrder,
+  updateOrderStatus,
+  createOrderForUser,
 } = require("../../../private/services/Pharmacy/Orders/orders.service");
 // const { fetchDrugName } = require("../../../private/services/Pharmacy/Drug/drug.service");
 
@@ -72,7 +75,9 @@ router.post("/fetch-specific-orders", verify, async (req, res) => {
       order_details.invoice_number = element.invoice_number;
       order_details.payment_type = element.payment_type;
       order_details.order_code = element.order_code;
+      order_details.order_status = element.order_status;
       order_details.products_summary = element.products_summary;
+      order_details.createdAt = element.createdAt;
 
       if (orders)
         return res
@@ -94,10 +99,10 @@ router.post("/cancel-an-order", async (req, res, next) => {
 });
 
 // approve an order placed to a particular pharmacy
-router.post('/approve-order', verify, async (req, res, next) => {
+router.post("/approve-order", verify, async (req, res, next) => {
   try {
     const result = await approveOrder({ req });
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(200).json(result);
     }
     return res.status(400).json(result);
@@ -177,10 +182,10 @@ router.post("/fetch-sales", verify, async (req, res) => {
   }).clone();
 });
 
-router.post('/update-order-status', verify, async (req, res, next) => {
+router.post("/update-order-status", verify, async (req, res, next) => {
   try {
     const result = await updateOrderStatus(req);
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(200).json(result);
     }
     return res.status(400).json(result);
@@ -189,16 +194,16 @@ router.post('/update-order-status', verify, async (req, res, next) => {
   }
 });
 
-router.post('/create-order-for-user', verify, async (req, res, next) => {
+router.post("/create-order-for-user", verify, async (req, res, next) => {
   try {
     const result = await createOrderForUser({ req });
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(201).json(result);
     }
     return res.status(400).json(result);
   } catch (error) {
     next(error);
   }
-})
+});
 
 module.exports = router;
