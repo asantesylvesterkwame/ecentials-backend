@@ -9,8 +9,7 @@ const ordersSchema = new mongoose.Schema(
     user_id: {
       type: mongoose.SchemaTypes.ObjectId,
       required: true,
-    },
-    
+    },  
     order_code: {
       type: String,
       required: false,

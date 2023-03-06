@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { verify } = require("../../../../verifyToken");
 const {
   fetchSalesPayment,
+  fetchDaySales,
 } = require("../../../../private/services/Pharmacy/Sales/sales.service");
 
 // Fetch Orders that are fulfilled (SALES)
@@ -16,5 +17,23 @@ router.post("/sales-payment", verify, async (req, res, next) => {
     next(error);
   }
 });
+
+// Can be sales for the week
+router.post("/sales-today", verify, async (req, res, next) => {
+  try {
+    return res.status(201).json(await fetchDaySales({ req }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+// sales for a month
+router.post("/monthly-sales", verify, async (req, res, next) => {
+  try {
+      return res.status(201).json(await fetchMonthSales({ req }));
+    } catch (error) {
+      next(error);
+    }
+})
 
 module.exports = router;

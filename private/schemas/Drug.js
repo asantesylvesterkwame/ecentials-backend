@@ -64,6 +64,11 @@ const drugSchema = new mongoose.Schema(
       required: true,
       default: "N/A",
     },
+    otc: {
+      type: String,
+      required: true,
+      default: "N/A",
+    },
     expiry_date: {
       type: Date,
       required: true,
