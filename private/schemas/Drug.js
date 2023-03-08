@@ -22,7 +22,7 @@ const drugSchema = new mongoose.Schema(
     },
     selling_price: {
       type: Number,
-      required: true,
+      required: false,
     },
     description: {
       type: String,
@@ -30,7 +30,7 @@ const drugSchema = new mongoose.Schema(
     },
     medicine_group: {
       type: String,
-      required: true,
+      required: false,
     },
     dosage: {
       type: String,
@@ -61,7 +61,7 @@ const drugSchema = new mongoose.Schema(
     },
     nhis: {
       type: String,
-      required: true,
+      required: false,
       default: "N/A",
     },
     otc: {
@@ -75,7 +75,7 @@ const drugSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }
