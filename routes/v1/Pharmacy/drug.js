@@ -15,11 +15,13 @@ const {
   searchDefaultDrugs,
   fetchDefaultDrugs,
   deleteDrug,
+  uploadDrugsFromFile,
 } = require("../../../private/services/Pharmacy/Drug/drug.service");
 const { verify } = require("../../../verifyToken");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single("picture");
+const fileUpload = multer({ dest: 'uploads' }).single('file')
 
 // list all drugs associated to a particular pharmacy or shop
 router.post("", verify, async (req, res, next) => {
@@ -157,6 +159,23 @@ router.delete('/delete-drug', verify, async (req, res, next) => {
     const result = await deleteDrug(req);
     if (result.status === 'success') {
       return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
+})
+
+router.post('/upload-drugs-from-file', verify, fileUpload, async (req, res, next) => {
+  try {
+    if (!req.file) {
+      res.status(400).json({message: 'No file uploaded'});
+      return;
+    }
+
+    const result = await uploadDrugsFromFile(req);
+    if (result.status === 'success') {
+      return res.status(201).json(result);
     }
     return res.status(400).json(result);
   } catch (error) {
