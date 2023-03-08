@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const csvParser = require('csv-parser');
+const fs = require('fs')
 const { DRUG_RETURN_DATA, STORE_AND_CATEGORY_LOOKUP } = require("../../../helpers/constants");
 const DefaultDrug = require("../../../schemas/DefaultDrug");
 
@@ -345,6 +347,44 @@ async function deleteDrug(req) {
   }
 }
 
+// process drug upload file
+async function uploadDrugsFromFile(req) {
+  const results = [];
+  
+  try {
+    fs.createReadStream(req.file.path)
+      .pipe(csvParser({skipLines: 1, 
+        headers: ['name', 'dosage', 'total_stock', 'discount', 'nhis', 'expiry_date', 'manufacturer', 'selling_price', 'price', 'description', 'image']}))
+      .on('data', (data) => {
+        const data_with_store_id = {
+          store_id: req.body.store_id,
+          name: data['name'],
+          dosage: data['dosage'],
+          total_stock: parseInt(data['total_stock']),
+          discount: parseFloat(data['discount']),
+          nhis: data['nhis'],
+          expiry_date: new Date(data['expiry_date']),
+          manufacturer: data['manufacturer'],
+          selling_price: parseFloat(data['selling_price']),
+          price: parseFloat(data['price']),
+          description: data['description'],
+          image: data['image'],
+        }
+        results.push(data_with_store_id)
+      })
+      .on('end', async () => {
+        const res = await Drug.insertMany(results);
+      })
+      return { 
+        status: 'success', 
+        message: 'successfully uploaded drugs',
+      }
+  } catch (error) {
+    console.log(error);
+    return { status: 'error', message: 'an error occurred, please try again' };
+  }
+}
+
 module.exports = {
   searchDrugInSpecificPharmacy,
   addDrugToInventory,
@@ -357,5 +397,6 @@ module.exports = {
   searchDrug,
   searchDefaultDrugs,
   fetchDefaultDrugs,
-  deleteDrug
+  deleteDrug,
+  uploadDrugsFromFile
 };
