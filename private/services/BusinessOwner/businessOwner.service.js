@@ -122,11 +122,14 @@ async function loginBusinessOwner({ account_id, password }) {
           account_id: 1,
           owner_id: "$owner._id",
           owner_password: "$owner.password",
+          owner_name: '$owner.full_name',
           staff_id: "$staff._id",
           staff_password: "$staff.password",
           staff_privileges: '$staff.privileges',
           staff_facility: '$staff.facility_id',
-          staff_terminated: '$staff.terminated'
+          staff_terminated: '$staff.terminated',
+          staff_first_name: '$staff.first_name',
+          staff_last_name: '$staff.last_name'
         },
       },
     ]);
