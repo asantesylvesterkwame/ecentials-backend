@@ -44,8 +44,21 @@ async function updateCustomer({ req }) {
   }
 }
 
+async function deleteCustomer(req) {
+  try {
+    await Customer.findByIdAndDelete(req.body.customer_id);
+    return { 
+      status: 'success', 
+      message: 'deleted customer successfully'
+    };
+  } catch (error) {
+    return { status: 'error', message: 'an error occurred' };
+  }
+}
+
 module.exports = { 
   createCustomer, 
   fetchCustomers,
-  updateCustomer 
+  updateCustomer,
+  deleteCustomer,
 };
