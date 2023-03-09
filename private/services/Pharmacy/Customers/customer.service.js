@@ -25,4 +25,27 @@ async function fetchCustomers({ facility_id }) {
   }
 }
 
-module.exports = { createCustomer, fetchCustomers };
+async function updateCustomer({ req }) {
+  try {
+    const result = await Customer.updateOne({
+      _id: req.body.customer_id
+    }, {
+      ...req.body
+    })
+    if (result.modifiedCount > 0) {
+      return { 
+        status: 'success',
+        message: 'customer information updated'
+      }
+    }
+    return { status: 'fail', message: 'failed to update customer information'};
+  } catch (error) {
+    return { status: 'error', message: 'an error occurred' };
+  }
+}
+
+module.exports = { 
+  createCustomer, 
+  fetchCustomers,
+  updateCustomer 
+};
