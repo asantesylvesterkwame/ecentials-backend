@@ -3,6 +3,7 @@ const { verify } = require("../../../../verifyToken");
 const {
   fetchSalesPayment,
   fetchDaySales,
+  fetchWeeklySales,
 } = require("../../../../private/services/Pharmacy/Sales/sales.service");
 
 // Fetch Orders that are fulfilled (SALES)
@@ -34,6 +35,19 @@ router.post("/monthly-sales", verify, async (req, res, next) => {
     } catch (error) {
       next(error);
     }
+})
+
+// sales for the week
+router.post('/weekly-sales', verify, async (req, res, next) => {
+  try {
+    const result = await fetchWeeklySales(req);
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
 })
 
 module.exports = router;
