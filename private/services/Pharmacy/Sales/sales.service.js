@@ -1,3 +1,5 @@
+const ObjectId = require("mongoose").Types.ObjectId;
+
 const Invoice = require("../../../schemas/Invoice");
 const Orders = require("../../../schemas/Orders");
 
@@ -82,4 +84,38 @@ async function fetchMonthSales({ req }) {
   }
 }
 
-module.exports = { fetchSalesPayment, fetchDaySales };
+// get sales for every week
+async function fetchWeeklySales(req) {
+  try {
+    const result = await Invoice.aggregate([
+      {
+        $match: {
+          store_id: ObjectId(req.body.store_id),
+          createdAt: {
+            $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+          },
+        },
+      },
+      {
+        $group: {
+          _id: {
+            $dateToString: {
+              format: "%Y-%m-%d",
+              date: { $dateFromString: { dateString: "$date" } },
+            },
+          },
+          totalSales: { $sum: "$grand_total" },
+        },
+      },
+    ]);
+    return {
+      status: "success",
+      message: "weekly sales retrieved",
+      data: result,
+    };
+  } catch (error) {
+    return { status: "error", message: "an error occurred" };
+  }
+}
+
+module.exports = { fetchSalesPayment, fetchDaySales, fetchWeeklySales };
