@@ -3,6 +3,7 @@ const { verify } = require("../../../../verifyToken");
 const {
   createCustomer,
   fetchCustomers,
+  updateCustomer,
 } = require("../../../../private/services/Pharmacy/Customers/customer.service");
 
 // Add customers to pharmacy
@@ -24,4 +25,15 @@ router.post("/fetch-customers", verify, async (req, res, next) => {
   }
 });
 
+router.post('/update-customer', verify, async (req, res, next) => {
+  try {
+    const result = await updateCustomer({ req });
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
+})
 module.exports = router;
