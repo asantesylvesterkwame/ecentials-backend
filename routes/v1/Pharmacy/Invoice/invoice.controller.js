@@ -4,6 +4,7 @@ const { verify } = require("../../../../verifyToken");
 const {
   fetchInvoice,
   addInvoice,
+  deleteInvoice,
 } = require("../../../../private/services/Pharmacy/Invoice/invoice.service");
 
 // FETCH POS INVOICE
@@ -20,6 +21,18 @@ router.post("", verify, async (req, res, next) => {
 router.post("/add-invoice", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await addInvoice({ req }));
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/delete-invoice", verify, async (req, res, next) => {
+  try {
+    const result = await deleteInvoice(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
   } catch (error) {
     next(error);
   }
