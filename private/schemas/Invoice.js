@@ -90,4 +90,12 @@ const invoiceSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+invoiceSchema.index({
+  invoice_number: "text",
+  customer_name: "text",
+  order_code: "text",
+  payment_status: "text",
+  order_status: "text",
+});
+
 module.exports = mongoose.model("Invoice", invoiceSchema);
