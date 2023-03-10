@@ -54,4 +54,30 @@ async function deleteInvoice(req) {
   }
 }
 
-module.exports = { fetchInvoice, addInvoice, deleteInvoice };
+async function searchInvoice(req) {
+  try {
+    const searchText = req.body.searchText;
+    const filter = {
+      $or: [
+        { customer_name: { $regex: searchText, $options: "i" } },
+        { invoice_number: { $regex: searchText, $options: "i" } },
+        { order_code: { $regex: searchText, $options: "i" } },
+        { payment_status: { $regex: searchText, $options: "i" } },
+        { order_status: { $regex: searchText, $options: "i" } },
+      ],
+    };
+    const result = await Invoice.find(filter);
+    return {
+      status: "success",
+      message: "data retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: "an error occurred",
+    };
+  }
+}
+
+module.exports = { fetchInvoice, addInvoice, deleteInvoice, searchInvoice };
