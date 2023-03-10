@@ -190,9 +190,35 @@ async function createOrderForUser({ req }) {
   }
 }
 
+async function searchOrder(req) {
+  try {
+    const searchText = req.body.searchText;
+    const filter = {
+      $or: [
+        { invoice_number: { $regex: searchText, $options: "i" } },
+        { order_code: { $regex: searchText, $options: "i" } },
+        { payment_status: { $regex: searchText, $options: "i" } },
+        { order_status: { $regex: searchText, $options: "i" } },
+      ],
+    };
+    const result = await Orders.find(filter);
+    return {
+      status: "success",
+      message: "data retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: "an error occurred",
+    };
+  }
+}
+
 module.exports = {
   cancelOrder,
   approveOrder,
   updateOrderStatus,
-  createOrderForUser
+  createOrderForUser,
+  searchOrder
 };
