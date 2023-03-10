@@ -45,4 +45,13 @@ async function addInvoice({ req }) {
   }
 }
 
-module.exports = { fetchInvoice, addInvoice };
+async function deleteInvoice(req) {
+  try {
+    await Invoice.findByIdAndDelete(req.body.invoice_id);
+    return { status: "success", message: "invoice deleted successfully" };
+  } catch (error) {
+    return { status: "error", message: "an error occurred" };
+  }
+}
+
+module.exports = { fetchInvoice, addInvoice, deleteInvoice };
