@@ -66,4 +66,26 @@ async function fetchReturns({ store_id }) {
     return { message: error };
   }
 }
-module.exports = { addReturns, fetchReturns };
+
+async function searchReturns(req) {
+  try {
+    const searchText = req.body.searchText;
+    const filter = {
+      $or: [
+        { invoice_number: { $regex: searchText, $options: "i" } },
+      ],
+    };
+    const result = await Returns.find(filter);
+    return {
+      status: "success",
+      message: "data retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: "an error occurred",
+    };
+  }
+}
+module.exports = { addReturns, fetchReturns, searchReturns };
