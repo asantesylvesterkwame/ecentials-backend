@@ -36,6 +36,10 @@ const drugSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    level: {
+      type: String,
+      required: false,
+    },
     total_stock: {
       type: Number,
       required: false,
