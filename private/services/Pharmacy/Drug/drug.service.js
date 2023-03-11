@@ -354,7 +354,8 @@ async function uploadDrugsFromFile(req) {
   try {
     fs.createReadStream(req.file.path)
       .pipe(csvParser({skipLines: 1, 
-        headers: ['name', 'dosage', 'total_stock', 'discount', 'nhis', 'expiry_date', 'manufacturer', 'selling_price', 'price', 'description', 'image']}))
+        headers: ['name', 'medicine_group', 'total_stock', 'discount', 'nhis', 'expiry_date', 'manufacturer', 
+        'selling_price', 'price', 'description', 'image', 'level', 'dosage']}))
       .on('data', (data) => {
         const data_with_store_id = {
           store_id: req.body.store_id,
@@ -369,6 +370,8 @@ async function uploadDrugsFromFile(req) {
           price: parseFloat(data['price']),
           description: data['description'],
           image: data['image'],
+          medicine_group: data['medicine_group'],
+          level: data['level']
         }
         results.push(data_with_store_id)
       })
