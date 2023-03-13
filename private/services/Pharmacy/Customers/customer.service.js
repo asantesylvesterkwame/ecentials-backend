@@ -56,9 +56,36 @@ async function deleteCustomer(req) {
   }
 }
 
+async function searchCustomer(req) {
+  try {
+    const searchText = req.body.searchText;
+    const filter = {
+      $or: [
+        { name: { $regex: searchText, $options: "i" } },
+        { email: { $regex: searchText, $options: "i" } },
+        { city: { $regex: searchText, $options: "i" } },
+        { region: { $regex: searchText, $options: "i" } },
+        { country: { $regex: searchText, $options: "i" } },
+      ],
+    };
+    const result = await Customer.find(filter);
+    return {
+      status: "success",
+      message: "data retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    return {
+      status: "error",
+      message: "an error occurred",
+    };
+  }
+}
+
 module.exports = { 
   createCustomer, 
   fetchCustomers,
   updateCustomer,
   deleteCustomer,
+  searchCustomer
 };
