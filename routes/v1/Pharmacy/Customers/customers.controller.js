@@ -5,6 +5,7 @@ const {
   fetchCustomers,
   updateCustomer,
   deleteCustomer,
+  searchCustomer,
 } = require("../../../../private/services/Pharmacy/Customers/customer.service");
 
 // Add customers to pharmacy
@@ -49,5 +50,17 @@ router.delete('/delete-customer', verify, async (req, res, next) => {
     next(error);
   }
 })
+
+router.post('/search-customer', verify, async (req, res, next) => {
+  try {
+    const result = await searchCustomer(req);
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;
