@@ -25,4 +25,13 @@ async function fetchWholesaler() {
   }
 }
 
-module.exports = { createWholesaler, fetchWholesaler };
+async function deleteWholesaler(req) {
+  try {
+    await Wholesaler.findByIdAndDelete(req.body.wholesaler_id);
+    return { status: "success", message: "wholesaler deleted successfully" };
+  } catch (error) {
+    return { status: "error", message: "an error occurred" }
+  }
+}
+
+module.exports = { createWholesaler, fetchWholesaler, deleteWholesaler };
