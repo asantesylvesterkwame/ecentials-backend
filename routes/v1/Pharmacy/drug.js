@@ -21,7 +21,7 @@ const { verify } = require("../../../verifyToken");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single("picture");
-const fileUpload = multer({ dest: 'uploads' }).single('file')
+const fileUpload = multer({ dest: '/tmp' }).single('file')
 
 // list all drugs associated to a particular pharmacy or shop
 router.post("", verify, async (req, res, next) => {
