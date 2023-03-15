@@ -24,6 +24,7 @@ const sendMail = require('../../../private/services/send_email')
 const RecoveryCode = require('../../../private/schemas/RecoveryCode')
 const EMAILBODY = require('../../../private/helpers/mail_body')
 const { generateTokens, verifyRefreshToken } = require('../../../private/helpers/user_token')
+const BaseTemplate = require('../../../private/helpers/base_mail')
 
 dotenv.config()
 
@@ -47,7 +48,19 @@ router.post('/register', async (req, res) => {
     })
     try{
         const saveUser = await user.save()
-        if(saveUser) return res.json({status: 200, message:"User created successfully"})
+        if(saveUser) {
+            const email_body = BaseTemplate(
+                'Welcome to Ecentials',
+                'Your account has been created successfully',
+                `Login and get access to great healthcare services.`,
+                "imgs/logo_ios.png",
+                "not-me-password-reset"
+            );
+
+            await sendMail(email, email_body);
+            
+            return res.json({status: 200, message:"User created successfully"})
+        }
     }catch(err){
         return res.json({status: 400, message:err})
     }
