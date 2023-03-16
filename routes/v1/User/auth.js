@@ -173,13 +173,13 @@ router.post('/verify_code', async (req, res) => {
                 return res.status(400).json({ message: "Could not verify code. Please try again"})
             }
             
-            // determine whether the code was sent over 60 mins before
+            // determine whether the code was sent over 15 mins before
             // if so, the code is expired and hence cannot be used for the verification.
             let code_date = new Date(result.createdAt)
     
             let time_elapsed = current_date.getTime() - code_date.getTime();
     
-            if (Math.abs(time_elapsed / msInMinute) > 60) {
+            if (Math.abs(time_elapsed / msInMinute) > 15) {
                 return res.status(400).json({ message: "Code has expired. Please try again"})
             }
     
