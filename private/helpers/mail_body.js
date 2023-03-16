@@ -301,7 +301,7 @@ const EMAILBODY = (resetCode, appLogo, notMeLink) =>{
                                                                     <h3
                                                                         style="margin: 0; color: #0076da; direction: ltr; font-family: Poppins, Arial, Helvetica, sans-serif; font-size: 28px; font-weight: 400; letter-spacing: normal; line-height: 120%; text-align: center; margin-top: 0; margin-bottom: 0;">
                                                                         <span class="tinyMce-placeholder"
-                                                                            style="color: #0ed145;">Code expires in 60
+                                                                            style="color: #0ed145;">Code expires in 15
                                                                             minutes</span></h3>
                                                                 </td>
                                                             </tr>
