@@ -118,4 +118,4 @@ async function fetchWeeklySales(req) {
   }
 }
 
-module.exports = { fetchSalesPayment, fetchDaySales, fetchWeeklySales };
+module.exports = { fetchSalesPayment, fetchMonthSales, fetchDaySales, fetchWeeklySales };

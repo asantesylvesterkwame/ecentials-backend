@@ -1,7 +1,10 @@
 const mongoose = require("mongoose");
-const csvParser = require('csv-parser');
-const fs = require('fs')
-const { DRUG_RETURN_DATA, STORE_AND_CATEGORY_LOOKUP } = require("../../../helpers/constants");
+const csvParser = require("csv-parser");
+const fs = require("fs");
+const {
+  DRUG_RETURN_DATA,
+  STORE_AND_CATEGORY_LOOKUP,
+} = require("../../../helpers/constants");
 const DefaultDrug = require("../../../schemas/DefaultDrug");
 
 const ObjectId = mongoose.Types.ObjectId;
@@ -16,20 +19,20 @@ async function searchDrugInSpecificPharmacy({ search_text, store_id }) {
       {
         $match: {
           $or: [
-            { name: { $regex: search_text, '$options' : 'i' } },
-            { description: { $regex: search_text, '$options' : 'i' } },
-            { manufacturer: { $regex: search_text, '$options' : 'i' } },
+            { name: { $regex: search_text, $options: "i" } },
+            { description: { $regex: search_text, $options: "i" } },
+            { manufacturer: { $regex: search_text, $options: "i" } },
           ],
-          store_id: ObjectId(store_id)
-        }
+          store_id: ObjectId(store_id),
+        },
       },
       ...STORE_AND_CATEGORY_LOOKUP,
       {
         $project: {
-          ...DRUG_RETURN_DATA
-        }
-      }
-    ])
+          ...DRUG_RETURN_DATA,
+        },
+      },
+    ]);
 
     if (results) {
       return { message: "success", data: results };
@@ -66,16 +69,16 @@ async function fetchAllPharmacyDrugs({ req }) {
     const drugs = await Drug.aggregate([
       {
         $match: {
-          store_id: ObjectId(req.body.store_id)
-        }
+          store_id: ObjectId(req.body.store_id),
+        },
       },
       ...STORE_AND_CATEGORY_LOOKUP,
       {
         $project: {
-          ...DRUG_RETURN_DATA
-        }
-      }
-    ])
+          ...DRUG_RETURN_DATA,
+        },
+      },
+    ]);
     return { message: "success", data: drugs };
   } catch (error) {
     return { message: "an error occurred, please try again" };
@@ -130,9 +133,9 @@ async function getDrugInformation({ req }) {
       },
       {
         $project: {
-          ...DRUG_RETURN_DATA
-        }
-      }
+          ...DRUG_RETURN_DATA,
+        },
+      },
     ]);
     return { message: "success", data: drug };
   } catch (error) {
@@ -144,10 +147,10 @@ async function getDrugInformation({ req }) {
 async function getPopularDrugs() {
   try {
     const result = await Drug.aggregate([
-      { 
-        $match: { 
-          total_stock: { $gt: 0 }
-        }
+      {
+        $match: {
+          total_stock: { $gt: 0 },
+        },
       },
       {
         $lookup: {
@@ -179,9 +182,9 @@ async function getPopularDrugs() {
       },
       {
         $project: {
-          ...DRUG_RETURN_DATA
-        }
-      }
+          ...DRUG_RETURN_DATA,
+        },
+      },
     ])
       .sort({ views: -1 })
       .limit(5);
@@ -229,50 +232,54 @@ async function updateDrugDetail({ req }) {
 
 // list top drugs in a pharmacy
 async function getPopularDrugsInPharmacy({ req }) {
-    try {
-        const result = await Drug.aggregate([
-            { $match: { store_id: ObjectId(req.body.store_id) }},
-            {
-                $lookup: {
-                  from: "drugcategories",
-                  localField: "category_id",
-                  foreignField: "_id",
-                  as: "category",
-                },
-            },
-            {
-                $unwind: {
-                    path: "$category",
-                    preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-                $lookup: {
-                    from: "stores",
-                    localField: "store_id",
-                    foreignField: "_id",
-                    as: "store",
-                },
-            },
-            {
-                $unwind: {
-                  path: "$store",
-                  preserveNullAndEmptyArrays: true,
-                },
-            },
-            {
-              $project: {
-                ...DRUG_RETURN_DATA
-              }
-            }
-        ])
-        .sort({ views: -1 })
-        .limit(100);
+  try {
+    const result = await Drug.aggregate([
+      { $match: { store_id: ObjectId(req.body.store_id) } },
+      {
+        $lookup: {
+          from: "drugcategories",
+          localField: "category_id",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      {
+        $unwind: {
+          path: "$category",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "stores",
+          localField: "store_id",
+          foreignField: "_id",
+          as: "store",
+        },
+      },
+      {
+        $unwind: {
+          path: "$store",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          ...DRUG_RETURN_DATA,
+        },
+      },
+    ])
+      .sort({ views: -1 })
+      .limit(100);
 
-        return { status: 'success', message: 'successfully found drugs', data: result}
-    } catch (error) {
-        return { status: 'error', message: 'an error occurred, please try again' }
-    }
+    return {
+      status: "success",
+      message: "successfully found drugs",
+      data: result,
+    };
+  } catch (error) {
+    return { status: "error", message: "an error occurred, please try again" };
+  }
 }
 
 // search drug on system
@@ -282,22 +289,26 @@ async function searchDrug(req) {
       {
         $match: {
           $or: [
-            { name: { $regex: req.body.search_text, '$options' : 'i' } },
-            { description: { $regex: req.body.search_text, '$options' : 'i' } },
-            { manufacturer: { $regex: req.body.search_text, '$options' : 'i' } },
-          ]
-        }
+            { name: { $regex: req.body.search_text, $options: "i" } },
+            { description: { $regex: req.body.search_text, $options: "i" } },
+            { manufacturer: { $regex: req.body.search_text, $options: "i" } },
+          ],
+        },
       },
       ...STORE_AND_CATEGORY_LOOKUP,
       {
         $project: {
-          ...DRUG_RETURN_DATA
-        }
-      }
-    ])
-    return { status: 'success', message: 'drug search successful', data: result }
+          ...DRUG_RETURN_DATA,
+        },
+      },
+    ]);
+    return {
+      status: "success",
+      message: "drug search successful",
+      data: result,
+    };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred, please try again' }
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
@@ -307,84 +318,106 @@ async function searchDefaultDrugs(req) {
       {
         $match: {
           $or: [
-            { name: { $regex: req.body.search_text, '$options' : 'i' } },
-            { drug_code: { $regex: req.body.search_text, '$options' : 'i' } },
-            { unit_of_pricing: { $regex: req.body.search_text, '$options' : 'i' } },
-            { dosage_form: { $regex: req.body.search_text, '$options' : 'i' } },
-          ]
-        }
+            { name: { $regex: req.body.search_text, $options: "i" } },
+            { drug_code: { $regex: req.body.search_text, $options: "i" } },
+            {
+              unit_of_pricing: { $regex: req.body.search_text, $options: "i" },
+            },
+            { dosage_form: { $regex: req.body.search_text, $options: "i" } },
+          ],
+        },
       },
-    ])
-    return { 
-      status: 'success', 
-      message: 'successfully retrieved default drugs', 
-      data: result 
-    }
+    ]);
+    return {
+      status: "success",
+      message: "successfully retrieved default drugs",
+      data: result,
+    };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred, please try again' }
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
 async function fetchDefaultDrugs() {
   try {
-    const result = await DefaultDrug.find({})
-    return { 
-      status: 'success', 
-      message: 'drugs fetched successful', 
-      data: result 
-    }
+    const result = await DefaultDrug.find({});
+    return {
+      status: "success",
+      message: "drugs fetched successful",
+      data: result,
+    };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred' }
+    return { status: "error", message: "an error occurred" };
   }
 }
 
 async function deleteDrug(req) {
   try {
     await Drug.findByIdAndDelete(req.body.drug_id);
-    return { status: 'success', message: 'drug deleted successfully' }
+    return { status: "success", message: "drug deleted successfully" };
   } catch (error) {
-    return { status: 'failed', message: 'an error occurred while deleting drug'}
+    return {
+      status: "failed",
+      message: "an error occurred while deleting drug",
+    };
   }
 }
 
 // process drug upload file
 async function uploadDrugsFromFile(req) {
   const results = [];
-  
+
   try {
     fs.createReadStream(req.file.path)
-      .pipe(csvParser({skipLines: 1, 
-        headers: ['name', 'medicine_group', 'total_stock', 'discount', 'nhis', 'expiry_date', 'manufacturer', 
-        'selling_price', 'price', 'description', 'image', 'level', 'dosage']}))
-      .on('data', (data) => {
+      .pipe(
+        csvParser({
+          skipLines: 1,
+          headers: [
+            "name",
+            "medicine_group",
+            "total_stock",
+            "discount",
+            "nhis",
+            "expiry_date",
+            "manufacturer",
+            "selling_price",
+            "price",
+            "description",
+            "image",
+            "level",
+            "dosage",
+          ],
+        })
+      )
+      .on("data", (data) => {
         const data_with_store_id = {
           store_id: req.body.store_id,
-          name: data['name'],
-          dosage: data['dosage'],
-          total_stock: parseInt(data['total_stock']),
-          discount: parseFloat(data['discount']),
-          nhis: data['nhis'],
-          expiry_date: new Date(data['expiry_date']),
-          manufacturer: data['manufacturer'],
-          selling_price: parseFloat(data['selling_price']),
-          price: parseFloat(data['price']),
-          description: data['description'],
-          image: data['image'],
-          medicine_group: data['medicine_group'],
-          level: data['level']
-        }
-        results.push(data_with_store_id)
+          name: data["name"],
+          dosage: data["dosage"],
+          total_stock: parseInt(data["total_stock"]),
+          discount: parseFloat(data["discount"]),
+          nhis: data["nhis"],
+          expiry_date: new Date(data["expiry_date"]),
+          manufacturer: data["manufacturer"],
+          selling_price: parseFloat(data["selling_price"]),
+          price: parseFloat(data["price"]),
+          description: data["description"],
+          image: data["image"],
+          medicine_group: data["medicine_group"],
+          level: data["level"],
+        };
+        results.push(data_with_store_id);
       })
-      .on('end', async () => {
+      .on("end", async () => {
         const res = await Drug.insertMany(results);
-      })
-      return { 
-        status: 'success', 
-        message: 'successfully uploaded drugs',
-      }
+      });
+    return {
+      status: "success",
+      message: "successfully uploaded drugs",
+    };
   } catch (error) {
     console.log(error);
-    return { status: 'error', message: 'an error occurred, please try again' };
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
@@ -401,5 +434,5 @@ module.exports = {
   searchDefaultDrugs,
   fetchDefaultDrugs,
   deleteDrug,
-  uploadDrugsFromFile
+  uploadDrugsFromFile,
 };
