@@ -87,23 +87,23 @@ async function fetchMonthSales({ req }) {
 // get sales for every week
 async function fetchWeeklySales(req) {
   try {
+    const startDate = new Date(req.body.start_date);
+    const endDate = new Date(startDate);
+    endDate.setDate(endDate.getDate() + 7)
+
     const result = await Invoice.aggregate([
       {
         $match: {
           store_id: ObjectId(req.body.store_id),
           createdAt: {
-            $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000),
+            $gte: startDate,
+            $lte: endDate
           },
         },
       },
       {
         $group: {
-          _id: {
-            $dateToString: {
-              format: "%Y-%m-%d",
-              date: { $dateFromString: { dateString: "$date" } },
-            },
-          },
+          _id: null,
           totalSales: { $sum: "$grand_total" },
         },
       },
