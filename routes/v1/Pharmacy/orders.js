@@ -54,7 +54,10 @@ router.post("/fetch-specific-orders", verify, async (req, res) => {
         payment_type: 1,
         order_code: 1,
         products_summary: 1,
+        order_status: 1,
+        createdAt: 1
       }
+      
     );
 
     const order_details = new Object();

@@ -22,6 +22,8 @@ async function fetchSalesPayment({ req }) {
   }
 }
 
+
+
 // CALCULATE TOTAL SALES TODAY
 async function fetchDaySales({ req }) {
   const { shop_id } = req.body;
