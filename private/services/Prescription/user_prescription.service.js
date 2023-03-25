@@ -2,15 +2,17 @@
 
 const Prescription = require("../../schemas/Prescription");
 const { uploadFile } = require("../Firebase/imageUpload.service");
-const { getPharmacyDetails } = require("../Pharmacy/Information/information.service");
+const {
+  getPharmacyDetails,
+} = require("../Pharmacy/Information/information.service");
 
-const ObjectId = require('mongoose').Types.ObjectId;
+const ObjectId = require("mongoose").Types.ObjectId;
 
 // pescription to pharmacy
 async function uploadPrescription({ user_id, store_id, file }) {
   try {
     const image = await uploadFile(file, "images");
-    
+
     const result = await Prescription.create({
       user_id,
       store_id,
@@ -23,11 +25,12 @@ async function uploadPrescription({ user_id, store_id, file }) {
   }
 }
 
-
 // retrieve prescriptions for a user
 async function getUserPrescription({ user_id }) {
   try {
-    const results = await Prescription.find({ user_id });
+    const results = await Prescription.find({ user_id }).sort({
+      createdAt: -1,
+    });
 
     // loop over the results obtained
     // and map the store id to the store name
@@ -35,17 +38,18 @@ async function getUserPrescription({ user_id }) {
 
     for (let i = 0; i < results.length; i++) {
       const prescription = results[i];
-      const store_detail = await getPharmacyDetails({ pharmacy_id: prescription["store_id"] });
+      const store_detail = await getPharmacyDetails({
+        pharmacy_id: prescription["store_id"],
+      });
       const store_name = store_detail.data.name;
 
-      data.push({ ...prescription._doc, store_name })
-    }  
+      data.push({ ...prescription._doc, store_name });
+    }
     return { message: "success", data };
   } catch (error) {
-    return { message: "An error occurred. Please try again", error }
+    return { message: "An error occurred. Please try again", error };
   }
 }
-
 
 // delete a prescription using the prescription id
 async function deleteUserPrescription({ prescription_id, user_id }) {
@@ -61,37 +65,41 @@ async function deleteUserPrescription({ prescription_id, user_id }) {
 async function getPrescriptionsSentToPharmacy(req) {
   try {
     const result = await Prescription.aggregate([
-      { $match: { store_id: ObjectId(req.body.store_id) }},
+      { $match: { store_id: ObjectId(req.body.store_id) } },
       {
         $lookup: {
-          from: 'users',
-          localField: 'user_id',
-          foreignField: '_id',
-          as: 'user'
-        }
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
       },
       {
         $unwind: {
-          path: '$user',
-          preserveNullAndEmptyArrays: true
-        }
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         $project: {
           _id: 1,
           status: 1,
           image: 1,
-          "user_id": '$user._id',
-          "user_name": '$user.personal.name',
-          "user_phone": '$user.personal.phone',
-          'user_email': '$user.email',
-          'user_address': '$user.personal.address'
-        }
-      }
-    ])
-    return { status: 'success', message: 'retrieved successfully', data: result };
+          user_id: "$user._id",
+          user_name: "$user.personal.name",
+          user_phone: "$user.personal.phone",
+          user_email: "$user.email",
+          user_address: "$user.personal.address",
+        },
+      },
+    ]);
+    return {
+      status: "success",
+      message: "retrieved successfully",
+      data: result,
+    };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred, please try again' };
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
@@ -99,5 +107,5 @@ module.exports = {
   uploadPrescription,
   getUserPrescription,
   deleteUserPrescription,
-  getPrescriptionsSentToPharmacy
+  getPrescriptionsSentToPharmacy,
 };
