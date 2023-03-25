@@ -8,6 +8,7 @@ const DRUG_RETURN_DATA = {
     "total_stock": 1,
     "views": 1,
     "nhis": 1,
+    "level": 1,
     "expiry_date": 1,
     "discount": 1,
     "image": 1,

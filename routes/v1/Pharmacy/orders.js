@@ -19,7 +19,7 @@ const {
 // const { fetchDrugName } = require("../../../private/services/Pharmacy/Drug/drug.service");
 
 // fetch all orders for a pharmacy
-router.post("/fetch-all-orders", async (req, res) => {
+router.post("/fetch-all-orders", verify, async (req, res) => {
   const { store_id } = req.body;
   // console.log(pharmacy_id);
 
@@ -33,8 +33,9 @@ router.post("/fetch-all-orders", async (req, res) => {
         payment_status: 1,
         grand_total: 1,
         order_status: 1,
+        createdAt: 1,
       }
-    );
+    ).sort({ createdAt: -1 });
 
     if (orders)
       return res.status(200).json({ message: "success", data: orders });
@@ -55,9 +56,8 @@ router.post("/fetch-specific-orders", verify, async (req, res) => {
         order_code: 1,
         products_summary: 1,
         order_status: 1,
-        createdAt: 1
+        createdAt: 1,
       }
-      
     );
 
     const order_details = new Object();
@@ -210,7 +210,7 @@ router.post("/create-order-for-user", verify, async (req, res, next) => {
   }
 });
 
-router.post('/search-order', verify, async (req, res, next) => {
+router.post("/search-order", verify, async (req, res, next) => {
   try {
     const result = await searchOrder(req);
     if (result.status === "success") {
