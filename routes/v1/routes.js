@@ -73,6 +73,9 @@ router.use(
   require("./BusinessOwner/businessOwner.controller")
 );
 
+// business owner and staff passwords endpoints
+router.use("/api/v1/accounts", require("./User/auth"));
+
 // paystack initialization endpoints
 router.use("/api/v1/wallet", require("./Wallet/wallet.controller"));
 router.use(

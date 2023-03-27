@@ -46,7 +46,8 @@ async function createPharmacyStaff({ req }) {
 
     if (result != null) {
       await _sendEmail({
-        email: req.body.email, 
+        email: req.body.email,
+        password: req.body.password, 
         accountID: employee_id,
         staffID: result._id
       });
@@ -65,9 +66,10 @@ function _generateEmployeeID(req) {
   return id + (Math.floor(Math.random() * 1000) + 1).toString();
 }
 
-async function _sendEmail({ email, accountID, staffID }) {
+async function _sendEmail({ email, password, accountID, staffID }) {
   let mail_body = StaffAccount(
     accountID,
+    password,
     "imgs/logo_ios.png",
     "not-me-password-reset"
   );

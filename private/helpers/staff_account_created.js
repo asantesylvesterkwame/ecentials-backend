@@ -1,4 +1,4 @@
-const StaffAccount = (account_id, appLogo, notMeLink) =>{
+const StaffAccount = (account_id, password, appLogo, notMeLink) =>{
     return`<!DOCTYPE html>
     <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
     
@@ -235,7 +235,7 @@ const StaffAccount = (account_id, appLogo, notMeLink) =>{
                                                                             <p
                                                                                 style="margin: 0; text-align: center; font-size: 17px; mso-line-height-alt: 25.5px;">
                                                                                 <span style="font-size:17px;">Please use this
-                                                                                    account id with your password to login into your account.
+                                                                                    account id with your password <b>${password}</b> to login into your account.
                                                                                     </span></p>
                                                                         </div>
                                                                     </div>
