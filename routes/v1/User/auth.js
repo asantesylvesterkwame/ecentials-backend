@@ -25,6 +25,8 @@ const RecoveryCode = require('../../../private/schemas/RecoveryCode')
 const EMAILBODY = require('../../../private/helpers/mail_body')
 const { generateTokens, verifyRefreshToken } = require('../../../private/helpers/user_token')
 const BaseTemplate = require('../../../private/helpers/base_mail')
+const Staff = require('../../../private/schemas/Staff')
+const BusinessOwner = require('../../../private/schemas/BusinessOwner')
 
 dotenv.config()
 
@@ -108,8 +110,12 @@ router.post('/forgot-password', async (req, res) => {
     //simple validation of the email and password
     const {error} = emailValidation(req.body)
     if(error) return res.json({status: 400, message:error.details[0].message})
-    const isEmailAvailable = await User.findOne({email: email})
-    if(!isEmailAvailable) return res.json({status: 400, message:"User does not exist. Please create an account instead"})
+    const isUserEmail = await User.findOne({email: email})
+    const isStaffEmail = await Staff.findOne({ email: email });
+    const isBusinessOwnerEmail = await BusinessOwner.findOne({ email: email });
+    if(!isUserEmail && !isStaffEmail && !isBusinessOwnerEmail) {
+        return res.json({status: 400, message:"User does not exist. Please create an account instead"})
+    }
     return res.json({status: 200, message:"User exists"})
 })
 
@@ -125,7 +131,10 @@ router.post('/reset-password', async (req, res) => {
     if(error) return res.json({status: 400, message: error.details[0].message})
 
     //change the password 
-    const updatePassword = await User.updateOne({ email }, {$set:{password: encryptPassword(confirmPassword)}})
+    let updatePassword = await User.updateOne({ email }, {$set:{password: encryptPassword(confirmPassword)}})
+    updatePassword = await Staff.updateOne({ email }, {$set:{password: encryptPassword(confirmPassword)}})
+    updatePassword = await BusinessOwner.updateOne({ email }, {$set:{password: encryptPassword(confirmPassword)}})
+    
     if(updatePassword) return res.json({status: 200, message:"Password reset completed"})
     return res.status(400).json({message: "Failed to reset password"})
 })
