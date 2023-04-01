@@ -35,7 +35,7 @@ router.post("/login-business-owner", async (req, res, next) => {
     return res
       .status(200)
       .header("auth_token", result.token)
-      .json({ result:result, roles: ["isAdmin", "isHRM"] });
+      .json({ result:result});
   } catch (error) {
     next(error);
   }
