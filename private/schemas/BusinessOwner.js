@@ -23,7 +23,8 @@ const businessOwnerSchema = new mongoose.Schema({
         required: true,
         max: 1024, 
         min: 6
-    }
+    },
+    privileges: ["isAdmin", "isHRM"]
 }, { timestamps: true });
 
 module.exports = mongoose.model('BusinessOwner', businessOwnerSchema);
