@@ -77,6 +77,10 @@ const drugSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    purpose_of_drug: {
+      type: String,
+      required: false
+    },
     image: {
       type: String,
       required: false,
