@@ -386,6 +386,7 @@ async function uploadDrugsFromFile(req) {
             "image",
             "level",
             "dosage",
+            "purpose_of_drug"
           ],
         })
       )
@@ -405,6 +406,7 @@ async function uploadDrugsFromFile(req) {
           image: data["image"],
           medicine_group: data["medicine_group"],
           level: data["level"],
+          purpose_of_drug: data["purpose_of_drug"]
         };
         results.push(data_with_store_id);
       })
