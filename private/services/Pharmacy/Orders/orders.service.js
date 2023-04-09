@@ -17,11 +17,16 @@ async function cancelOrder({ req }) {
       { $set: { order_status: "Cancelled" } }
     );
     const user = await _getUser(order_code);
+    
+    const data = {
+      "launch_url":"order",
+    }
 
     const sendNotification = sendFCMessage(
       user.user_token,
       "Order cancelled",
-      req.body.message
+      req.body.message,
+      data
     );
     const createNotification = _createNewNotification(
       user.user_id,
@@ -51,10 +56,15 @@ async function approveOrder({ req }) {
     );
     const user = await _getUser(order_code);
     
+    const data = {
+      "launch_url":"order",
+    }
+
     const sendNotification = sendFCMessage(
       user.user_token,
       "Order approved",
-      req.body.message
+      req.body.message,
+      data
     );
     const createNotification = _createNewNotification(
       user.user_id,
@@ -127,11 +137,16 @@ async function updateOrderStatus(req) {
     if (result.modifiedCount > 0) {
       const user = await _getUser(order_code);
       
+      const data = {
+        "launch_url":"order",
+      }
+
       sendAndCreateNotification(
         user.user_token,
         user.user_id,
         "Order status",
-        `your order status: ${req.body.order_status}`
+        `your order status: ${req.body.order_status}`,
+        data
       );
       
       return { status: 'success', message: 'order status updated successfully' }
