@@ -423,6 +423,19 @@ async function uploadDrugsFromFile(req) {
   }
 }
 
+async function getDrugsBasedOnPurpose(req) {
+  try {
+    const result = await Drug.find({ "purpose_of_drug": req.body.purpose_of_drug })
+    return { 
+      status: "success", 
+      message: "drugs retrieved successfully", 
+      data: result 
+    };
+  } catch (error) {
+    return { status: "error", message: "an error occurred, please try again"};
+  }
+}
+
 module.exports = {
   searchDrugInSpecificPharmacy,
   addDrugToInventory,
@@ -437,4 +450,5 @@ module.exports = {
   fetchDefaultDrugs,
   deleteDrug,
   uploadDrugsFromFile,
+  getDrugsBasedOnPurpose
 };
