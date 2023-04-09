@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
 const { sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
 const Notification = require("../../../schemas/Notification");
+const Prescription = require("../../../schemas/Prescription");
 const { findUserById } = require("../../User/Account/account.service");
 const {
   sendFCMessage,
@@ -181,6 +182,10 @@ async function createOrderForUser({ req }) {
 
     const user = await findUserById(req.body.user_id);
 
+    await Prescription.findByIdAndUpdate(req.body.prescription_id, {
+      $set: {status: 1}
+    });
+    
     const data = {
       "launch_url":"prescription_pay",
       "order_id": `${result._id}`,
