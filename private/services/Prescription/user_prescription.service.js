@@ -103,9 +103,33 @@ async function getPrescriptionsSentToPharmacy(req) {
   }
 }
 
+async function getPescriptionDetails(req) {
+  try {
+    const result = await Prescription.findById(req.body.prescription_id);
+    if (result === null) {
+      return {
+        status: "failed",
+        message: "no prescription found",
+        data: {}
+      }
+    }
+    return {
+      status: "success",
+      message: "prescription details retrieved",
+      data: result
+    }
+  } catch (error) {
+    return {
+      status: "error",
+      message: "error occurred, please try again"
+    }    
+  }
+}
+
 module.exports = {
   uploadPrescription,
   getUserPrescription,
   deleteUserPrescription,
   getPrescriptionsSentToPharmacy,
+  getPescriptionDetails
 };

@@ -16,6 +16,7 @@ const {
   fetchDefaultDrugs,
   deleteDrug,
   uploadDrugsFromFile,
+  getDrugsBasedOnPurpose,
 } = require("../../../private/services/Pharmacy/Drug/drug.service");
 const { verify } = require("../../../verifyToken");
 
@@ -182,5 +183,17 @@ router.post('/upload-drugs-from-file', verify, fileUpload, async (req, res, next
     next(error);
   }
 })
+
+router.post('/get-drugs-based-on-purpose', verify, async (req, res, next) => {
+  try {
+    const result = await getDrugsBasedOnPurpose(req);
+    if (result.status === 'success') {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    next(error);
+  }
+});
 
 module.exports = router;

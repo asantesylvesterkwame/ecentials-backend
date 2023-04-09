@@ -386,6 +386,7 @@ async function uploadDrugsFromFile(req) {
             "image",
             "level",
             "dosage",
+            "purpose_of_drug"
           ],
         })
       )
@@ -405,6 +406,7 @@ async function uploadDrugsFromFile(req) {
           image: data["image"],
           medicine_group: data["medicine_group"],
           level: data["level"],
+          purpose_of_drug: data["purpose_of_drug"]
         };
         results.push(data_with_store_id);
       })
@@ -418,6 +420,19 @@ async function uploadDrugsFromFile(req) {
   } catch (error) {
     console.log(error);
     return { status: "error", message: "an error occurred, please try again" };
+  }
+}
+
+async function getDrugsBasedOnPurpose(req) {
+  try {
+    const result = await Drug.find({ "purpose_of_drug": req.body.purpose_of_drug })
+    return { 
+      status: "success", 
+      message: "drugs retrieved successfully", 
+      data: result 
+    };
+  } catch (error) {
+    return { status: "error", message: "an error occurred, please try again"};
   }
 }
 
@@ -435,4 +450,5 @@ module.exports = {
   fetchDefaultDrugs,
   deleteDrug,
   uploadDrugsFromFile,
+  getDrugsBasedOnPurpose
 };

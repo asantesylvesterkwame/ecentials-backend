@@ -2,6 +2,7 @@ const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
 const { sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
 const Notification = require("../../../schemas/Notification");
+const Prescription = require("../../../schemas/Prescription");
 const { findUserById } = require("../../User/Account/account.service");
 const {
   sendFCMessage,
@@ -18,8 +19,11 @@ async function cancelOrder({ req }) {
     );
     const user = await _getUser(order_code);
     
+    const order = await Orders.find({ order_code });
+
     const data = {
       "launch_url":"order",
+      "id": `${order._id}`
     }
 
     const sendNotification = sendFCMessage(
@@ -56,8 +60,11 @@ async function approveOrder({ req }) {
     );
     const user = await _getUser(order_code);
     
+    const order = await Orders.find({ order_code });
+
     const data = {
       "launch_url":"order",
+      "id": `${order._id}`
     }
 
     const sendNotification = sendFCMessage(
@@ -137,8 +144,11 @@ async function updateOrderStatus(req) {
     if (result.modifiedCount > 0) {
       const user = await _getUser(order_code);
       
+      const order = await Orders.find({ order_code: req.body.order_code });
+
       const data = {
         "launch_url":"order",
+        "id": `${order._id}`
       }
 
       sendAndCreateNotification(
@@ -172,8 +182,14 @@ async function createOrderForUser({ req }) {
 
     const user = await findUserById(req.body.user_id);
 
+    await Prescription.findByIdAndUpdate(req.body.prescription_id, {
+      $set: {status: 1}
+    });
+    
     const data = {
       "launch_url":"prescription_pay",
+      "order_id": `${result._id}`,
+      "prescription_id": `${req.body.prescription_id}`
     }
     const sendNotification = sendFCMessage(
       user.fcm_token,
