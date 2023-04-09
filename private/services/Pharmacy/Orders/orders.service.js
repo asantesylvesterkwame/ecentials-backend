@@ -18,8 +18,11 @@ async function cancelOrder({ req }) {
     );
     const user = await _getUser(order_code);
     
+    const order = await Orders.find({ order_code });
+
     const data = {
       "launch_url":"order",
+      "id": `${order._id}`
     }
 
     const sendNotification = sendFCMessage(
@@ -56,8 +59,11 @@ async function approveOrder({ req }) {
     );
     const user = await _getUser(order_code);
     
+    const order = await Orders.find({ order_code });
+
     const data = {
       "launch_url":"order",
+      "id": `${order._id}`
     }
 
     const sendNotification = sendFCMessage(
@@ -137,8 +143,11 @@ async function updateOrderStatus(req) {
     if (result.modifiedCount > 0) {
       const user = await _getUser(order_code);
       
+      const order = await Orders.find({ order_code: req.body.order_code });
+
       const data = {
         "launch_url":"order",
+        "id": `${order._id}`
       }
 
       sendAndCreateNotification(
@@ -174,6 +183,8 @@ async function createOrderForUser({ req }) {
 
     const data = {
       "launch_url":"prescription_pay",
+      "order_id": `${result._id}`,
+      "prescription_id": `${req.body.prescription_id}`
     }
     const sendNotification = sendFCMessage(
       user.fcm_token,
