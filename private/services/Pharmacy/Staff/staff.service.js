@@ -5,6 +5,7 @@ const ObjectId = require("mongoose").Types.ObjectId;
 const AccountID = require("../../../schemas/AccountID");
 const StaffAccount = require("../../../helpers/staff_account_created");
 const sendMail = require("../../send_email");
+const getFacility = require("../../../helpers/get_facility");
 
 
 // get all the staff registered to a pharmacy
@@ -43,13 +44,20 @@ async function createPharmacyStaff({ req }) {
       password: encryptPassword(req.body.password),
       employee_id,
     });
+    
+    const facility = await getFacility(
+      req.body.facility_id, 
+      req.body.facility_type
+    );
 
     if (result != null) {
       await _sendEmail({
         email: req.body.email,
         password: req.body.password, 
         accountID: employee_id,
-        staffID: result._id
+        staffID: result._id,
+        staff_name: req.body.first_name,
+        facility_name: facility.name
       });
 
       return { message: "success", data: result };
@@ -66,12 +74,19 @@ function _generateEmployeeID(req) {
   return id + (Math.floor(Math.random() * 1000) + 1).toString();
 }
 
-async function _sendEmail({ email, password, accountID, staffID }) {
+async function _sendEmail({ 
+  email, 
+  password, 
+  accountID, 
+  staffID, 
+  staff_name,
+  facility_name 
+}) {
   let mail_body = StaffAccount(
+    staff_name,
     accountID,
     password,
-    "imgs/logo_ios.png",
-    "not-me-password-reset"
+    facility_name
   );
   sendMail(email, mail_body)
     .then((result) => {
