@@ -19,17 +19,15 @@ const {
   refreshTokenBodyValidation,
 } = require("./validation/auth_validation");
 
-const verify = require("../../../verifyToken");
-const sendMail = require("../../../private/services/send_email");
-const RecoveryCode = require("../../../private/schemas/RecoveryCode");
-const EMAILBODY = require("../../../private/helpers/mail_body");
-const {
-  generateTokens,
-  verifyRefreshToken,
-} = require("../../../private/helpers/user_token");
-const BaseTemplate = require("../../../private/helpers/base_mail");
-const Staff = require("../../../private/schemas/Staff");
-const BusinessOwner = require("../../../private/schemas/BusinessOwner");
+const verify = require('../../../verifyToken')
+const sendMail = require('../../../private/services/send_email')
+const RecoveryCode = require('../../../private/schemas/RecoveryCode')
+const EMAILBODY = require('../../../private/helpers/mail_body')
+const { generateTokens, verifyRefreshToken } = require('../../../private/helpers/user_token')
+const BaseTemplate = require('../../../private/helpers/base_mail')
+const Staff = require('../../../private/schemas/Staff')
+const BusinessOwner = require('../../../private/schemas/BusinessOwner')
+const getFirstName = require('../../../private/helpers/retrieve_first_name')
 
 dotenv.config();
 
@@ -164,7 +162,8 @@ router.post("/recover_password", async (req, res) => {
   const { email } = req.body;
 
   let code = `${uuid()}`.substring(0, 6).toUpperCase();
-  let mail_body = EMAILBODY(code, "imgs/logo_ios.png", "not-me-password-reset");
+  let first_name = await getFirstName(email);
+  let mail_body = EMAILBODY(first_name, code);
 
   if (email === "") {
     return res.status(400).json({ message: "user email not provided." });
