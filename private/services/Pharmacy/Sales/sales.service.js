@@ -60,9 +60,9 @@ async function fetchDaySales({ req }) {
 // Sales for each month
 // SALES FOR MONTH
 async function fetchMonthSales({ req }) {
-  const { shop_id } = req.body;
+  const { store_id } = req.body;
   try {
-    const results = await Invoice.find({ shop_id });
+    const results = await Invoice.find({ store_id });
     const sales = {};
     let total = 0;
     results.forEach(({ grand_total, createdAt }) => {
