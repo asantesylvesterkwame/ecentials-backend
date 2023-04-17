@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
 const { sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
+const Drug = require("../../../schemas/Drug");
 const Notification = require("../../../schemas/Notification");
 const Prescription = require("../../../schemas/Prescription");
 const { findUserById } = require("../../User/Account/account.service");
@@ -186,6 +187,19 @@ async function createOrderForUser({ req }) {
       $set: {status: 1}
     });
     
+    // decrement drug counts
+    req.body.products_summary.forEach(async (item) => {
+      // reduce total drug stock
+      await Drug.updateOne(
+        {
+          _id: item.drug_id,
+        },
+        {
+          $inc: { total_stock: -item.quantity },
+        }
+      );
+    });
+
     const data = {
       "launch_url":"prescription_pay",
       "order_id": `${result._id}`,
