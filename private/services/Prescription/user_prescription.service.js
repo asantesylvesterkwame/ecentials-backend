@@ -105,7 +105,37 @@ async function getPrescriptionsSentToPharmacy(req) {
 
 async function getPescriptionDetails(req) {
   try {
-    const result = await Prescription.findById(req.body.prescription_id);
+    // const result = await Prescription.findById(req.body.prescription_id);
+    const result = await Prescription.aggregate([
+      {
+        $match: {
+          "_id": ObjectId(req.body.prescription_id)
+        }
+      },
+      {
+        $lookup: {
+          "from": "orders",
+          "foreignField": "prescription_id",
+          "localField": "_id",
+          "as": "order"
+        }
+      },
+      {
+        $unwind: {
+          "path": "$order",
+          "preserveNullAndEmptyArrays": true
+        }
+      },
+      {
+        $project: {
+          "_id": 1,
+          "user_id": 1,
+          "store_id": 1,
+          "drugs": "$order.products_summary"
+        }
+      }
+    ]);
+    
     if (result === null) {
       return {
         status: "failed",
