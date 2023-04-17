@@ -127,11 +127,30 @@ async function getPescriptionDetails(req) {
         }
       },
       {
+        $lookup: {
+          "from": "stores",
+          "foreignField": "store_id",
+          "localField": "_id",
+          "as": "store"
+        }
+      },
+      {
+        $unwind: {
+          "path": "$store",
+          "preserveNullAndEmptyArrays": true
+        }
+      },
+      {
         $project: {
           "_id": 1,
           "user_id": 1,
+          "status": 1,
+          "image": 1,
           "store_id": 1,
-          "drugs": "$order.products_summary"
+          "store_name": "$store.name",
+          "drugs": "$order.products_summary",
+          "createdAt": 1,
+          "updatedAt": 1,
         }
       }
     ]);
