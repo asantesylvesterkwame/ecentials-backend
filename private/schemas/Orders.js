@@ -104,6 +104,10 @@ const ordersSchema = new mongoose.Schema(
         },
       },
     ],
+    prescription_id: {
+      type: mongoose.SchemaTypes.ObjectId,
+      required: false
+    }
   },
   { timestamps: true }
 );
