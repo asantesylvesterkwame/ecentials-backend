@@ -129,8 +129,8 @@ async function getPescriptionDetails(req) {
       {
         $lookup: {
           "from": "stores",
-          "foreignField": "store_id",
-          "localField": "_id",
+          "foreignField": "_id",
+          "localField": "store_id",
           "as": "store"
         }
       },
@@ -141,18 +141,42 @@ async function getPescriptionDetails(req) {
         }
       },
       {
-        $project: {
-          "_id": 1,
-          "user_id": 1,
-          "status": 1,
-          "image": 1,
-          "store_id": 1,
-          "store_name": "$store.name",
-          "drugs": "$order.products_summary",
-          "createdAt": 1,
-          "updatedAt": 1,
+        $lookup: {
+          "from": "drugs",
+          "foreignField": "_id",
+          "localField": "order.products_summary.drug_id",
+          "as": "prescription_drug"
         }
-      }
+      },
+      { 
+        $unwind: {
+          "path": "$prescription_drug",
+          "preserveNullAndEmptyArrays": true
+        }
+      },
+      {
+        $group: {
+          "_id": "$_id",
+          "status": { $first: "$status" },
+          "user_id": { $first: "$user_id" },
+          "image": { $first: "$image" },
+          "store_name": { $first: "$store.name" },
+          "prescription_drugs": { $push: "$prescription_drug" }
+        }
+      },
+      // {
+      //   $project: {
+      //     "_id": 1,
+      //     "user_id": 1,
+      //     "status": 1,
+      //     "image": 1,
+      //     "store_id": 1,
+      //     "store_name": "$store.name",
+      //     "drugs": "$prescription_drug",
+      //     "createdAt": 1,
+      //     "updatedAt": 1,
+      //   }
+      // }
     ]);
     
     if (result === null) {
@@ -168,10 +192,8 @@ async function getPescriptionDetails(req) {
       data: result
     }
   } catch (error) {
-    return {
-      status: "error",
-      message: "error occurred, please try again"
-    }    
+    throw new Error(error);
+    
   }
 }
 
