@@ -161,6 +161,8 @@ async function getPescriptionDetails(req) {
           "user_id": { $first: "$user_id" },
           "image": { $first: "$image" },
           "store_name": { $first: "$store.name" },
+          "createdAt": { $first: "$createdAt"},
+          "updatedAt": { $first: "$updatedAt"},
           "prescription_drugs": { $push: "$prescription_drug" }
         }
       },
