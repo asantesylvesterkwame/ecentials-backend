@@ -60,6 +60,7 @@ router.use("/api/v1/prescriptions", require("./Prescription/prescription"));
 // hospital related endpoints
 router.use("/api/v1/hospitals", require("./Hospital/hospital"));
 router.use("/api/v1/hospital/staff", require("./Hospital/staff"));
+router.use("/api/v1/hospitals", require("./Hospital/appointment.controller"));
 
 // lab related endpoints
 router.use("/api/v1/labs", require("./Lab/lab.controller"));
