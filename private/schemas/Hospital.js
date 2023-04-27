@@ -35,6 +35,12 @@ const hospitalSchema = new mongoose.Schema({
         required: false,
         ref: "businessowners"
     },
+    available_appointment_dates: [
+        {
+            type: mongoose.SchemaTypes.Date,
+            required: false
+        }
+    ]
 }, { timestamps: true });
 
 module.exports = mongoose.model("Hospital", hospitalSchema);
