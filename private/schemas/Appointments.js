@@ -7,7 +7,7 @@ const appointmentsSchema = new mongoose.Schema({
     },
     facility_id: {
         type: mongoose.SchemaTypes.ObjectId,
-        required: true
+        required: false
     },
     staff_id: {
         type: mongoose.SchemaTypes.ObjectId,
@@ -23,7 +23,8 @@ const appointmentsSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        required: true
+        required: true,
+        default: "upcoming"
     },
     facility_type: {
         type: String,
