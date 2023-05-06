@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
 
+const logger = require('../../../private/helpers/log/logger');
 const Bookmark = require('../../../private/schemas/Bookmark');
 const { getBookmarkDetails, getBookmarkItems } = require('../../../private/services/User/Bookmark/bookmark.service');
 const { verify } = require('../../../verifyToken')
@@ -33,6 +34,7 @@ router.post('/list-bookmark-items', verify, async (req, res, next) => {
         }
         return res.status(400).json(result)
     } catch (error) {
+        logger.error(error.message);
         next(error)
     }
 }); 
