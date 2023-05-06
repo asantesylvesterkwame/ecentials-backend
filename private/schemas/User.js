@@ -91,7 +91,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: false
     },
-    primary_doctors: []
-})
+    primary_doctors: [],
+    health_history: [{
+        type: mongoose.SchemaTypes.Mixed
+    }]
+}, { timestamps: true })
 
 module.exports = mongoose.model("User", userSchema)
