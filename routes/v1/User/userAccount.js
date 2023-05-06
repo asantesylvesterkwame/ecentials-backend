@@ -91,6 +91,7 @@ router.get('/fetch-health-details', verify, async (req, res) => {
 //add or edit health details
 router.post('/addEdit-health-details', verify, async (req, res) => {
     var user_id = req.user._id
+    var currentDate = new Date();
     var changes = {
         "health.blood_group": req.body.blood_group,
         "health.genotype": req.body.genotype,
@@ -100,13 +101,15 @@ router.post('/addEdit-health-details', verify, async (req, res) => {
         "health.respiration_rate": req.body.respiration_rate,
         "health.blood_pressure": req.body.blood_pressure,
         "health.temperature": req.body.temperature,
-        "health.nhis_no": req.body.nhis_no
+        "health.nhis_no": req.body.nhis_no,
+        "updatedAt": currentDate
     }
 
     const add_details = await User.updateOne({
         _id: user_id
     }, {
-        $set: changes
+        $set: changes,
+        $push: { health_history: req.body }
     })
     if (!add_details) return res.json({
         status: 400,
