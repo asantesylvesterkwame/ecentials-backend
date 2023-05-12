@@ -1,9 +1,8 @@
+const router = require("express").Router();
 const {
   fetchAvailableAppointmentDates,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
-
-const router = require("express").Router();
 
 router.get(
   "/:hospital_id/appointments/fetch-available-appointments",
@@ -12,7 +11,7 @@ router.get(
     try {
       return res.status(200).json(await fetchAvailableAppointmentDates(req));
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 );

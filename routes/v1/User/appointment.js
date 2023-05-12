@@ -1,3 +1,7 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable consistent-return */
+
 const router = require("express").Router();
 
 const { verify } = require("../../../verifyToken");
@@ -40,9 +44,10 @@ router.post("", verify, async (req, res, next) => {
 // create a new user appointment
 router.post("/book-an-appointment", verify, async (req, res, next) => {
   const user_id = req.user._id;
+  // eslint-disable-next-line
   const { staff_id, facility_id, date, time, status, facility_type } = req.body;
 
-  let current_date = new Date().toJSON().slice(0, 10);
+  const current_date = new Date().toJSON().slice(0, 10);
 
   if (new Date(date) < new Date(current_date)) {
     return res
@@ -63,12 +68,10 @@ router.post("/book-an-appointment", verify, async (req, res, next) => {
       },
       async (err, result) => {
         if (err) {
-          return res
-            .status(400)
-            .json({
-              message: "Failed to book appointment. Try again later",
-              err,
-            });
+          return res.status(400).json({
+            message: "Failed to book appointment. Try again later",
+            err,
+          });
         }
 
         const user_email = await findUserById(user_id);
@@ -135,7 +138,7 @@ router.post(
   async (req, res, next) => {
     try {
       const result = await bookAppointmentWithDoctor(req);
-      if (req.status === "success") {
+      if (result.status === "success") {
         return res.status(200).json(result);
       }
       return res.status(400).json(result);

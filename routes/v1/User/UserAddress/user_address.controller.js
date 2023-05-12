@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
+
 const router = require("express").Router();
 
 const {
@@ -10,11 +13,9 @@ const { verify } = require("../../../../verifyToken");
 
 router.post("/add-user-shipping-address", verify, async (req, res, next) => {
   try {
-    return res.status(201).json(
-      await addNewShippingAddress({ req })
-    );
+    return res.status(201).json(await addNewShippingAddress({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -25,24 +26,24 @@ router.get("/fetch-all-shipping-addresses", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await getUserShippingAddresses({ user_id }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
-router.post('/update-shipping-address', verify, async (req, res, next) => {
+router.post("/update-shipping-address", verify, async (req, res, next) => {
   try {
-    return res.status(200).json(await updateShippingAddress({ req }))
+    return res.status(200).json(await updateShippingAddress({ req }));
   } catch (error) {
-    next(error)
+    return next(error);
   }
-})
+});
 
-router.post('/delete-shipping-address', verify, async (req, res, next) => {
+router.post("/delete-shipping-address", verify, async (req, res, next) => {
   try {
-    return res.json(await deleteShippingAddress({ req }))
+    return res.json(await deleteShippingAddress({ req }));
   } catch (error) {
-    next(error)
+    return next(error);
   }
-})
+});
 
 module.exports = router;

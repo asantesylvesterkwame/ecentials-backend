@@ -1,101 +1,121 @@
-const router = require('express').Router();
-const multer = require('multer')
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
 
-const Hospital = require('../../../private/schemas/Hospital');
-const { uploadHospitalImages, searchNearbyHospital, getHospitalDetails} = require('../../../private/services/Hospital/hospital.service');
-const { verify } = require('../../../verifyToken');
+const router = require("express").Router();
+const multer = require("multer");
+
+const Hospital = require("../../../private/schemas/Hospital");
+const {
+  uploadHospitalImages,
+  searchNearbyHospital,
+  getHospitalDetails,
+} = require("../../../private/services/Hospital/hospital.service");
+const { verify } = require("../../../verifyToken");
 
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ storage });
 
 // create a new hospital using data from request body
-router.post('/add-new-hospital', (req, res) => {
+router.post("/add-new-hospital", (req, res) => {
+  // eslint-disable-next-line
     const {
-        name,
-        address,
-        opening_hours,
-        phone_number,
-        gps_address,
-    } = req.body;
+    name, address, opening_hours, phone_number, gps_address
+  } = req.body;
 
-    Hospital.create({
-        name, address, opening_hours, phone_number, gps_address
-    }, (err, result) => {
-        if (err) {
-            return res.status(400).json({ message: "Failed to create a hospital" });
-        }
-        return res.status(200).json({ message: "success", data: result });
-    })
+  Hospital.create(
+    {
+      name,
+      address,
+      opening_hours,
+      phone_number,
+      gps_address,
+    },
+    (err, result) => {
+      if (err) {
+        return res.status(400).json({ message: "Failed to create a hospital" });
+      }
+      return res.status(200).json({ message: "success", data: result });
+    }
+  );
 });
 
-
 // upload images of a hospital
-router.post('/upload-hospital-images', upload.array("pictures", 15), async (req, res, next) => {
+router.post(
+  "/upload-hospital-images",
+  upload.array("pictures", 15),
+  async (req, res, next) => {
     const { hospital_id } = req.body;
 
     const pictures = req.files;
 
     try {
-        if (pictures.length > 0) {
-            return res.status(200).json(await uploadHospitalImages({ hospital_id, files: pictures }))
-        }
-        return res.status(400).json({ message: "Please upload images" });
+      if (pictures.length > 0) {
+        return res
+          .status(200)
+          .json(await uploadHospitalImages({ hospital_id, files: pictures }));
+      }
+      return res.status(400).json({ message: "Please upload images" });
     } catch (error) {
-        next(error)
+      return next(error);
     }
-})
+  }
+);
 
-
-// search for a hospital using specific keywords like name, address, 
+// search for a hospital using specific keywords like name, address,
 // gps_address, phone number
-router.post('/search-for-hospital', verify, async (req, res) => {
-    const { search_text } = req.body;
+router.post("/search-for-hospital", verify, async (req, res) => {
+  const { search_text } = req.body;
 
-    try {
-        const results =  await Hospital.find({ 
-            "$or": [
-                {name: { $regex: search_text, '$options' : 'i' }},
-                {address: { $regex: search_text, '$options' : 'i' }},
-                {gps_address: { $regex: search_text, '$options' : 'i' }},
-                {phone_number: { $regex: search_text }}
-            ]
-        });
-    
-        if (results == null) {
-            return res.status(200).json({ message: "No hospital found", data: []})
-        }
-        return res.status(200).json({ message: "success", data: results });
-    } catch (error) {
-        return res.status(400).json({ message: "Something went wrong. Please try again" });
+  try {
+    const results = await Hospital.find({
+      $or: [
+        { name: { $regex: search_text, $options: "i" } },
+        { address: { $regex: search_text, $options: "i" } },
+        { gps_address: { $regex: search_text, $options: "i" } },
+        { phone_number: { $regex: search_text } },
+      ],
+    });
+
+    if (results == null) {
+      return res.status(200).json({ message: "No hospital found", data: [] });
     }
+    return res.status(200).json({ message: "success", data: results });
+  } catch (error) {
+    return res
+      .status(400)
+      .json({ message: "Something went wrong. Please try again" });
+  }
 });
-
 
 // search for a nearby hospitals
-router.post('/search-nearby-hospitals', verify, async (req, res, next) => {
-    const { search_text, user_latitude, user_longitude } = req.body;
+router.post("/search-nearby-hospitals", verify, async (req, res, next) => {
+  const { search_text, user_latitude, user_longitude } = req.body;
 
-    try {
-        return res.status(200).json(await searchNearbyHospital({ search_text, user_latitude, user_longitude }))
-    } catch (error) {
-        next(error);
-    }
+  try {
+    // eslint-disable-next-line max-len
+    return res.status(200).json(
+      await searchNearbyHospital({
+        search_text,
+        user_latitude,
+        user_longitude,
+      })
+    );
+  } catch (error) {
+    return next(error);
+  }
 });
 
-router.post('/fetch-hospital-information', verify, async (req, res, next) => {
-    try {
-        const result = await getHospitalDetails(req)
+router.post("/fetch-hospital-information", verify, async (req, res, next) => {
+  try {
+    const result = await getHospitalDetails(req);
 
-        if (result.status === 'success') {
-            return res.status(200).json(result)
-        }
-        return res.status(400).json(result)
-    } catch (error) {
-        next(error)
+    if (result.status === "success") {
+      return res.status(200).json(result);
     }
-})
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
 
-router.get('/check-if-user-has-hospital', verify, async (req, res,next) => {
-    
-})
 module.exports = router;

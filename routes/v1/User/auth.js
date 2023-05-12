@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const router = require("express").Router();
 const dotenv = require("dotenv"); //saves secrets like passwords, API keys etc in a virtual env
 const { v4: uuid } = require("uuid");
