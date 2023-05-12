@@ -134,8 +134,8 @@ const staffSchema = new mongoose.Schema(
     privileges: [],
     terminated: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   { timestamps: true }
 );

@@ -1,32 +1,35 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
-const walletTransactionSchema = new mongoose.Schema({
+const walletTransactionSchema = new mongoose.Schema(
+  {
     user_id: {
-        type: mongoose.SchemaTypes.ObjectId,
-        required: true
+      type: mongoose.SchemaTypes.ObjectId,
+      required: true,
     },
     transaction_type: {
-        type: String,
-        required: true
+      type: String,
+      required: true,
     },
     amount: {
-        type: Number,
-        required: true
+      type: Number,
+      required: true,
     },
     status: {
-        type: String,
-        required: [true, "payment status is required"],
-        enum: ["successful", "pending", "failed"],
+      type: String,
+      required: [true, "payment status is required"],
+      enum: ["successful", "pending", "failed"],
     },
-    paymentMethod: { 
-        type: String, 
-        default: "flutterwave" 
+    paymentMethod: {
+      type: String,
+      default: "flutterwave",
     },
     currency: {
-        type: String,
-        required: [true, "currency is required"],
-        enum: ["GH", "USD", "EUR", "GBP"],
+      type: String,
+      required: [true, "currency is required"],
+      enum: ["GH", "USD", "EUR", "GBP"],
     },
-}, { timestamps: true });
+  },
+  { timestamps: true }
+);
 
 module.exports = mongoose.model("WalletTransaction", walletTransactionSchema);
