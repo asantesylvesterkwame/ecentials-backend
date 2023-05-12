@@ -219,6 +219,21 @@ async function removePrimaryDoctor({ user_id, doctor_id }) {
   }
 }
 
+/**
+ * get doctor by id
+ */
+async function getDoctorById(doctor_id) {
+  try {
+    const result = await Staff.findById(doctor_id);
+    if (result === null) {
+      throw new Error("doctor not found");
+    }
+    return result;
+  } catch (error) {
+    throw new Error("failed to retrieve doctor");
+  }
+}
+
 module.exports = {
   getDoctorsInHospital,
   getDoctorInformaion,
@@ -227,4 +242,5 @@ module.exports = {
   addPrimaryDoctorForUser,
   searchDoctor,
   removePrimaryDoctor,
+  getDoctorById,
 };
