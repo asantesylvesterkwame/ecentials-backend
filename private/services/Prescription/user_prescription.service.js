@@ -1,4 +1,4 @@
-// this service allows a user to upload a
+/* eslint-disable  */
 
 const Prescription = require("../../schemas/Prescription");
 const { uploadFile } = require("../Firebase/imageUpload.service");
@@ -109,62 +109,62 @@ async function getPescriptionDetails(req) {
     const result = await Prescription.aggregate([
       {
         $match: {
-          "_id": ObjectId(req.body.prescription_id)
-        }
+          _id: ObjectId(req.body.prescription_id),
+        },
       },
       {
         $lookup: {
-          "from": "orders",
-          "foreignField": "prescription_id",
-          "localField": "_id",
-          "as": "order"
-        }
+          from: "orders",
+          foreignField: "prescription_id",
+          localField: "_id",
+          as: "order",
+        },
       },
       {
         $unwind: {
-          "path": "$order",
-          "preserveNullAndEmptyArrays": true
-        }
+          path: "$order",
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         $lookup: {
-          "from": "stores",
-          "foreignField": "_id",
-          "localField": "store_id",
-          "as": "store"
-        }
+          from: "stores",
+          foreignField: "_id",
+          localField: "store_id",
+          as: "store",
+        },
       },
       {
         $unwind: {
-          "path": "$store",
-          "preserveNullAndEmptyArrays": true
-        }
+          path: "$store",
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         $lookup: {
-          "from": "drugs",
-          "foreignField": "_id",
-          "localField": "order.products_summary.drug_id",
-          "as": "prescription_drug"
-        }
+          from: "drugs",
+          foreignField: "_id",
+          localField: "order.products_summary.drug_id",
+          as: "prescription_drug",
+        },
       },
-      { 
+      {
         $unwind: {
-          "path": "$prescription_drug",
-          "preserveNullAndEmptyArrays": true
-        }
+          path: "$prescription_drug",
+          preserveNullAndEmptyArrays: true,
+        },
       },
       {
         $group: {
-          "_id": "$_id",
-          "status": { $first: "$status" },
-          "user_id": { $first: "$user_id" },
-          "image": { $first: "$image" },
-          "store_name": { $first: "$store.name" },
-          "createdAt": { $first: "$createdAt"},
-          "updatedAt": { $first: "$updatedAt"},
-          "prescription_drugs": { $push: "$prescription_drug" }
-        }
+          _id: "$_id",
+          status: { $first: "$status" },
+          user_id: { $first: "$user_id" },
+          image: { $first: "$image" },
+          store_name: { $first: "$store.name" },
+          createdAt: { $first: "$createdAt" },
+          updatedAt: { $first: "$updatedAt" },
+          prescription_drugs: { $push: "$prescription_drug" },
+        },
       },
       // {
       //   $project: {
@@ -180,22 +180,21 @@ async function getPescriptionDetails(req) {
       //   }
       // }
     ]);
-    
+
     if (result === null) {
       return {
         status: "failed",
         message: "no prescription found",
-        data: {}
-      }
+        data: {},
+      };
     }
     return {
       status: "success",
       message: "prescription details retrieved",
-      data: result
-    }
+      data: result,
+    };
   } catch (error) {
     throw new Error(error);
-    
   }
 }
 
@@ -204,5 +203,5 @@ module.exports = {
   getUserPrescription,
   deleteUserPrescription,
   getPrescriptionsSentToPharmacy,
-  getPescriptionDetails
+  getPescriptionDetails,
 };

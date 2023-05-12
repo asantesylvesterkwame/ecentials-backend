@@ -4,7 +4,7 @@ const Hospital = require("../../../schemas/Hospital");
  * @param [req] request object
  * @returns [Object] object of available appointment dates if a there exists
  * @returns [Object] object if an error occurs
- * 
+ *
  * checks the available appointment dates for a hospital
  */
 async function fetchAvailableAppointmentDates(req) {

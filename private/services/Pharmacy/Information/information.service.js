@@ -1,3 +1,5 @@
+/* eslint-disable  camelcase */
+
 const Store = require("../../../schemas/Store");
 
 // retrieve pharmacy details using pharmacy id
@@ -19,13 +21,14 @@ async function getPharmacyInformation({ pharmacy_id }) {
   }
 }
 
-// check whether an business owner has a pharmacy
+// check whether a business owner has a pharmacy
 async function isBusinessOwnerHavingPharmacy({ owner_id }) {
   try {
     const result = await Store.find({ owner_id });
 
-    if (result.length > 0)
+    if (result.length > 0) {
       return { message: "success", data: result, has_pharmacy: true };
+    }
 
     return { message: "success", has_pharmacy: false };
   } catch (error) {

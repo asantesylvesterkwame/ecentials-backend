@@ -1,8 +1,8 @@
 const nodemailer = require("nodemailer");
 
-const sendMail = (email, mail_body) =>
+const sendMail = (email, mailBody) => {
   new Promise((resolve, reject) => {
-    let transporter = nodemailer.createTransport({
+    const transporter = nodemailer.createTransport({
       service: "gmail",
       host: "smtp.gmail.com",
       auth: {
@@ -15,20 +15,20 @@ const sendMail = (email, mail_body) =>
       },
     });
 
-    let mailOptions = {
+    const mailOptions = {
       from: "replyus.app@gmail.com",
       to: `${email}`,
       subject: "Ecentials",
-      html: mail_body,
+      html: mailBody,
     };
 
-    transporter.sendMail(mailOptions, (error, info) => {
+    transporter.sendMail(mailOptions, (error) => {
       if (error) {
         reject(error);
       }
       resolve("ok");
     });
   });
-
+};
 
 module.exports = sendMail;

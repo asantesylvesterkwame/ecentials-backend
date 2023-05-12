@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const Drug = require("../../../schemas/Drug");
 const Invoice = require("../../../schemas/Invoice");
 const Orders = require("../../../schemas/Orders");
@@ -5,7 +7,6 @@ const Returns = require("../../../schemas/Returns");
 
 async function addReturns({ req }) {
   const { invoice_number, store_id } = req.body;
-  console.log(invoice_number, store_id);
   try {
     const invoices = Invoice.find({
       store_id,
@@ -69,11 +70,9 @@ async function fetchReturns({ store_id }) {
 
 async function searchReturns(req) {
   try {
-    const searchText = req.body.searchText;
+    const { searchText } = req.body;
     const filter = {
-      $or: [
-        { invoice_number: { $regex: searchText, $options: "i" } },
-      ],
+      $or: [{ invoice_number: { $regex: searchText, $options: "i" } }],
     };
     const result = await Returns.find(filter);
     return {

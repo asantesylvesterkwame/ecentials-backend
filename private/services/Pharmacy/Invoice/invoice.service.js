@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const Drug = require("../../../schemas/Drug");
 const Invoice = require("../../../schemas/Invoice");
 const Orders = require("../../../schemas/Orders");

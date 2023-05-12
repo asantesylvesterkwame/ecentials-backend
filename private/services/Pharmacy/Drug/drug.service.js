@@ -1,3 +1,6 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
+
 const mongoose = require("mongoose");
 const csvParser = require("csv-parser");
 const fs = require("fs");
@@ -7,7 +10,7 @@ const {
 } = require("../../../helpers/constants");
 const DefaultDrug = require("../../../schemas/DefaultDrug");
 
-const ObjectId = mongoose.Types.ObjectId;
+const { ObjectId } = mongoose.Types;
 const Drug = require("../../../schemas/Drug");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -196,7 +199,8 @@ async function getPopularDrugs() {
 
 async function updateDrugDetail({ req }) {
   try {
-    let image_url, result;
+    let image_url;
+    let result;
 
     if (req.file) {
       image_url = await uploadFile(req.file, `drugs/${req.body.store_id}`);
@@ -386,53 +390,54 @@ async function uploadDrugsFromFile(req) {
             "image",
             "level",
             "dosage",
-            "purpose_of_drug"
+            "purpose_of_drug",
           ],
         })
       )
       .on("data", (data) => {
         const data_with_store_id = {
           store_id: req.body.store_id,
-          name: data["name"],
-          dosage: data["dosage"],
-          total_stock: parseInt(data["total_stock"]),
-          discount: parseFloat(data["discount"]),
-          nhis: data["nhis"],
-          expiry_date: new Date(data["expiry_date"]),
-          manufacturer: data["manufacturer"],
-          selling_price: parseFloat(data["selling_price"]),
-          price: parseFloat(data["price"]),
-          description: data["description"],
-          image: data["image"],
-          medicine_group: data["medicine_group"],
-          level: data["level"],
-          purpose_of_drug: data["purpose_of_drug"]
+          name: data.name,
+          dosage: data.dosage,
+          total_stock: parseInt(data.total_stock, 10),
+          discount: parseFloat(data.discount),
+          nhis: data.nhis,
+          expiry_date: new Date(data.expiry_date),
+          manufacturer: data.manufacturer,
+          selling_price: parseFloat(data.selling_price),
+          price: parseFloat(data.price),
+          description: data.description,
+          image: data.image,
+          medicine_group: data.medicine_group,
+          level: data.level,
+          purpose_of_drug: data.purpose_of_drug,
         };
         results.push(data_with_store_id);
       })
       .on("end", async () => {
-        const res = await Drug.insertMany(results);
+        await Drug.insertMany(results);
       });
     return {
       status: "success",
       message: "successfully uploaded drugs",
     };
   } catch (error) {
-    console.log(error);
     return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
 async function getDrugsBasedOnPurpose(req) {
   try {
-    const result = await Drug.find({ "purpose_of_drug": req.body.purpose_of_drug })
-    return { 
-      status: "success", 
-      message: "drugs retrieved successfully", 
-      data: result 
+    const result = await Drug.find({
+      purpose_of_drug: req.body.purpose_of_drug,
+    });
+    return {
+      status: "success",
+      message: "drugs retrieved successfully",
+      data: result,
     };
   } catch (error) {
-    return { status: "error", message: "an error occurred, please try again"};
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
@@ -450,5 +455,5 @@ module.exports = {
   fetchDefaultDrugs,
   deleteDrug,
   uploadDrugsFromFile,
-  getDrugsBasedOnPurpose
+  getDrugsBasedOnPurpose,
 };

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const Customer = require("../../../schemas/Customers");
 
 // Create new customer
@@ -33,7 +35,7 @@ async function updateCustomer({ req }) {
       ...req.body
     })
     if (result.modifiedCount > 0) {
-      return { 
+      return {
         status: 'success',
         message: 'customer information updated'
       }
@@ -47,8 +49,8 @@ async function updateCustomer({ req }) {
 async function deleteCustomer(req) {
   try {
     await Customer.findByIdAndDelete(req.body.customer_id);
-    return { 
-      status: 'success', 
+    return {
+      status: 'success',
       message: 'deleted customer successfully'
     };
   } catch (error) {
@@ -82,8 +84,8 @@ async function searchCustomer(req) {
   }
 }
 
-module.exports = { 
-  createCustomer, 
+module.exports = {
+  createCustomer,
   fetchCustomers,
   updateCustomer,
   deleteCustomer,

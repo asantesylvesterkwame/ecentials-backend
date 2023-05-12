@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const Hospital = require("../../schemas/Hospital");
 const {uploadFile} = require("../Firebase/imageUpload.service");
 const getDistance = require('../../../private/helpers/get_distance');
@@ -62,8 +64,8 @@ async function searchNearbyHospital({search_text, user_latitude, user_longitude}
 async function getHospitalDetails(req) {
     try {
         const result = await Hospital.find({ _id: req.body.hospital_id })
-        return { 
-            status: 'success', 
+        return {
+            status: 'success',
             message: 'successfully retrieved hospital',
             data: result
         }

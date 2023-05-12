@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 const { admin } = require("../../../config/firebase_admin.config");
 const User = require("../../../schemas/User");
 
@@ -14,16 +16,16 @@ async function setFCMToken(req) {
   }
 }
 
-async function sendFCMessage(fcmToken, title, message, data={}) {
+async function sendFCMessage(fcmToken, title, message, data = {}) {
   try {
-    var payload = {
+    const payload = {
       notification: {
-        title: title,
+        title,
         body: message,
       },
-      data
+      data,
     };
-    admin.messaging().sendToDevice(fcmToken, payload, {
+    await admin.messaging().sendToDevice(fcmToken, payload, {
       priority: "high",
       timeToLive: 60 * 60 * 24,
     });

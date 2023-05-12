@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
 const { sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
@@ -19,7 +21,7 @@ async function cancelOrder({ req }) {
       { $set: { order_status: "Cancelled" } }
     );
     const user = await _getUser(order_code);
-    
+
     const order = await Orders.find({ order_code });
 
     const data = {
@@ -38,7 +40,7 @@ async function cancelOrder({ req }) {
       "Order cancelled",
       req.body.message
     );
-    
+
     Promise.all([sendNotification, createNotification]).catch((e) => { throw new Error(e) })
 
     if (result.modifiedCount > 0) {
@@ -60,7 +62,7 @@ async function approveOrder({ req }) {
       { $set: { order_status: "Approved" } }
     );
     const user = await _getUser(order_code);
-    
+
     const order = await Orders.find({ order_code });
 
     const data = {
@@ -79,7 +81,7 @@ async function approveOrder({ req }) {
       "Order approved",
       req.body.message
     );
-    
+
     Promise.all([sendNotification, createNotification]).catch((e) => { throw new Error(e) })
 
     if (result.modifiedCount > 0) {
@@ -144,7 +146,7 @@ async function updateOrderStatus(req) {
 
     if (result.modifiedCount > 0) {
       const user = await _getUser(order_code);
-      
+
       const order = await Orders.find({ order_code: req.body.order_code });
 
       const data = {
@@ -159,7 +161,7 @@ async function updateOrderStatus(req) {
         `your order status: ${req.body.order_status}`,
         data
       );
-      
+
       return { status: 'success', message: 'order status updated successfully' }
     }
     return { status: 'failed', message: 'failed to update order status' }
@@ -172,9 +174,9 @@ async function createOrderForUser({ req }) {
   try {
     const invoice_number = generateInvoiceNumber();
     const order_code = await generateOrderCode('ORDER', req.body.name);
-    
+
     delete req.body.name;
-    
+
     const result = await Orders.create({
       ...req.body,
       order_code,
@@ -186,7 +188,7 @@ async function createOrderForUser({ req }) {
     await Prescription.findByIdAndUpdate(req.body.prescription_id, {
       $set: {status: 1}
     });
-    
+
     // decrement drug counts
     req.body.products_summary.forEach(async (item) => {
       // reduce total drug stock
@@ -217,9 +219,9 @@ async function createOrderForUser({ req }) {
       "Order approved",
       "your order has been approved, please update relevant information"
     );
-    
-    Promise.all([sendNotification, createNotification]).catch((e) => { 
-      throw new Error("an error occurred") 
+
+    Promise.all([sendNotification, createNotification]).catch((e) => {
+      throw new Error("an error occurred")
     });
 
     if (result) {
@@ -227,8 +229,8 @@ async function createOrderForUser({ req }) {
     }
     return { status: 'fail', message: 'failed to create order for user'}
   } catch (error) {
-    return { 
-      status: 'error', 
+    return {
+      status: 'error',
       message: 'an error occurred, please try again',
       error
     }

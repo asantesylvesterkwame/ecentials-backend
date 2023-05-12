@@ -1,4 +1,7 @@
-const ObjectId = require("mongoose").Types.ObjectId;
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
+
+const { ObjectId } = require("mongoose").Types;
 
 const Invoice = require("../../../schemas/Invoice");
 const Orders = require("../../../schemas/Orders");
@@ -22,8 +25,6 @@ async function fetchSalesPayment({ req }) {
   }
 }
 
-
-
 // CALCULATE TOTAL SALES TODAY
 async function fetchDaySales({ req }) {
   const { shop_id } = req.body;
@@ -32,7 +33,7 @@ async function fetchDaySales({ req }) {
     const sales = {};
     let total = 0;
     let previousWeekDay = null; // keep track of the previous week day
-    results.forEach(({ grand_total, createdAt, invoice_number }) => {
+    results.forEach(({ grand_total, createdAt }) => {
       const dayOfWeek = new Date(createdAt).toLocaleDateString("en-US", {
         weekday: "short",
       });
@@ -91,7 +92,7 @@ async function fetchWeeklySales(req) {
   try {
     const startDate = new Date(req.body.start_date);
     const endDate = new Date(startDate);
-    endDate.setDate(endDate.getDate() + 7)
+    endDate.setDate(endDate.getDate() + 7);
 
     const result = await Invoice.aggregate([
       {
@@ -99,7 +100,7 @@ async function fetchWeeklySales(req) {
           store_id: ObjectId(req.body.store_id),
           createdAt: {
             $gte: startDate,
-            $lte: endDate
+            $lte: endDate,
           },
         },
       },
@@ -120,4 +121,9 @@ async function fetchWeeklySales(req) {
   }
 }
 
-module.exports = { fetchSalesPayment, fetchMonthSales, fetchDaySales, fetchWeeklySales };
+module.exports = {
+  fetchSalesPayment,
+  fetchMonthSales,
+  fetchDaySales,
+  fetchWeeklySales,
+};
