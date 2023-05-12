@@ -27,3 +27,4 @@ yarn-error.log*
 /uploads
 
 /ecentials-backend
+.idea
