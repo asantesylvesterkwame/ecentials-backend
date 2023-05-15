@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 const router = require("express").Router();
 
 const {
@@ -12,7 +14,7 @@ router.post("/fetch-pharmacy-information", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await getPharmacyInformation({ pharmacy_id }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

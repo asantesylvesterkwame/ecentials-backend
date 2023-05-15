@@ -1,8 +1,8 @@
+/* eslint-disable */
+
 const router = require("express").Router();
 
 const Orders = require("../../../private/schemas/Orders");
-const Users = require("../../../private/schemas/User");
-const Drug = require("../../../private/schemas/Drug");
 
 const PaymentTransaction = require("../../../private/schemas/PaymentTransaction");
 const { verify } = require("../../../verifyToken");
@@ -37,10 +37,11 @@ router.post("/fetch-all-orders", verify, async (req, res) => {
       }
     ).sort({ createdAt: -1 });
 
-    if (orders)
+    if (orders) {
       return res.status(200).json({ message: "success", data: orders });
+    }
   } catch (e) {
-    res.status(400).json({ message: e });
+    return res.status(400).json({ message: e });
   }
 });
 
@@ -61,11 +62,6 @@ router.post("/fetch-specific-orders", verify, async (req, res) => {
     );
 
     const order_details = new Object();
-    var theDrugId;
-
-    var product_summary;
-    const products = new Object();
-
     //extracting user_id from response
     orders.forEach(async (element) => {
       const user_id = element.user_id;
@@ -98,7 +94,7 @@ router.post("/cancel-an-order", async (req, res, next) => {
   try {
     return res.status(200).json(await cancelOrder({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -111,7 +107,7 @@ router.post("/approve-order", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -149,8 +145,6 @@ router.post("/total-products-sold", verify, async (req, res) => {
 // this implementation might change in the future as this is
 // calculated only based on orders made in the system.
 router.post("/total-income-made-by-pharmacy", verify, async (req, res) => {
-  const { facility_id } = req.body;
-
   await PaymentTransaction.aggregate(
     [
       {

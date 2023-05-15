@@ -12,7 +12,7 @@ router.post("/add-new-wholesaler", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await createWholesaler({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -21,7 +21,7 @@ router.post("/fetch-wholesalers", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await fetchWholesaler());
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -33,9 +33,9 @@ router.delete("/delete-wholesaler", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error)
+    return next(error);
   }
-})
+});
 
 router.patch("/update-wholesaler", verify, async (req, res, next) => {
   try {
@@ -45,7 +45,7 @@ router.patch("/update-wholesaler", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

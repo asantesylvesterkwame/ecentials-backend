@@ -1,3 +1,6 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable camelcase */
+
 const router = require("express").Router();
 const {
   addReturns,
@@ -14,7 +17,7 @@ router.post("/add-return", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -24,7 +27,7 @@ router.post("", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await fetchReturns({ store_id }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -36,7 +39,7 @@ router.post("/search-returns", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

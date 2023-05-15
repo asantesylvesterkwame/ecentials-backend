@@ -16,7 +16,7 @@ router.post("/sales-payment", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -25,7 +25,7 @@ router.post("/sales-today", verify, async (req, res, next) => {
   try {
     return res.status(201).json(await fetchDaySales({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -34,7 +34,7 @@ router.post("/monthly-sales", verify, async (req, res, next) => {
   try {
     return res.status(201).json(await fetchMonthSales({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -47,7 +47,7 @@ router.post("/weekly-sales", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

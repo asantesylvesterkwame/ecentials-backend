@@ -1,7 +1,9 @@
+/* eslint-disable camelcase */
+/* eslint-disable no-underscore-dangle */
+
 const router = require("express").Router();
 const multer = require("multer");
-
-const Drug = require("../../../private/schemas/Drug");
+require("../../../private/schemas/Drug");
 const {
   searchDrugInSpecificPharmacy,
   addDrugToInventory,
@@ -22,28 +24,28 @@ const { verify } = require("../../../verifyToken");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single("picture");
-const fileUpload = multer({ dest: '/tmp' }).single('file')
+const fileUpload = multer({ dest: "/tmp" }).single("file");
 
 // list all drugs associated to a particular pharmacy or shop
 router.post("", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await fetchAllPharmacyDrugs({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
 // search for a drug using name, manufacturer, description
 router.post("/drug-search", verify, async (req, res, next) => {
   try {
-    const result = await searchDrug(req)
-    
-    if (result.status === 'success') {
-      return res.status(200).json(result)
+    const result = await searchDrug(req);
+
+    if (result.status === "success") {
+      return res.status(200).json(result);
     }
-    return res.status(400).json(result)
+    return res.status(400).json(result);
   } catch (error) {
-    next(error)
+    return next(error);
   }
 });
 
@@ -52,7 +54,7 @@ router.post("/view-drug-details", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await getDrugInformation({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -78,7 +80,7 @@ router.post(
         await searchDrugInSpecificPharmacy({ search_text, store_id })
       );
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 );
@@ -89,7 +91,7 @@ router.post("/add-new-drug", upload, async (req, res, next) => {
   try {
     return res.status(201).json(await addDrugToInventory({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -98,7 +100,7 @@ router.post("/count-drugs-in-pharmacy", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await countPharmacyDrugs({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -111,88 +113,96 @@ router.post(
     try {
       return res.status(200).json(await updateDrugDetail({ req }));
     } catch (error) {
-      next(error);
+      return next(error);
     }
   }
 );
 
 // list popular pharmacy drugs
-router.post('/top-popular-drugs-in-pharmacy', verify, async (req, res, next) => {
+router.post(
+  "/top-popular-drugs-in-pharmacy",
+  verify,
+  async (req, res, next) => {
     try {
-        const result = await getPopularDrugsInPharmacy({ req })
-        
-        if (result.status === 'success') {
-            return res.status(200).json(result)
-        }
+      const result = await getPopularDrugsInPharmacy({ req });
 
-        return res.status(400).json(result)
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+
+      return res.status(400).json(result);
     } catch (error) {
-        next(error)
+      return next(error);
     }
-})
-
-router.post('/search-default-drugs', verify, async (req, res, next) => {
-  try {
-    const result = await searchDefaultDrugs(req)
-    if (result.status === 'success') {
-      return res.status(200).json(result)
-    }
-    return res.status(400).json(result)
-  } catch (error) {
-    next(error)
   }
-})
+);
 
-router.get('/fetch-default-drugs', verify, async (req, res, next) => {
+router.post("/search-default-drugs", verify, async (req, res, next) => {
   try {
-    const result = await fetchDefaultDrugs()
-    if (result.status === 'success') {
-      return res.status(200).json(result)
+    const result = await searchDefaultDrugs(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
     }
-    return res.status(400).json(result)
+    return res.status(400).json(result);
   } catch (error) {
-    next(error)
+    return next(error);
   }
-})
+});
 
-router.delete('/delete-drug', verify, async (req, res, next) => {
+router.get("/fetch-default-drugs", verify, async (req, res, next) => {
+  try {
+    const result = await fetchDefaultDrugs();
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.delete("/delete-drug", verify, async (req, res, next) => {
   try {
     const result = await deleteDrug(req);
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(200).json(result);
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
-})
+});
 
-router.post('/upload-drugs-from-file', verify, fileUpload, async (req, res, next) => {
-  try {
-    if (!req.file) {
-      res.status(400).json({message: 'No file uploaded'});
-      return;
-    }
+router.post(
+  "/upload-drugs-from-file",
+  verify,
+  fileUpload,
+  async (req, res, next) => {
+    try {
+      if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded" });
+      }
 
-    const result = await uploadDrugsFromFile(req);
-    if (result.status === 'success') {
-      return res.status(201).json(result);
+      const result = await uploadDrugsFromFile(req);
+      if (result.status === "success") {
+        return res.status(201).json(result);
+      }
+      return res.status(400).json(result);
+    } catch (error) {
+      return next(error);
     }
-    return res.status(400).json(result);
-  } catch (error) {
-    next(error);
   }
-})
+);
 
-router.post('/get-drugs-based-on-purpose', verify, async (req, res, next) => {
+router.post("/get-drugs-based-on-purpose", verify, async (req, res, next) => {
   try {
     const result = await getDrugsBasedOnPurpose(req);
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(200).json(result);
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 

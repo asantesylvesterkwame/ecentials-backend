@@ -1,3 +1,5 @@
+/* eslint-disable camelcase */
+
 const router = require("express").Router();
 const { verify } = require("../../../../verifyToken");
 
@@ -14,7 +16,7 @@ router.post("", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await fetchInvoice({ store_id }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -23,7 +25,7 @@ router.post("/add-invoice", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await addInvoice({ req }));
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
@@ -35,11 +37,11 @@ router.delete("/delete-invoice", verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
 });
 
-router.post('/search-invoice', verify, async (req, res, next) => {
+router.post("/search-invoice", verify, async (req, res, next) => {
   try {
     const result = await searchInvoice(req);
     if (result.status === "success") {
@@ -47,8 +49,8 @@ router.post('/search-invoice', verify, async (req, res, next) => {
     }
     return res.status(400).json(result);
   } catch (error) {
-    next(error);
+    return next(error);
   }
-})
+});
 
 module.exports = router;
