@@ -1,8 +1,9 @@
+// eslint-disable-next-line consistent-return
 const isCorrectDate = (req, res, next) => {
   try {
-    let current_date = new Date().toJSON().slice(0, 10);
+    const currentDate = new Date().toJSON().slice(0, 10);
 
-    if (new Date(req.body.date) < new Date(current_date)) {
+    if (new Date(req.body.date) < new Date(currentDate)) {
       return res
         .status(400)
         .json({ message: "provide a current or future date" });

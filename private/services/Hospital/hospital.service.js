@@ -74,17 +74,19 @@ async function getHospitalDetails(req) {
     }
 }
 
-// check if user has a hospital
+/**
+ * Check if business owner has hospital
+ */
 async function isBusinessOwnerHavingHospital(req) {
     try {
-        const result = await Hospital.find({ owner_id: req.user._id })
+        const result = await Hospital.find({ owner_id: req.user._id });
 
         if (result.length > 0) {
-            return { status: 'success', message: 'user has a hospital', data: result}
+            return { status: 'success', message: 'user has a hospital', has_hospital: true };
         }
-        return { status: 'failed', message: 'user has no hospital'}
+        return { status: 'success', message: 'user has no hospital', has_hospital: false };
     } catch (error) {
-        return { status: 'error', message: 'an error occurred, please try again' }
+        return { status: 'error', message: 'an error occurred, please try again' };
     }
 }
 
