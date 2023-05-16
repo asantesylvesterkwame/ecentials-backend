@@ -9,6 +9,7 @@ const {
   uploadHospitalImages,
   searchNearbyHospital,
   getHospitalDetails,
+  isBusinessOwnerHavingHospital,
 } = require("../../../private/services/Hospital/hospital.service");
 const { verify } = require("../../../verifyToken");
 
@@ -118,4 +119,19 @@ router.post("/fetch-hospital-information", verify, async (req, res, next) => {
   }
 });
 
+router.get(
+  "/check-whether-owner-has-hospital",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await isBusinessOwnerHavingHospital(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(400).json(result);
+    } catch (e) {
+      return next(e);
+    }
+  }
+);
 module.exports = router;
