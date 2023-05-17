@@ -6,7 +6,15 @@ const hospitalSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    address: {
+    email: {
+      type: String,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    location: {
       type: String,
       required: true,
     },
@@ -15,6 +23,10 @@ const hospitalSchema = new mongoose.Schema(
       required: true,
     },
     phone_number: {
+      type: String,
+      required: true,
+    },
+    license_number: {
       type: String,
       required: true,
     },
@@ -31,6 +43,10 @@ const hospitalSchema = new mongoose.Schema(
       required: false,
     },
     images: [],
+    business_document: {
+      type: String,
+      required: true,
+    },
     owner_id: {
       type: mongoose.SchemaTypes.ObjectId,
       required: false,
