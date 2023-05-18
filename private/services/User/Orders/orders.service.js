@@ -106,7 +106,7 @@ async function createOrderItem(req) {
           {
             $inc: { total_stock: -item.quantity },
             // eslint-disable-next-line prettier/prettier
-          },
+          }
         );
       });
     });
@@ -128,7 +128,7 @@ async function cancelOrder(req) {
           order_status: "Cancelled",
         },
         // eslint-disable-next-line prettier/prettier
-      },
+      }
     );
     if (result.modifiedCount > 0) {
       return { status: "success", message: "order cancelled successfully" };

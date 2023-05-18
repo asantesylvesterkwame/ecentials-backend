@@ -99,7 +99,7 @@ async function cancelUserAppointment({ req }) {
         user_id: req.user._id,
       },
       // eslint-disable-next-line prettier/prettier
-      { status: "cancelled" },
+      { status: "cancelled" }
     );
 
     if (result.modifiedCount > 0) {

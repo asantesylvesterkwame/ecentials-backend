@@ -29,20 +29,23 @@ async function fetchCustomers({ facility_id }) {
 
 async function updateCustomer({ req }) {
   try {
-    const result = await Customer.updateOne({
-      _id: req.body.customer_id
-    }, {
-      ...req.body
-    })
+    const result = await Customer.updateOne(
+      {
+        _id: req.body.customer_id,
+      },
+      {
+        ...req.body,
+      }
+    );
     if (result.modifiedCount > 0) {
       return {
-        status: 'success',
-        message: 'customer information updated'
-      }
+        status: "success",
+        message: "customer information updated",
+      };
     }
-    return { status: 'fail', message: 'failed to update customer information'};
+    return { status: "fail", message: "failed to update customer information" };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred' };
+    return { status: "error", message: "an error occurred" };
   }
 }
 
@@ -50,11 +53,11 @@ async function deleteCustomer(req) {
   try {
     await Customer.findByIdAndDelete(req.body.customer_id);
     return {
-      status: 'success',
-      message: 'deleted customer successfully'
+      status: "success",
+      message: "deleted customer successfully",
     };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred' };
+    return { status: "error", message: "an error occurred" };
   }
 }
 
@@ -89,5 +92,5 @@ module.exports = {
   fetchCustomers,
   updateCustomer,
   deleteCustomer,
-  searchCustomer
+  searchCustomer,
 };

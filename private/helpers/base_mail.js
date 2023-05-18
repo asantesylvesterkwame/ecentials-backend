@@ -1,5 +1,6 @@
-const BaseTemplate = (title, subtitle, details, appLogo, notMeLink) =>{
-    return`<!DOCTYPE html>
+/* eslint-disable */
+const BaseTemplate = (title, subtitle, details, appLogo, notMeLink) => {
+  return `<!DOCTYPE html>
     <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">
     
     <head>
@@ -407,8 +408,7 @@ const BaseTemplate = (title, subtitle, details, appLogo, notMeLink) =>{
     </body>
     
     </html>     
-    `
-}
-
+    `;
+};
 
 module.exports = BaseTemplate;
