@@ -10,6 +10,7 @@ const {
   searchNearbyHospital,
   getHospitalDetails,
   isBusinessOwnerHavingHospital,
+  registerNewHospital,
 } = require("../../../private/services/Hospital/hospital.service");
 const { verify } = require("../../../verifyToken");
 
@@ -17,26 +18,21 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // create a new hospital using data from request body
-router.post("/add-new-hospital", (req, res) => {
-  // eslint-disable-next-line
-  const { name, address, opening_hours, phone_number, gps_address } = req.body;
-
-  Hospital.create(
-    {
-      name,
-      address,
-      opening_hours,
-      phone_number,
-      gps_address,
-    },
-    (err, result) => {
-      if (err) {
-        return res.status(400).json({ message: "Failed to create a hospital" });
+router.post(
+  "/add-new-hospital",
+  upload.single("document"),
+  async (req, res, next) => {
+    try {
+      const result = await registerNewHospital({ req });
+      if (result.status === "success") {
+        return res.status(201).json(result);
       }
-      return res.status(200).json({ message: "success", data: result });
+      return res.status(400).json(result);
+    } catch (e) {
+      return next(e);
     }
-  );
-});
+  }
+);
 
 // upload images of a hospital
 router.post(
