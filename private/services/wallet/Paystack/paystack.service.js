@@ -27,7 +27,7 @@ async function initializePaymentTransaction(req) {
       if (response.data.status === true) return { message: response.data };
     })
     .catch((error) => {
-      console.log(error);
+      throw new Error(error);
     });
   // } catch (error) {
   //     return { message: "An error occurred when initializing paystack" }
