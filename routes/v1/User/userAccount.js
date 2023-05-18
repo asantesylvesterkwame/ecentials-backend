@@ -261,7 +261,7 @@ router.get("/fetch-school-details", verify, async (req, res) => {
 
 // delete a school detail
 router.delete("/delete-school-details", verify, async (req, res) => {
-    const { record_id } = req.body;
+  const { record_id } = req.body;
 
   try {
     const removeRecord = await User.updateOne(

@@ -1,3 +1,4 @@
+/* eslint-disable */
 const Staff = require("../schemas/Staff");
 const User = require("../schemas/User");
 
@@ -10,22 +11,22 @@ const User = require("../schemas/User");
  * @returns {String} empty string When an error occurs
  */
 async function getFirstName(email) {
-    let first_name = '';
-    try {
-        let result = await User.find({email: email});
-        
-        if (result !== null) {
-            first_name = result.personal.name
-        } else {
-            result = await Staff.find({email: email});
-            if (result !== null) {
-                first_name = result.first_name;
-            }
-        }
-        return first_name;
-    } catch (error) {
-        return first_name;
+  let first_name = "";
+  try {
+    let result = await User.find({ email });
+
+    if (result !== null) {
+      first_name = result.personal.name;
+    } else {
+      result = await Staff.find({ email });
+      if (result !== null) {
+        first_name = result.first_name;
+      }
     }
+    return first_name;
+  } catch (error) {
+    return first_name;
+  }
 }
 
 module.exports = getFirstName;

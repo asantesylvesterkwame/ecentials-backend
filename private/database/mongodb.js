@@ -1,3 +1,4 @@
+/* eslint-disable */
 const mongoose = require("mongoose");
 
 module.exports = (db_name) => {

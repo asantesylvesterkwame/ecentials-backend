@@ -28,7 +28,6 @@ router.post("/new-prescription", verify, upload, async (req, res, next) => {
       .status(201)
       .json(await uploadPrescription({ user_id, store_id, file: req.file }));
   } catch (error) {
-    console.log(error);
     return next(error);
   }
 });

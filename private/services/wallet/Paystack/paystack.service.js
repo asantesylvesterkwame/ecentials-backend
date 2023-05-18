@@ -20,14 +20,14 @@ async function initializePaymentTransaction(req) {
       "https://api.paystack.co/transaction/initialize",
       { params },
       // eslint-disable-next-line prettier/prettier
-      { headers },
+      { headers }
     )
     // eslint-disable-next-line consistent-return
     .then((response) => {
       if (response.data.status === true) return { message: response.data };
     })
     .catch((error) => {
-      console.log(error);
+      throw new Error(error);
     });
   // } catch (error) {
   //     return { message: "An error occurred when initializing paystack" }
