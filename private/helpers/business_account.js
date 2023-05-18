@@ -1,3 +1,4 @@
+/* eslint-disable */
 const BusinessAccount = (account_id, appLogo, notMeLink) =>{
     return`<!DOCTYPE html>
     <html lang="en" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:v="urn:schemas-microsoft-com:vml">

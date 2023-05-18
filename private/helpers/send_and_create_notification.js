@@ -1,3 +1,4 @@
+/* eslint-disable */
 const {
   sendFCMessage,
 } = require("../services/User/Notification/notification.service");

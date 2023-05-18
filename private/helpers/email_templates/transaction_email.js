@@ -1,3 +1,4 @@
+/* eslint-disable */
 const TRANSACTION_EMAIL = (
   customer_name,
   invoice_number,
