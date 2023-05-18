@@ -57,7 +57,13 @@ const EMAILBODY = (name, resetCode) => {
             <h1>Confirm Verification Code</h1>
             <p>Hi ${name}</p>
             <p>This is your verification code</p>
-            <span>${resetCode.charAt(0)}</span><span>${resetCode.charAt(1)}</span><span>${resetCode.charAt(2)}</span><span>${resetCode.charAt(3)}</span><span>${resetCode.charAt(4)}</span><span>${resetCode.charAt(5)}</span>
+            <span>${resetCode.charAt(0)}</span><span>${resetCode.charAt(
+    1
+  )}</span><span>${resetCode.charAt(2)}</span><span>${resetCode.charAt(
+    3
+  )}</span><span>${resetCode.charAt(4)}</span><span>${resetCode.charAt(
+    5
+  )}</span>
             <p>This code will only be valid for the next 15 minutes. If the code does not work, you can use this login verification link:</p>
             <a href="" class="btn">Verify Email</a>
            <div class="line">

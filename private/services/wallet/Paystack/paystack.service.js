@@ -20,7 +20,7 @@ async function initializePaymentTransaction(req) {
       "https://api.paystack.co/transaction/initialize",
       { params },
       // eslint-disable-next-line prettier/prettier
-      { headers },
+      { headers }
     )
     // eslint-disable-next-line consistent-return
     .then((response) => {

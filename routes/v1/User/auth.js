@@ -21,15 +21,18 @@ const {
   refreshTokenBodyValidation,
 } = require("./validation/auth_validation");
 
-const verify = require('../../../verifyToken')
-const sendMail = require('../../../private/services/send_email')
-const RecoveryCode = require('../../../private/schemas/RecoveryCode')
-const EMAILBODY = require('../../../private/helpers/mail_body')
-const { generateTokens, verifyRefreshToken } = require('../../../private/helpers/user_token')
-const BaseTemplate = require('../../../private/helpers/base_mail')
-const Staff = require('../../../private/schemas/Staff')
-const BusinessOwner = require('../../../private/schemas/BusinessOwner')
-const getFirstName = require('../../../private/helpers/retrieve_first_name')
+const verify = require("../../../verifyToken");
+const sendMail = require("../../../private/services/send_email");
+const RecoveryCode = require("../../../private/schemas/RecoveryCode");
+const EMAILBODY = require("../../../private/helpers/mail_body");
+const {
+  generateTokens,
+  verifyRefreshToken,
+} = require("../../../private/helpers/user_token");
+const BaseTemplate = require("../../../private/helpers/base_mail");
+const Staff = require("../../../private/schemas/Staff");
+const BusinessOwner = require("../../../private/schemas/BusinessOwner");
+const getFirstName = require("../../../private/helpers/retrieve_first_name");
 
 dotenv.config();
 

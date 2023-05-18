@@ -1,2512 +1,2168 @@
 {
-	"info": {
-		"_postman_id": "0f9ebdc4-0ec8-488e-9e90-0e9e52282e69",
-		"name": "Ecentials-Api-v1",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "9797981"
-	},
-	"item": [
-		{
-			"name": "Users",
-			"item": [
-				{
-					"name": "Appointments",
-					"item": [
-						{
-							"name": "book-appointment",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"staff_id\": \"62fc17c3194568bd5797f8f4\",\n    \"date\": \"2022-08-16T22:18:43.251+00:00\",\n    \"time\": \"2022-08-16T22:18:43.251+00:00\",\n    \"status\": \"unapproved\"\n\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/appointments/book-an-appointment",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"appointments",
-										"book-an-appointment"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-completed-appointments",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"status\": \"completed\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/appointments/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"appointments",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-upcoming-appointments",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"status\": \"upcoming\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/appointments/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"appointments",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-cancelled-appointments",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"status\": \"cancelled\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/appointments/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"appointments",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "reschedule-an-appointment",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"date\": \"2022-09-16T22:18:43.251+00:00\",\n    \"time\": \"2022-09-16T22:18:43.251+00:00\",\n    \"appoint_id\": \"630a89a5e1d9d275a070b700\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/appointments/reschedule-appointment-date",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"appointments",
-										"reschedule-appointment-date"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Wallet",
-					"item": [
-						{
-							"name": "create-ecentials-wallet",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/user/wallet/create-ecentials-wallet",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"wallet",
-										"create-ecentials-wallet"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-ecentials-wallet-balance",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/user/wallet/get-ecentials-wallet-balance",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"wallet",
-										"get-ecentials-wallet-balance"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "recent-ecentials-wallet-transactions",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/user/wallet/recent-ecentials-wallet-transactions",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"wallet",
-										"recent-ecentials-wallet-transactions"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Orders",
-					"item": [
-						{
-							"name": "user-orders",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{new-token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/orders",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"orders"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "order-item-detail",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"order_id\": \"62f192c8b5c5bbdebb50ce29\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/orders/order-item",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"orders",
-										"order-item"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Favourites",
-					"item": [
-						{
-							"name": "user-favourites",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"favourite_type\": \"pharmacy\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/favourites",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"favourites"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "user-add-favourite",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"favourite_type\": \"pharmacy\",\n    \"item_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/favourites/add-favourite",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"favourites",
-										"add-favourite"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "user-remove-favourite",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{new-token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"favourite_id\": \"62bb36606bcca32622c9bb99\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/favourites/remove-favourite",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"favourites",
-										"remove-favourite"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Bookmarks",
-					"item": [
-						{
-							"name": "add-new-bookmark-item",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"bookmark_type\": \"pharmacy\",\n    \"item_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/api/v1/user/bookmarks/add-new-bookmark-item",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"bookmarks",
-										"add-new-bookmark-item"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list-bookmark-items",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"bookmark_type\": \"pharmacy\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/bookmarks/list-bookmark-items",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"bookmarks",
-										"list-bookmark-items"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "remove-item-from-bookmarks",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"item_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/api/v1/user/bookmarks/remove-bookmark-item",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"bookmarks",
-										"remove-bookmark-item"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Notifications",
-					"item": [
-						{
-							"name": "add_notification_for_user",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{auth-token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"title\": \"hello\",\n    \"message\": \"hey there\",\n    \"image\": \"image url\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/notifications/add_notification_for_user",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"notifications",
-										"add_notification_for_user"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "mark-notification-as-delivered",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{auth-token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"id\": \"\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/logs/mark-notification-as-delivered",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"logs",
-										"mark-notification-as-delivered"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "fetch-user-notifications",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/notifications/fetch-all-user-notifications",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"notifications",
-										"fetch-all-user-notifications"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "fetch-user-notification(specific/recommended)",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"notification_type\": \"recommended\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/notifications/fetch-user-notifications",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"notifications",
-										"fetch-user-notifications"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Authentication",
-					"item": [
-						{
-							"name": "login",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"kumi123@gmail.com\",\n    \"password\": \"oneKumi2016#\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/login",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"login"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "signup",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"kumi123@gmail.com\",\n    \"password\": \"oneKumi2016#\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/register",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"register"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "login-attempts",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{auth-token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"user_id\": \"\",\n    \"device_type\": \"android\",\n    \"device_name\": \"samsung\",\n    \"ip_addr\": \"0.0.0.0\",\n    \"type\": 0\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/logs/login-attempts",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"logs",
-										"login-attempts"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "health-pin",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"pin\": \"1111\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/health-pin",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"health-pin"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "reset-health-pin",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"pin\":\"2827\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/reset-health-pin",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"reset-health-pin"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "send-password-reset-verification-code",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
-										"type": "text",
-										"disabled": true
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"lateofrederick@yahoo.com\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/recover_password",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"recover_password"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "verify-password-reset-verification-code",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
-										"type": "text",
-										"disabled": true
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n\t\"code\": \"2A69BC\",\n    \"email\": \"lateofrederick@yahoo.com\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/verify_code",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"verify_code"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "reset-user-password",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
-										"type": "text",
-										"disabled": true
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"email\": \"lateofrederick@yahoo.com\",\n    \"password\": \"JosephPeter2018@@#\",\n    \"confirmPassword\": \"JosephPeter2018@@#\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/reset-password",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"reset-password"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Information",
-					"item": [
-						{
-							"name": "fetch-user-details",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/fetch-personal-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"fetch-personal-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "Add/Edit details",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"kumi\",\n    \"phone\": \"02008000578\",\n    \"gender\": \"male\",\n    \"address\": \"hello\",\n    \"occupation\": \"farmer\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/addEdit-personal-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"addEdit-personal-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "fetch-health-details",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/fetch-health-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"fetch-health-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "add-edit-health-details",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"blood_group\": \"o positive\",\n    \"temperature\": \"24.5\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/addEdit-health-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"addEdit-health-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "add-school-details",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTg0MzU4Mjh9.em6JB4IGsGOj_Gglyd_HkDXIychbx57KpgOMof7o0V4",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"school_name\": \"tech\",\n    \"course\": \"pharmacy\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/add-school-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"add-school-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "edit-school-details",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{auth-token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"school_name\": \"kass\",\n    \"course\": \"medicine\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/edit-school-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"edit-school-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "fetch-school-details",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ1ZjU4OTgxMmRiODNkNmM2NzQ0NmEiLCJpYXQiOjE2NTgxODk2NjZ9.1LSxeUPrTHX-vyfXvfCjUqOwC83_O7pXsM88Y42eTx0",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/fetch-school-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"fetch-school-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "delete-school-details",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{auth-token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"record_id\": \"\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/account/delete-school-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"account",
-										"delete-school-details"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Cart",
-					"item": [
-						{
-							"name": "remove-item-from-cart",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{new-token}}",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"item_id\": \"62bb7b03ebdeaddbb74810cb\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/cart/remove-item-from-cart",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"cart",
-										"remove-item-from-cart"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "add-item-to-cart",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"item_name\": \"Codeine\",\n    \"item_image_url\": \"http://www.google.com\",\n    \"quantity\": 1,\n    \"price\": 10\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/cart/add-item",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"cart",
-										"add-item"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list-all-cart-items",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/cart/fetch-all-cart-items",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"cart",
-										"fetch-all-cart-items"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Prescription",
-					"item": [
-						{
-							"name": "new-prescription",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "picture",
-											"type": "file",
-											"src": "/home/lateo/Pictures/Screenshot from 2021-12-17 10-28-59.png"
-										},
-										{
-											"key": "store_id",
-											"value": "62c81cce8faa7ded917bd066",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/prescriptions/new-prescription",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"prescriptions",
-										"new-prescription"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "get-user-prescriptions",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/prescriptions/user-prescriptions",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"prescriptions",
-										"user-prescriptions"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "remove-user-prescription",
-							"request": {
-								"method": "DELETE",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"prescription_id\": \"62f0f50caad3b51550c455ad\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/prescriptions/remove-user-prescription",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"prescriptions",
-										"remove-user-prescription"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Checkout",
-					"item": [
-						{
-							"name": "create-checkout-item",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTg3ODUzODZ9._GS_X9uuFbKPJq9CANAHsoVyriyBoTx76c8VizCSNag",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"delivery_address\": \"Kumi Guitar, 24th street. Adabraka Accra\",\n    \"delivery_date\": \"Between 26th July and 30th August\",\n    \"total_items_cost\": 200,\n    \"shipping_fee\": 20,\n    \"total\": 220,\n    \"shipment_summary\": [\n        {\n            \"drug_name\": \"paracetamol\",\n            \"total_number\": 1,\n            \"pharmacy\": \"62c81cce8faa7ded917bd066\"\n        }\n    ]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/user/checkout/create-checkout-item",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"user",
-										"checkout",
-										"create-checkout-item"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Shipping-Address",
-					"item": [
-						{
-							"name": "add-new-shipping-address",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"street_name\": \"George Bush High street\",\n    \"name_of_recipient\": \"Kumi Guitar\",\n    \"mobile\": \"233300499483\",\n    \"town\": \"Lapaz\",\n    \"district\": \"Ga North\",\n    \"region\": \"Greater accra\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/user/shipping-address/add-user-shipping-address/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"shipping-address",
-										"add-user-shipping-address",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "fetch-user-shipping-addresses",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/user/shipping-address/fetch-all-shipping-addresses",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"user",
-										"shipping-address",
-										"fetch-all-shipping-addresses"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Pharmacies",
-			"item": [
-				{
-					"name": "Search",
-					"item": [
-						{
-							"name": "search-for-pharmacy",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"search_text\": \"moz\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacies/search-for-pharmacy",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacies",
-										"search-for-pharmacy"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "search-nearby-pharmacies",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "https://ecentials.herokuapp.com/api/v1/pharmacies/search-nearby-pharmacies",
-									"protocol": "https",
-									"host": [
-										"ecentials",
-										"herokuapp",
-										"com"
-									],
-									"path": [
-										"api",
-										"v1",
-										"pharmacies",
-										"search-nearby-pharmacies"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "all-pharmacies",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "{{new-token}}",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3001/api/v1/pharmacies",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"pharmacies"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Drug",
-					"item": [
-						{
-							"name": "list-all-drugs",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/pharmacy/drugs/",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"pharmacy",
-										"drugs",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "view-drug-details",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"drug_id\": \"62cd942ac6377c69b61b632e\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/pharmacy/drugs/view-drug-details",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"pharmacy",
-										"drugs",
-										"view-drug-details"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "list-popular-drugs",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "http://localhost:3001/api/v1/pharmacy/drugs/list-popular-drugs",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"pharmacy",
-										"drugs",
-										"list-popular-drugs"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "add-new-drug-for-pharmacy",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\",\n    \"name\": \"codeine\",\n    \"prize\": 1.0,\n    \"description\": \"best codeine in town\",\n    \"dosage\": \"three times daily. one in the morning, afternoon,  then one in the evening\",\n    \"quantity\": 1,\n    \"dosage_form\": \"tablet\",\n    \"manufacturer\": \"Kumi Chemist\",\n    \"views\": 0,\n    \"discount\": 0.20,\n    \"nhis\": 0,\n    \"images\": [\"https://www.google.com\"]\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/pharmacy/drugs/add-new-drug",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"pharmacy",
-										"drugs",
-										"add-new-drug"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "search-for-drug",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"search_text\": \"Ernes\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/pharmacy/drugs/drug-search",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"pharmacy",
-										"drugs",
-										"drug-search"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "search-for-drug-in-specific-pharmacy",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"search_text\": \"codeine\",\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/drugs//pharmacy-specific-drug-search/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"drugs",
-										"",
-										"pharmacy-specific-drug-search",
-										""
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Sales",
-					"item": [
-						{
-							"name": "total-orders",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/orders/total-orders/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"orders",
-										"total-orders",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "total-products-sold",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/orders/total-products-sold/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"orders",
-										"total-products-sold",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "total-income-made-by-pharmacy",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"facility_id\": \"62c81cce8faa7ded917bd066\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/orders/total-income-made-by-pharmacy/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"orders",
-										"total-income-made-by-pharmacy",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "fetch-sales",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}"
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/orders/fetch-sales/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"orders",
-										"fetch-sales",
-										""
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Create",
-					"item": [
-						{
-							"name": "create-new-pharmacy",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"store_pin\": \"4893\",\n    \"name\": \"Dinkunim Pharmacy\",\n    \"description\": \"Your health is our concern\",\n    \"address\": \"George Bush Street\",\n    \"city\": \"Accra\",\n    \"licence_no\": \"AR040FA93\",\n    \"logo\": \"https://www.google.com\",\n    \"accept_nhis\": false,\n    \"gps_lat\": 92.00,\n    \"gps_lng\": 12.0\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://localhost:3001/api/v1/pharmacies/create-new-pharmacy",
-									"protocol": "http",
-									"host": [
-										"localhost"
-									],
-									"port": "3001",
-									"path": [
-										"api",
-										"v1",
-										"pharmacies",
-										"create-new-pharmacy"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Staff",
-					"item": [
-						{
-							"name": "fetch-all-pharmacy-staff",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"facility_id\": \"62c81cce8faa7ded917bd066\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/staff/fetch-pharmacy-staff",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"staff",
-										"fetch-pharmacy-staff"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Information",
-					"item": [
-						{
-							"name": "retrieve-pharmacy-information",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"pharmacy_id\":\"62c81e45bf41c44dabffbb6f\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/pharmacy/information/fetch-pharmacy-information",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"pharmacy",
-										"information",
-										"fetch-pharmacy-information"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Hospitals",
-			"item": [
-				{
-					"name": "Doctors",
-					"item": [
-						{
-							"name": "fetch-top-doctors",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "https://ecentials.herokuapp.com/hospital/staff/fetch-top-doctors",
-									"protocol": "https",
-									"host": [
-										"ecentials",
-										"herokuapp",
-										"com"
-									],
-									"path": [
-										"hospital",
-										"staff",
-										"fetch-top-doctors"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Create",
-					"item": [
-						{
-							"name": "create-new-hospital",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"Peace hospital\",\n    \"address\": \"27th Street Avenue, Berlin\",\n    \"opening_hours\": \"8am everyday\",\n    \"phone_number\": \"9837432832\",\n    \"gps_addreess\": \"12829424828\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospitals/add-new-hospital",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospitals",
-										"add-new-hospital"
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "upload-hospital-images",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "formdata",
-									"formdata": [
-										{
-											"key": "pictures",
-											"type": "file",
-											"src": [
-												"/home/lateo/Pictures/Screenshots/created bucket.png",
-												"/home/lateo/Pictures/Screenshots/elasticbeanstalk-image.png"
-											]
-										},
-										{
-											"key": "hospital_id",
-											"value": "62fc17c3194568bd5797f8f4",
-											"type": "text"
-										}
-									]
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospitals/upload-hospital-images",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospitals",
-										"upload-hospital-images"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Search",
-					"item": [
-						{
-							"name": "search-for-hospital",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"search_text\": \"peace\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/hospitals/search-for-hospital",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"hospitals",
-										"search-for-hospital"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		},
-		{
-			"name": "Lab",
-			"item": [
-				{
-					"name": "Create-Details",
-					"item": [
-						{
-							"name": "fetch-all-labs",
-							"request": {
-								"method": "GET",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"url": {
-									"raw": "{{BASE_URL}}/labs/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"labs",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "create-lab",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"name\": \"New lab\",\n    \"address\": \"George Bush Highway, Lapaz\",\n    \"phone_numbers\": [\"0200000038\", \"94839024823\"],\n    \"opening_hours\": \"2022-09-05T21:16:21.870+00:00\",\n    \"gps_address\": \"BJ-0000-4567\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/labs/create-new-lab/",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"labs",
-										"create-new-lab",
-										""
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				},
-				{
-					"name": "Staff",
-					"item": [
-						{
-							"name": "fetch-top-doctors-in-labs",
-							"request": {
-								"method": "POST",
-								"header": [
-									{
-										"key": "auth-token",
-										"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
-										"type": "text"
-									}
-								],
-								"body": {
-									"mode": "raw",
-									"raw": "{\n    \"facility_type\": \"lab\"\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{BASE_URL}}/labs/fetch-top-doctors-in-labs",
-									"host": [
-										"{{BASE_URL}}"
-									],
-									"path": [
-										"labs",
-										"fetch-top-doctors-in-labs"
-									]
-								}
-							},
-							"response": []
-						}
-					]
-				}
-			]
-		}
-	],
-	"event": [
-		{
-			"listen": "prerequest",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		},
-		{
-			"listen": "test",
-			"script": {
-				"type": "text/javascript",
-				"exec": [
-					""
-				]
-			}
-		}
-	],
-	"variable": [
-		{
-			"key": "token",
-			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc"
-		},
-		{
-			"key": "BASE_URL",
-			"value": "http://localhost:3001"
-		}
-	]
+  "info": {
+    "_postman_id": "0f9ebdc4-0ec8-488e-9e90-0e9e52282e69",
+    "name": "Ecentials-Api-v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "9797981"
+  },
+  "item": [
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Appointments",
+          "item": [
+            {
+              "name": "book-appointment",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"staff_id\": \"62fc17c3194568bd5797f8f4\",\n    \"date\": \"2022-08-16T22:18:43.251+00:00\",\n    \"time\": \"2022-08-16T22:18:43.251+00:00\",\n    \"status\": \"unapproved\"\n\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/user/appointments/book-an-appointment",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["user", "appointments", "book-an-appointment"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-completed-appointments",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"completed\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/user/appointments/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["user", "appointments", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-upcoming-appointments",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"upcoming\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/user/appointments/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["user", "appointments", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-cancelled-appointments",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"status\": \"cancelled\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/user/appointments/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["user", "appointments", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reschedule-an-appointment",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"date\": \"2022-09-16T22:18:43.251+00:00\",\n    \"time\": \"2022-09-16T22:18:43.251+00:00\",\n    \"appoint_id\": \"630a89a5e1d9d275a070b700\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/user/appointments/reschedule-appointment-date",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "user",
+                    "appointments",
+                    "reschedule-appointment-date"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Wallet",
+          "item": [
+            {
+              "name": "create-ecentials-wallet",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{BASE_URL}}/user/wallet/create-ecentials-wallet",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["user", "wallet", "create-ecentials-wallet"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-ecentials-wallet-balance",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{BASE_URL}}/user/wallet/get-ecentials-wallet-balance",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["user", "wallet", "get-ecentials-wallet-balance"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "recent-ecentials-wallet-transactions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{BASE_URL}}/user/wallet/recent-ecentials-wallet-transactions",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "user",
+                    "wallet",
+                    "recent-ecentials-wallet-transactions"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Orders",
+          "item": [
+            {
+              "name": "user-orders",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{new-token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/orders",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "orders"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "order-item-detail",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"order_id\": \"62f192c8b5c5bbdebb50ce29\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/orders/order-item",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "orders", "order-item"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Favourites",
+          "item": [
+            {
+              "name": "user-favourites",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"favourite_type\": \"pharmacy\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/favourites",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "favourites"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "user-add-favourite",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"favourite_type\": \"pharmacy\",\n    \"item_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/favourites/add-favourite",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "favourites", "add-favourite"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "user-remove-favourite",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{new-token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"favourite_id\": \"62bb36606bcca32622c9bb99\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/favourites/remove-favourite",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "favourites",
+                    "remove-favourite"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Bookmarks",
+          "item": [
+            {
+              "name": "add-new-bookmark-item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bookmark_type\": \"pharmacy\",\n    \"item_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/api/v1/user/bookmarks/add-new-bookmark-item",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "bookmarks",
+                    "add-new-bookmark-item"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "list-bookmark-items",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"bookmark_type\": \"pharmacy\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/user/bookmarks/list-bookmark-items",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["user", "bookmarks", "list-bookmark-items"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "remove-item-from-bookmarks",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"item_id\": \"62c81e45bf41c44dabffbb6f\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/api/v1/user/bookmarks/remove-bookmark-item",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "bookmarks",
+                    "remove-bookmark-item"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Notifications",
+          "item": [
+            {
+              "name": "add_notification_for_user",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{auth-token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"title\": \"hello\",\n    \"message\": \"hey there\",\n    \"image\": \"image url\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/notifications/add_notification_for_user",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "notifications",
+                    "add_notification_for_user"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "mark-notification-as-delivered",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{auth-token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"id\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/logs/mark-notification-as-delivered",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "logs",
+                    "mark-notification-as-delivered"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "fetch-user-notifications",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/notifications/fetch-all-user-notifications",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "notifications",
+                    "fetch-all-user-notifications"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "fetch-user-notification(specific/recommended)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"notification_type\": \"recommended\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/notifications/fetch-user-notifications",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "notifications",
+                    "fetch-user-notifications"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Authentication",
+          "item": [
+            {
+              "name": "login",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"kumi123@gmail.com\",\n    \"password\": \"oneKumi2016#\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/login",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "login"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "signup",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"kumi123@gmail.com\",\n    \"password\": \"oneKumi2016#\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/register",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "register"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "login-attempts",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{auth-token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"user_id\": \"\",\n    \"device_type\": \"android\",\n    \"device_name\": \"samsung\",\n    \"ip_addr\": \"0.0.0.0\",\n    \"type\": 0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/logs/login-attempts",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "logs", "login-attempts"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "health-pin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"pin\": \"1111\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/health-pin",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "account", "health-pin"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reset-health-pin",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTkyNjY2NDV9.iEvpIDCKLL4BTZI6NysL4gSHtdfgA0MWzU7MqidT2uY",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"pin\":\"2827\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/reset-health-pin",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "account", "reset-health-pin"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "send-password-reset-verification-code",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"lateofrederick@yahoo.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/recover_password",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "recover_password"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "verify-password-reset-verification-code",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n\t\"code\": \"2A69BC\",\n    \"email\": \"lateofrederick@yahoo.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/verify_code",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "verify_code"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "reset-user-password",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
+                    "type": "text",
+                    "disabled": true
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"email\": \"lateofrederick@yahoo.com\",\n    \"password\": \"JosephPeter2018@@#\",\n    \"confirmPassword\": \"JosephPeter2018@@#\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/reset-password",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "reset-password"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Information",
+          "item": [
+            {
+              "name": "fetch-user-details",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmM5ZjYzN2RmMmQ2MDM1OWIzZmRjYTkiLCJpYXQiOjE2NTc4Mzc5MzN9.bZcdYtW58gzG4QQGXR7Zd6YedmAxvgjBfN8olobIWaw",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/fetch-personal-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "account",
+                    "fetch-personal-details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Add/Edit details",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"kumi\",\n    \"phone\": \"02008000578\",\n    \"gender\": \"male\",\n    \"address\": \"hello\",\n    \"occupation\": \"farmer\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/addEdit-personal-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "account",
+                    "addEdit-personal-details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "fetch-health-details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/fetch-health-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "account",
+                    "fetch-health-details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add-edit-health-details",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"blood_group\": \"o positive\",\n    \"temperature\": \"24.5\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/addEdit-health-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "account",
+                    "addEdit-health-details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add-school-details",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTg0MzU4Mjh9.em6JB4IGsGOj_Gglyd_HkDXIychbx57KpgOMof7o0V4",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"school_name\": \"tech\",\n    \"course\": \"pharmacy\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/add-school-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "account", "add-school-details"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "edit-school-details",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{auth-token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"school_name\": \"kass\",\n    \"course\": \"medicine\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/edit-school-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "account",
+                    "edit-school-details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "fetch-school-details",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ1ZjU4OTgxMmRiODNkNmM2NzQ0NmEiLCJpYXQiOjE2NTgxODk2NjZ9.1LSxeUPrTHX-vyfXvfCjUqOwC83_O7pXsM88Y42eTx0",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/fetch-school-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "account",
+                    "fetch-school-details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "delete-school-details",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{auth-token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"record_id\": \"\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/account/delete-school-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "account",
+                    "delete-school-details"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "remove-item-from-cart",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{new-token}}",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"item_id\": \"62bb7b03ebdeaddbb74810cb\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/cart/remove-item-from-cart",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "cart", "remove-item-from-cart"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add-item-to-cart",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"item_name\": \"Codeine\",\n    \"item_image_url\": \"http://www.google.com\",\n    \"quantity\": 1,\n    \"price\": 10\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/cart/add-item",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "cart", "add-item"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "list-all-cart-items",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/cart/fetch-all-cart-items",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "user", "cart", "fetch-all-cart-items"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Prescription",
+          "item": [
+            {
+              "name": "new-prescription",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "picture",
+                      "type": "file",
+                      "src": "/home/lateo/Pictures/Screenshot from 2021-12-17 10-28-59.png"
+                    },
+                    {
+                      "key": "store_id",
+                      "value": "62c81cce8faa7ded917bd066",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/prescriptions/new-prescription",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "prescriptions", "new-prescription"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get-user-prescriptions",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{BASE_URL}}/prescriptions/user-prescriptions",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["prescriptions", "user-prescriptions"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "remove-user-prescription",
+              "request": {
+                "method": "DELETE",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"prescription_id\": \"62f0f50caad3b51550c455ad\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/prescriptions/remove-user-prescription",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["prescriptions", "remove-user-prescription"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Checkout",
+          "item": [
+            {
+              "name": "create-checkout-item",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTg3ODUzODZ9._GS_X9uuFbKPJq9CANAHsoVyriyBoTx76c8VizCSNag",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"delivery_address\": \"Kumi Guitar, 24th street. Adabraka Accra\",\n    \"delivery_date\": \"Between 26th July and 30th August\",\n    \"total_items_cost\": 200,\n    \"shipping_fee\": 20,\n    \"total\": 220,\n    \"shipment_summary\": [\n        {\n            \"drug_name\": \"paracetamol\",\n            \"total_number\": 1,\n            \"pharmacy\": \"62c81cce8faa7ded917bd066\"\n        }\n    ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/user/checkout/create-checkout-item",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "user",
+                    "checkout",
+                    "create-checkout-item"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Shipping-Address",
+          "item": [
+            {
+              "name": "add-new-shipping-address",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"street_name\": \"George Bush High street\",\n    \"name_of_recipient\": \"Kumi Guitar\",\n    \"mobile\": \"233300499483\",\n    \"town\": \"Lapaz\",\n    \"district\": \"Ga North\",\n    \"region\": \"Greater accra\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/user/shipping-address/add-user-shipping-address/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "user",
+                    "shipping-address",
+                    "add-user-shipping-address",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "fetch-user-shipping-addresses",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{BASE_URL}}/user/shipping-address/fetch-all-shipping-addresses",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "user",
+                    "shipping-address",
+                    "fetch-all-shipping-addresses"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Pharmacies",
+      "item": [
+        {
+          "name": "Search",
+          "item": [
+            {
+              "name": "search-for-pharmacy",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"search_text\": \"moz\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacies/search-for-pharmacy",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["pharmacies", "search-for-pharmacy"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "search-nearby-pharmacies",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "https://ecentials.herokuapp.com/api/v1/pharmacies/search-nearby-pharmacies",
+                  "protocol": "https",
+                  "host": ["ecentials", "herokuapp", "com"],
+                  "path": [
+                    "api",
+                    "v1",
+                    "pharmacies",
+                    "search-nearby-pharmacies"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "all-pharmacies",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "{{new-token}}",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/pharmacies",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "pharmacies"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Drug",
+          "item": [
+            {
+              "name": "list-all-drugs",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/pharmacy/drugs/",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "pharmacy", "drugs", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "view-drug-details",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"drug_id\": \"62cd942ac6377c69b61b632e\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/pharmacy/drugs/view-drug-details",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "pharmacy",
+                    "drugs",
+                    "view-drug-details"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "list-popular-drugs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/pharmacy/drugs/list-popular-drugs",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": [
+                    "api",
+                    "v1",
+                    "pharmacy",
+                    "drugs",
+                    "list-popular-drugs"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "add-new-drug-for-pharmacy",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\",\n    \"name\": \"codeine\",\n    \"prize\": 1.0,\n    \"description\": \"best codeine in town\",\n    \"dosage\": \"three times daily. one in the morning, afternoon,  then one in the evening\",\n    \"quantity\": 1,\n    \"dosage_form\": \"tablet\",\n    \"manufacturer\": \"Kumi Chemist\",\n    \"views\": 0,\n    \"discount\": 0.20,\n    \"nhis\": 0,\n    \"images\": [\"https://www.google.com\"]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/pharmacy/drugs/add-new-drug",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "pharmacy", "drugs", "add-new-drug"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "search-for-drug",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"search_text\": \"Ernes\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/pharmacy/drugs/drug-search",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "pharmacy", "drugs", "drug-search"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "search-for-drug-in-specific-pharmacy",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"search_text\": \"codeine\",\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacy/drugs//pharmacy-specific-drug-search/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "pharmacy",
+                    "drugs",
+                    "",
+                    "pharmacy-specific-drug-search",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Sales",
+          "item": [
+            {
+              "name": "total-orders",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacy/orders/total-orders/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["pharmacy", "orders", "total-orders", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "total-products-sold",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacy/orders/total-products-sold/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["pharmacy", "orders", "total-products-sold", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "total-income-made-by-pharmacy",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"facility_id\": \"62c81cce8faa7ded917bd066\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacy/orders/total-income-made-by-pharmacy/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "pharmacy",
+                    "orders",
+                    "total-income-made-by-pharmacy",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "fetch-sales",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmQ5YjhjMDdlYmQzODBlYjIxNmI1MjAiLCJpYXQiOjE2NTk5NTU0ODN9.ADy7PRlJc0aTYYGhizYMe_trrByTtXVqJmBQPXRWtRQ",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"store_id\": \"62c81cce8faa7ded917bd066\"\n}"
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacy/orders/fetch-sales/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["pharmacy", "orders", "fetch-sales", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create",
+          "item": [
+            {
+              "name": "create-new-pharmacy",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"store_pin\": \"4893\",\n    \"name\": \"Dinkunim Pharmacy\",\n    \"description\": \"Your health is our concern\",\n    \"address\": \"George Bush Street\",\n    \"city\": \"Accra\",\n    \"licence_no\": \"AR040FA93\",\n    \"logo\": \"https://www.google.com\",\n    \"accept_nhis\": false,\n    \"gps_lat\": 92.00,\n    \"gps_lng\": 12.0\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:3001/api/v1/pharmacies/create-new-pharmacy",
+                  "protocol": "http",
+                  "host": ["localhost"],
+                  "port": "3001",
+                  "path": ["api", "v1", "pharmacies", "create-new-pharmacy"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Staff",
+          "item": [
+            {
+              "name": "fetch-all-pharmacy-staff",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"facility_id\": \"62c81cce8faa7ded917bd066\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacy/staff/fetch-pharmacy-staff",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["pharmacy", "staff", "fetch-pharmacy-staff"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Information",
+          "item": [
+            {
+              "name": "retrieve-pharmacy-information",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"pharmacy_id\":\"62c81e45bf41c44dabffbb6f\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/pharmacy/information/fetch-pharmacy-information",
+                  "host": ["{{BASE_URL}}"],
+                  "path": [
+                    "pharmacy",
+                    "information",
+                    "fetch-pharmacy-information"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Hospitals",
+      "item": [
+        {
+          "name": "Doctors",
+          "item": [
+            {
+              "name": "fetch-top-doctors",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "https://ecentials.herokuapp.com/hospital/staff/fetch-top-doctors",
+                  "protocol": "https",
+                  "host": ["ecentials", "herokuapp", "com"],
+                  "path": ["hospital", "staff", "fetch-top-doctors"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Create",
+          "item": [
+            {
+              "name": "create-new-hospital",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"Peace hospital\",\n    \"address\": \"27th Street Avenue, Berlin\",\n    \"opening_hours\": \"8am everyday\",\n    \"phone_number\": \"9837432832\",\n    \"gps_addreess\": \"12829424828\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/hospitals/add-new-hospital",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["hospitals", "add-new-hospital"]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "upload-hospital-images",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "formdata",
+                  "formdata": [
+                    {
+                      "key": "pictures",
+                      "type": "file",
+                      "src": [
+                        "/home/lateo/Pictures/Screenshots/created bucket.png",
+                        "/home/lateo/Pictures/Screenshots/elasticbeanstalk-image.png"
+                      ]
+                    },
+                    {
+                      "key": "hospital_id",
+                      "value": "62fc17c3194568bd5797f8f4",
+                      "type": "text"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/hospitals/upload-hospital-images",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["hospitals", "upload-hospital-images"]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Search",
+          "item": [
+            {
+              "name": "search-for-hospital",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"search_text\": \"peace\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/hospitals/search-for-hospital",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["hospitals", "search-for-hospital"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Lab",
+      "item": [
+        {
+          "name": "Create-Details",
+          "item": [
+            {
+              "name": "fetch-all-labs",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "url": {
+                  "raw": "{{BASE_URL}}/labs/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["labs", ""]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create-lab",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"name\": \"New lab\",\n    \"address\": \"George Bush Highway, Lapaz\",\n    \"phone_numbers\": [\"0200000038\", \"94839024823\"],\n    \"opening_hours\": \"2022-09-05T21:16:21.870+00:00\",\n    \"gps_address\": \"BJ-0000-4567\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/labs/create-new-lab/",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["labs", "create-new-lab", ""]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Staff",
+          "item": [
+            {
+              "name": "fetch-top-doctors-in-labs",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "auth-token",
+                    "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MmJiMmQ0YzIyOThhZTI2NjdjMzllMjYiLCJpYXQiOjE2NTcyNzk2MDV9.xE4dHxQz_dxs13UuwSyaspjv0kt4P8iiEG9RRLH3d0g",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"facility_type\": \"lab\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{BASE_URL}}/labs/fetch-top-doctors-in-labs",
+                  "host": ["{{BASE_URL}}"],
+                  "path": ["labs", "fetch-top-doctors-in-labs"]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [""]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "token",
+      "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjlmZWQwYjhjNjAzZGI5MjJjMzNlY2IiLCJpYXQiOjE2NTU5MTc5NjV9._bx8tl26m4pceFBVQhpjGd3A8YGU1jrIbGB6AGq9Vvc"
+    },
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3001"
+    }
+  ]
 }

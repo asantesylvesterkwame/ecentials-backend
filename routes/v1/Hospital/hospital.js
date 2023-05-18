@@ -19,9 +19,7 @@ const upload = multer({ storage });
 // create a new hospital using data from request body
 router.post("/add-new-hospital", (req, res) => {
   // eslint-disable-next-line
-    const {
-    name, address, opening_hours, phone_number, gps_address
-  } = req.body;
+  const { name, address, opening_hours, phone_number, gps_address } = req.body;
 
   Hospital.create(
     {
