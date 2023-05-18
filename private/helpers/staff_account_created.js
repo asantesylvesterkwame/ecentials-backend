@@ -1,3 +1,4 @@
+/* eslint-disable */
 const StaffAccount = (staff_name, account_id, password, facility_name) => {
   return `
     <!DOCTYPE html>

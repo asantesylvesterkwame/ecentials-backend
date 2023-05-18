@@ -56,7 +56,7 @@ async function updateShippingAddress({ req }) {
         user_id: req.user._id,
       },
       // eslint-disable-next-line prettier/prettier
-      { ...req.body },
+      { ...req.body }
     );
 
     if (result.matchedCount > 0) {

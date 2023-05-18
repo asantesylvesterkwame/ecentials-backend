@@ -43,7 +43,7 @@ async function getUserPrescription({ user_id }) {
       });
       const store_name = store_detail.data.name;
 
-      data.push({ ...prescription._doc, store_name })    ;
+      data.push({ ...prescription._doc, store_name });
     }
     return { message: "success", data };
   } catch (error) {

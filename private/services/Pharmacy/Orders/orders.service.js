@@ -2,7 +2,9 @@
 
 const router = require("express").Router();
 const Orders = require("../../../../private/schemas/Orders");
-const { sendAndCreateNotification } = require("../../../helpers/send_and_create_notification");
+const {
+  sendAndCreateNotification,
+} = require("../../../helpers/send_and_create_notification");
 const Drug = require("../../../schemas/Drug");
 const Notification = require("../../../schemas/Notification");
 const Prescription = require("../../../schemas/Prescription");
@@ -10,7 +12,10 @@ const { findUserById } = require("../../User/Account/account.service");
 const {
   sendFCMessage,
 } = require("../../User/Notification/notification.service");
-const { generateInvoiceNumber, generateOrderCode } = require("../../User/Orders/orders.service");
+const {
+  generateInvoiceNumber,
+  generateOrderCode,
+} = require("../../User/Orders/orders.service");
 
 async function cancelOrder({ req }) {
   const { order_code } = req.body;
@@ -25,9 +30,9 @@ async function cancelOrder({ req }) {
     const order = await Orders.find({ order_code });
 
     const data = {
-      "launch_url":"order",
-      "id": `${order._id}`
-    }
+      launch_url: "order",
+      id: `${order._id}`,
+    };
 
     const sendNotification = sendFCMessage(
       user.user_token,
@@ -41,7 +46,9 @@ async function cancelOrder({ req }) {
       req.body.message
     );
 
-    Promise.all([sendNotification, createNotification]).catch((e) => { throw new Error(e) })
+    Promise.all([sendNotification, createNotification]).catch((e) => {
+      throw new Error(e);
+    });
 
     if (result.modifiedCount > 0) {
       return { message: "success", data: result };
@@ -66,9 +73,9 @@ async function approveOrder({ req }) {
     const order = await Orders.find({ order_code });
 
     const data = {
-      "launch_url":"order",
-      "id": `${order._id}`
-    }
+      launch_url: "order",
+      id: `${order._id}`,
+    };
 
     const sendNotification = sendFCMessage(
       user.user_token,
@@ -82,15 +89,21 @@ async function approveOrder({ req }) {
       req.body.message
     );
 
-    Promise.all([sendNotification, createNotification]).catch((e) => { throw new Error(e) })
+    Promise.all([sendNotification, createNotification]).catch((e) => {
+      throw new Error(e);
+    });
 
     if (result.modifiedCount > 0) {
-      return { status: 'success', message: "order successfully approved", data: result };
+      return {
+        status: "success",
+        message: "order successfully approved",
+        data: result,
+      };
     }
 
-    return { status:'failed', message: "Failed to approve order.", data: err };
+    return { status: "failed", message: "Failed to approve order.", data: err };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred, please try again' };
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
@@ -140,8 +153,8 @@ async function _createNewNotification(user_id, title, message) {
 async function updateOrderStatus(req) {
   try {
     const result = await Orders.updateOne(
-      { order_code: req.body.order_code, },
-      { $set: { order_status: req.body.order_status }}
+      { order_code: req.body.order_code },
+      { $set: { order_status: req.body.order_status } }
     );
 
     if (result.modifiedCount > 0) {
@@ -150,9 +163,9 @@ async function updateOrderStatus(req) {
       const order = await Orders.find({ order_code: req.body.order_code });
 
       const data = {
-        "launch_url":"order",
-        "id": `${order._id}`
-      }
+        launch_url: "order",
+        id: `${order._id}`,
+      };
 
       sendAndCreateNotification(
         user.user_token,
@@ -162,31 +175,34 @@ async function updateOrderStatus(req) {
         data
       );
 
-      return { status: 'success', message: 'order status updated successfully' }
+      return {
+        status: "success",
+        message: "order status updated successfully",
+      };
     }
-    return { status: 'failed', message: 'failed to update order status' }
+    return { status: "failed", message: "failed to update order status" };
   } catch (error) {
-    return { status: 'error', message: 'an error occurred, please try again'}
+    return { status: "error", message: "an error occurred, please try again" };
   }
 }
 
 async function createOrderForUser({ req }) {
   try {
     const invoice_number = generateInvoiceNumber();
-    const order_code = await generateOrderCode('ORDER', req.body.name);
+    const order_code = await generateOrderCode("ORDER", req.body.name);
 
     delete req.body.name;
 
     const result = await Orders.create({
       ...req.body,
       order_code,
-      invoice_number
+      invoice_number,
     });
 
     const user = await findUserById(req.body.user_id);
 
     await Prescription.findByIdAndUpdate(req.body.prescription_id, {
-      $set: {status: 1}
+      $set: { status: 1 },
     });
 
     // decrement drug counts
@@ -203,10 +219,10 @@ async function createOrderForUser({ req }) {
     });
 
     const data = {
-      "launch_url":"prescription_pay",
-      "order_id": `${result._id}`,
-      "prescription_id": `${req.body.prescription_id}`
-    }
+      launch_url: "prescription_pay",
+      order_id: `${result._id}`,
+      prescription_id: `${req.body.prescription_id}`,
+    };
     const sendNotification = sendFCMessage(
       user.fcm_token,
       "Order approved",
@@ -221,19 +237,23 @@ async function createOrderForUser({ req }) {
     );
 
     Promise.all([sendNotification, createNotification]).catch((e) => {
-      throw new Error("an error occurred")
+      throw new Error("an error occurred");
     });
 
     if (result) {
-      return { status: 'success', message: 'order created for user', data: result}
+      return {
+        status: "success",
+        message: "order created for user",
+        data: result,
+      };
     }
-    return { status: 'fail', message: 'failed to create order for user'}
+    return { status: "fail", message: "failed to create order for user" };
   } catch (error) {
     return {
-      status: 'error',
-      message: 'an error occurred, please try again',
-      error
-    }
+      status: "error",
+      message: "an error occurred, please try again",
+      error,
+    };
   }
 }
 
@@ -267,5 +287,5 @@ module.exports = {
   approveOrder,
   updateOrderStatus,
   createOrderForUser,
-  searchOrder
+  searchOrder,
 };
