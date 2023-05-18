@@ -7,7 +7,6 @@ const { encryptPassword } = require("../../helpers/functions");
 const { uploadFile } = require("../Firebase/imageUpload.service");
 const getDistance = require("../../../private/helpers/get_distance");
 
-
 // upload hospital images
 async function uploadHospitalImages({ hospital_id, files }) {
   try {
@@ -114,37 +113,35 @@ async function isBusinessOwnerHavingHospital(req) {
 }
 
 /*
-* Register new hospital
-*/
+ * Register new hospital
+ */
 async function registerNewHospital({ req }) {
-    try {
-        const businessFile = req.file;
-        const businessDocumentUrl = await uploadFile(
-          businessFile,
-          `${req.body.hospital_name}/businessDocument/`
-        );
+  try {
+    const businessFile = req.file;
+    const businessDocumentUrl = await uploadFile(
+      businessFile,
+      `${req.body.hospital_name}/businessDocument/`
+    );
 
-        const result = await Hospital.create(
-          {
-              ...req.body,
-              business_document: businessDocumentUrl,
-              password: encryptPassword(req.body.password)
-          }
-        );
+    const result = await Hospital.create({
+      ...req.body,
+      business_document: businessDocumentUrl,
+      password: encryptPassword(req.body.password),
+    });
 
-        if (result !== null) {
-            return {
-                status: "success",
-                message: "hospital registration successful",
-            }
-        }
-        return {
-            status: "failed",
-            message: "hospital registration failed",
-        }
-    } catch (e) {
-        throw new Error(`failed to register new hospital ${e}`)
+    if (result !== null) {
+      return {
+        status: "success",
+        message: "hospital registration successful",
+      };
     }
+    return {
+      status: "failed",
+      message: "hospital registration failed",
+    };
+  } catch (e) {
+    throw new Error(`failed to register new hospital ${e}`);
+  }
 }
 
 module.exports = {
