@@ -61,6 +61,7 @@ const userSchema = new mongoose.Schema({
     temperature: Number,
     nhis_no: String,
     medical_conditions: Array,
+    preventive_care: Array,
     date: {
       type: Date,
       default: Date.now,
