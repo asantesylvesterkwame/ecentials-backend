@@ -11,6 +11,9 @@ const { encryptPassword } = require("../../../private/helpers/functions");
 const {
   uploadProfileImage,
 } = require("../../../private/services/User/Account/account.service");
+const { getAllergies,
+  editAllergies
+} = require("../../../private/services/User/Information/health");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single("profile");
@@ -111,7 +114,7 @@ router.post("/addEdit-health-details", verify, async (req, res) => {
   const changes = {
     "health.blood_group": req.body.blood_group,
     "health.genotype": req.body.genotype,
-    "health.alergies": req.body.alergies,
+    "health.allergies": req.body.allergies,
     "health.medical_id_no": req.body.medical_id_no,
     "health.pulse_rate": req.body.pulse_rate,
     "health.respiration_rate": req.body.respiration_rate,
@@ -387,4 +390,28 @@ router.post("/update-profile-image", verify, upload, async (req, res, next) => {
     next(error);
   }
 });
+
+router.get("/allergies", verify, async (req, res, next) => {
+  try {
+    const result = await getAllergies(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (e) {
+    return next(e);
+  }
+});
+
+router.patch("/allergies", verify, async (req, res, next) => {
+  try {
+    const result = await editAllergies(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (e) {
+    return next(e);
+  }
+})
 module.exports = router;
