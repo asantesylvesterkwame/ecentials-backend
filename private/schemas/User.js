@@ -53,7 +53,7 @@ const userSchema = new mongoose.Schema({
     pin: String,
     blood_group: String,
     genotype: String,
-    alergies: Array,
+    allergies: Array,
     medical_id_no: String,
     pulse_rate: Number,
     respiration_rate: Number,
