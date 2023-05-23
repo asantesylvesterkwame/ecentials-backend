@@ -11,7 +11,10 @@ const { encryptPassword } = require("../../../private/helpers/functions");
 const {
   uploadProfileImage,
 } = require("../../../private/services/User/Account/account.service");
-const { updateMedicalConditions, getMedicalConditions } = require("../../../private/services/User/Information/health");
+const {
+  updateMedicalConditions,
+  getMedicalConditions,
+} = require("../../../private/services/User/Information/health");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single("profile");
@@ -411,5 +414,5 @@ router.get("/medical-conditions", verify, async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-})
+});
 module.exports = router;
