@@ -70,7 +70,81 @@ async function updateMedicalConditions(req) {
   }
 }
 
+/**
+ * editAllergies edits a user's allergies
+ * */
+async function editAllergies(req) {
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: { "health.allergies": req.body.allergies },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to edit allergies",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated allergies",
+    };
+  } catch (error) {
+    throw new Error(`could not get preventive care. ${error}`);
+  }
+}
+/**
+ * getPreventiveCare returns a user's preventive care
+ */
+async function getPreventiveCare(req) {
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to retrieve preventive care",
+      };
+    }
+    return {
+      status: "success",
+      message: "preventive care retrieved successfully",
+      data: result.health.preventive_care,
+    };
+  } catch (e) {
+    throw new Error("failed to edit allergies");
+  }
+}
+
+/**
+ * updatePreventiveCare updates a user's preventive care
+ */
+async function updatePreventiveCare(req) {
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: { "health.preventive_care": req.body.preventive_care },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update preventive care",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated preventive care",
+    };
+  } catch (error) {
+    throw new Error(`could not update preventive care. ${error}`);
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
+  getAllergies,
+  editAllergies,
+  getPreventiveCare,
+  updatePreventiveCare,
 };
