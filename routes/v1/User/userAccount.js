@@ -14,8 +14,8 @@ const {
 const {
   updateMedicalConditions,
   getMedicalConditions,
-getAllergies,
-  editAllergies
+  getAllergies,
+  editAllergies,
 } = require("../../../private/services/User/Information/health");
 
 const storage = multer.memoryStorage();
@@ -404,7 +404,7 @@ router.patch("/medical-conditions", verify, async (req, res, next) => {
   } catch (e) {
     return next(e);
   }
-})
+});
 router.get("/allergies", verify, async (req, res, next) => {
   try {
     const result = await getAllergies(req);
