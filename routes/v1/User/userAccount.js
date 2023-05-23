@@ -11,6 +11,10 @@ const { encryptPassword } = require("../../../private/helpers/functions");
 const {
   uploadProfileImage,
 } = require("../../../private/services/User/Account/account.service");
+const {
+  updateMedicalConditions,
+  getMedicalConditions,
+} = require("../../../private/services/User/Information/health");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single("profile");
@@ -385,6 +389,30 @@ router.post("/update-profile-image", verify, upload, async (req, res, next) => {
     return res.status(200).json(await uploadProfileImage({ req }));
   } catch (error) {
     next(error);
+  }
+});
+
+router.patch("/medical-conditions", verify, async (req, res, next) => {
+  try {
+    const result = await updateMedicalConditions(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/medical-conditions", verify, async (req, res, next) => {
+  try {
+    const result = await getMedicalConditions(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
   }
 });
 module.exports = router;

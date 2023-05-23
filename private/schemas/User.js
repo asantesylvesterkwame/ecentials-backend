@@ -60,6 +60,7 @@ const userSchema = new mongoose.Schema({
     blood_pressure: String,
     temperature: Number,
     nhis_no: String,
+    medical_conditions: Array,
     date: {
       type: Date,
       default: Date.now,
