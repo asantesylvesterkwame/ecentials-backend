@@ -16,6 +16,7 @@ const {
   getMedicalConditions,
   getAllergies,
   editAllergies,
+  updatePreventiveCare, getPreventiveCare
 } = require("../../../private/services/User/Information/health");
 
 const storage = multer.memoryStorage();
@@ -405,6 +406,7 @@ router.patch("/medical-conditions", verify, async (req, res, next) => {
     return next(e);
   }
 });
+
 router.get("/allergies", verify, async (req, res, next) => {
   try {
     const result = await getAllergies(req);
@@ -432,6 +434,30 @@ router.get("/medical-conditions", verify, async (req, res, next) => {
 router.patch("/allergies", verify, async (req, res, next) => {
   try {
     const result = await editAllergies(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+})
+
+router.patch("/preventive-care", verify, async (req, res, next) => {
+  try {
+    const result = await updatePreventiveCare(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/preventive-care", verify, async (req, res, next) => {
+  try {
+    const result = await getPreventiveCare(req);
     if (result.status === "success") {
       return res.status(200).json(result);
     }

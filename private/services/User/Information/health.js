@@ -70,33 +70,7 @@ async function updateMedicalConditions(req) {
   }
 }
 
-/**
- * editAllergies edits a user's allergies
- * */
-async function editAllergies(req) {
-  try {
-    // eslint-disable-next-line no-underscore-dangle
-    const result = await User.findByIdAndUpdate(req.user._id, {
-      $set: { "health.allergies": req.body.allergies },
-    });
-    if (!result) {
-      return {
-        status: "failed",
-        message: "failed to edit allergies",
-      };
-    }
-    return {
-      status: "success",
-      message: "allergies edited successfully",
-    };
-  } catch (e) {
-    throw new Error("failed to edit allergies");
-  }
-}
-
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
-  getAllergies,
-  editAllergies,
 };
