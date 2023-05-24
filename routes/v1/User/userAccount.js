@@ -520,5 +520,4 @@ router.patch("/health-issues", verify, async (req, res, next) => {
   }
 });
 
-
 module.exports = router;
