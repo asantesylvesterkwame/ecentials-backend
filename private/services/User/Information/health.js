@@ -187,6 +187,53 @@ async function updateGynecologicalHistory(req) {
   }
 }
 
+/**
+ * getHealthIssues return's a user's gynecological history
+ */
+async function getHealthIssues(req) {
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to retrieve health issues",
+      };
+    }
+    return {
+      status: "success",
+      message: "health issues retrieved successfully",
+      data: result.health.issues,
+    };
+  } catch (e) {
+    throw new Error(`failed to get health issues. {e}`);
+  }
+}
+
+/**
+ * updateHealthIssues updates a user's preventive care
+ */
+async function updateHealthIssues(req) {
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: { "health.issues": req.body.issues },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update health issues",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated health issues",
+    };
+  } catch (error) {
+    throw new Error(`could not update health issues. ${error}`);
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
@@ -196,4 +243,6 @@ module.exports = {
   updatePreventiveCare,
   getGynecologicalHistory,
   updateGynecologicalHistory,
+  getHealthIssues,
+  updateHealthIssues,
 };
