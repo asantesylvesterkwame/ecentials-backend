@@ -63,6 +63,13 @@ const userSchema = new mongoose.Schema({
     medical_conditions: Array,
     preventive_care: Array,
     gynecological_history: Array,
+    issues: [
+      {
+        harmed: Boolean,
+        harmedDescription: String,
+        depressed: Boolean,
+      },
+    ],
     date: {
       type: Date,
       default: Date.now,
