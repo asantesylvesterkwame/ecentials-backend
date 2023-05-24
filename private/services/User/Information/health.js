@@ -112,7 +112,7 @@ async function getPreventiveCare(req) {
       data: result.health.preventive_care,
     };
   } catch (e) {
-    throw new Error("failed to edit allergies");
+    throw new Error("failed to get allergies");
   }
 }
 
@@ -140,6 +140,53 @@ async function updatePreventiveCare(req) {
   }
 }
 
+/**
+ * getGynecologicalHistory return's a user's gynecological history
+ */
+async function getGynecologicalHistory(req) {
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to retrieve history",
+      };
+    }
+    return {
+      status: "success",
+      message: "history retrieved successfully",
+      data: result.health.gynecological_history,
+    };
+  } catch (e) {
+    throw new Error(`failed to get history. {e}`);
+  }
+}
+
+/**
+ * updateGynecologicalHistory update's a user's gynecological history
+ */
+async function updateGynecologicalHistory(req) {
+  try {
+    // eslint-disable-next-line no-underscore-dangle
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: { "health.gynecological_history": req.body.gynecological_history },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update gynecological history",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated gynecological history",
+    };
+  } catch (error) {
+    throw new Error(`could not update gynecological history. ${error}`);
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
@@ -147,4 +194,6 @@ module.exports = {
   editAllergies,
   getPreventiveCare,
   updatePreventiveCare,
+  getGynecologicalHistory,
+  updateGynecologicalHistory,
 };

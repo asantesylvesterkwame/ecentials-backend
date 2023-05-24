@@ -62,6 +62,7 @@ const userSchema = new mongoose.Schema({
     nhis_no: String,
     medical_conditions: Array,
     preventive_care: Array,
+    gynecological_history: Array,
     date: {
       type: Date,
       default: Date.now,
