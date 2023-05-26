@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const router = require("express").Router();
+const multer = require("multer");
 
 const Staff = require("../../../private/schemas/Staff");
 const {
@@ -14,6 +15,16 @@ const {
   removePrimaryDoctor,
 } = require("../../../private/services/Hospital/Doctor/doctor.service");
 const { verify } = require("../../../verifyToken");
+const {
+  createHospitalStaff,
+} = require("../../../private/services/Hospital/Staff/staff.service");
+
+const storage = multer.memoryStorage();
+const newStaffFiles = multer({ storage }).fields([
+  { name: "cv", maxCount: 1 },
+  { name: "certificate", maxCount: 1 },
+  { name: "photo", maxCount: 1 },
+]);
 
 // returns top-rated doctors on the platform
 // for simplicity's sake, the current data returned is just
@@ -114,6 +125,18 @@ router.post("/remove-primary-doctor", verify, async (req, res, next) => {
     return res
       .status(200)
       .json(await removePrimaryDoctor({ user_id, doctor_id }));
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.post("/add-new-staff", verify, newStaffFiles, async (req, res, next) => {
+  try {
+    const result = await createHospitalStaff({ req });
+    if (result.status === "success") {
+      return res.status(201).json(result);
+    }
+    return res.status(400).json(result);
   } catch (error) {
     return next(error);
   }
