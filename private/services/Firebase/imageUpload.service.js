@@ -16,10 +16,9 @@ async function uploadFile(file, base_dir_name) {
   let imageUrl = "";
 
   try {
-    const timestamp = Date.now();
     const name = file.originalname.replace(/ /g, "_").split(".")[0];
     const type = file.originalname.split(".")[1];
-    const fileName = `${name}_${timestamp}.${type}`;
+    const fileName = `${name}.${type}`;
 
     const storageRef = ref(storage, `${base_dir_name}/${fileName}`);
 

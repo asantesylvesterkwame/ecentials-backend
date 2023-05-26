@@ -136,6 +136,10 @@ const staffSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    isPasswordChanged: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );
