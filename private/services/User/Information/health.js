@@ -1,4 +1,5 @@
 const User = require("../../../schemas/User");
+const { uploadFile } = require("../../Firebase/imageUpload.service");
 
 /**
  * getMedicalConditions returns a user's medical condition
@@ -119,11 +120,21 @@ async function getPreventiveCare(req) {
 /**
  * updatePreventiveCare updates a user's preventive care
  */
-async function updatePreventiveCare(req) {
+async function updatePreventiveCare({ req }) {
   try {
+    let fileUrl;
+    if (req.file) {
+      // eslint-disable-next-line no-underscore-dangle
+      fileUrl = await uploadFile(req.file, `${req.user._id}/preventiveCare/`);
+    }
     // eslint-disable-next-line no-underscore-dangle
     const result = await User.findByIdAndUpdate(req.user._id, {
-      $set: { "health.preventive_care": req.body.preventive_care },
+      $push: {
+        "health.preventive_care": {
+          ...req.body,
+          result: fileUrl,
+        },
+      },
     });
     if (!result) {
       return {

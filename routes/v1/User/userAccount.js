@@ -26,6 +26,7 @@ const {
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage }).single("profile");
+const file = multer({ storage });
 
 // this verifies using the token before any transaction is made.
 // fetch personal details
@@ -448,17 +449,22 @@ router.patch("/allergies", verify, async (req, res, next) => {
   }
 });
 
-router.patch("/preventive-care", verify, async (req, res, next) => {
-  try {
-    const result = await updatePreventiveCare(req);
-    if (result.status === "success") {
-      return res.status(200).json(result);
+router.patch(
+  "/preventive-care",
+  verify,
+  file.single("file"),
+  async (req, res, next) => {
+    try {
+      const result = await updatePreventiveCare({ req });
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(400).json(result);
+    } catch (error) {
+      return next(error);
     }
-    return res.status(400).json(result);
-  } catch (error) {
-    return next(error);
   }
-});
+);
 
 router.get("/preventive-care", verify, async (req, res, next) => {
   try {
