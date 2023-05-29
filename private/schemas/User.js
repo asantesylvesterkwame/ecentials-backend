@@ -83,6 +83,7 @@ const userSchema = new mongoose.Schema({
         filename: String,
       },
     ],
+    surgeries: Array,
     date: {
       type: Date,
       default: Date.now,
@@ -118,6 +119,6 @@ const userSchema = new mongoose.Schema({
     required: false,
   },
   primary_doctors: [],
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model("User", userSchema);

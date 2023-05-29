@@ -307,6 +307,7 @@ async function getImmunizations(req) {
     return {
       status: "success",
       message: "successfully retrieved immunizations",
+      data: result.health.immunizations,
     };
   } catch (error) {
     throw new Error(`could not get immunizations. ${error}`);
@@ -323,8 +324,10 @@ async function updateImmunizations(req) {
       req.user._id,
       {
         $push: {
-          ...req.body,
-          result: fileUrl
+          "health.immunizations": {
+            ...req.body,
+            result: fileUrl
+          }
         }
       }
     );
@@ -343,6 +346,49 @@ async function updateImmunizations(req) {
   }
 }
 
+async function getSurgicalHistory(req) {
+  try {
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to get surgical history",
+      };
+    }
+    return {
+      status: "success",
+      message: "surgical history successfully retrieved",
+      data: result.health.surgeries,
+    };
+  } catch (error) {
+    throw new Error(`could not get surgical history. ${error}`);
+  }
+}
+
+async function updateSurgicalHistory(req) {
+  const date = new Date();
+  try {
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: {
+        "health.surgeries": req.body.surgeries,
+        "updatedAt": date,
+      },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update surgical history",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated surgical history",
+    };
+  } catch (error) {
+    throw new Error(`could not update surgical history. ${error}`);
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
@@ -358,4 +404,6 @@ module.exports = {
   updateSexualHistory,
   getImmunizations,
   updateImmunizations,
+  getSurgicalHistory,
+  updateSurgicalHistory,
 };
