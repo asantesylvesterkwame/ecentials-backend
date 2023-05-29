@@ -294,6 +294,55 @@ async function updateSexualHistory(req) {
   }
 }
 
+//  [{ immunization: String, result: File, filename: String }]
+async function getImmunizations(req) {
+  try {
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to retrieve immunizations",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved immunizations",
+    };
+  } catch (error) {
+    throw new Error(`could not get immunizations. ${error}`);
+  }
+}
+
+async function updateImmunizations(req) {
+  try {
+    let fileUrl;
+    if (req.file) {
+      fileUrl = await uploadFile(req.file, `${req.user._id}/immunizations/`);
+    }
+    const result = await User.findByIdAndUpdate(
+      req.user._id,
+      {
+        $push: {
+          ...req.body,
+          result: fileUrl
+        }
+      }
+    );
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update immunizations",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated immunizations"
+    };
+  } catch (error) {
+    throw new Error(`could not update immunizations. ${error}`);
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
@@ -307,4 +356,6 @@ module.exports = {
   updateHealthIssues,
   getSexualHistory,
   updateSexualHistory,
+  getImmunizations,
+  updateImmunizations,
 };

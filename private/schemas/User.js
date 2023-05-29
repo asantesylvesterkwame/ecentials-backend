@@ -63,13 +63,11 @@ const userSchema = new mongoose.Schema({
     medical_conditions: Array,
     preventive_care: Array,
     gynecological_history: Array,
-    issues: [
-      {
-        harmed: Boolean,
-        harmedDescription: String,
-        depressed: Boolean,
-      },
-    ],
+    issues: {
+      harmed: Boolean,
+      harmedDescription: String,
+      depressed: Boolean,
+    },
     sexualHistory: {
       sexualPartners: String,
       moreThanOneSexualPartner: Boolean,
@@ -78,6 +76,13 @@ const userSchema = new mongoose.Schema({
         date: Date
       }]
     },
+    immunizations: [
+      {
+        immunization: String,
+        result: String,
+        filename: String,
+      },
+    ],
     date: {
       type: Date,
       default: Date.now,
