@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const User = require("../../../schemas/User");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -245,6 +246,147 @@ async function updateHealthIssues(req) {
   }
 }
 
+/**
+ * getSexualHistory returns a user's sexual history
+ */
+async function getSexualHistory(req) {
+  try {
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to get sexual history",
+      };
+    }
+    return {
+      status: "success",
+      message: "sexual history successfully retrieved",
+      data: result.health.sexualHistory,
+    };
+  } catch (error) {
+    throw new Error(`could not get sexual history. ${error}`);
+  }
+}
+
+async function updateSexualHistory(req) {
+  try {
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: {
+        "health.sexualHistory.sexualPartners": req.body.sexualPartners,
+        "health.sexualHistory.moreThanOneSexualPartner":
+          req.body.moreThanOneSexualPartner,
+      },
+      $push: {
+        "health.sexualHistory.history": req.body.history,
+      },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update sexual history",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated sexual history",
+    };
+  } catch (error) {
+    throw new Error(`could not update sexual history. ${error}`);
+  }
+}
+
+//  [{ immunization: String, result: File, filename: String }]
+async function getImmunizations(req) {
+  try {
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to retrieve immunizations",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved immunizations",
+      data: result.health.immunizations,
+    };
+  } catch (error) {
+    throw new Error(`could not get immunizations. ${error}`);
+  }
+}
+
+async function updateImmunizations(req) {
+  try {
+    let fileUrl;
+    if (req.file) {
+      fileUrl = await uploadFile(req.file, `${req.user._id}/immunizations/`);
+    }
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $push: {
+        "health.immunizations": {
+          ...req.body,
+          result: fileUrl,
+        },
+      },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update immunizations",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated immunizations",
+    };
+  } catch (error) {
+    throw new Error(`could not update immunizations. ${error}`);
+  }
+}
+
+async function getSurgicalHistory(req) {
+  try {
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to get surgical history",
+      };
+    }
+    return {
+      status: "success",
+      message: "surgical history successfully retrieved",
+      data: result.health.surgeries,
+    };
+  } catch (error) {
+    throw new Error(`could not get surgical history. ${error}`);
+  }
+}
+
+async function updateSurgicalHistory(req) {
+  const date = new Date();
+  try {
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: {
+        "health.surgeries": req.body.surgeries,
+        updatedAt: date,
+      },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update surgical history",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated surgical history",
+    };
+  } catch (error) {
+    throw new Error(`could not update surgical history. ${error}`);
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
@@ -256,4 +398,10 @@ module.exports = {
   updateGynecologicalHistory,
   getHealthIssues,
   updateHealthIssues,
+  getSexualHistory,
+  updateSexualHistory,
+  getImmunizations,
+  updateImmunizations,
+  getSurgicalHistory,
+  updateSurgicalHistory,
 };
