@@ -48,7 +48,7 @@ async function updateWholesaler({ req }) {
  */
 async function searchWholesaler(req) {
   try {
-    const searchText = req.query.searchText;
+    const { searchText } = req.query;
     const filter = {
       $or: [
         { name: { $regex: searchText, $options: "i" } },
