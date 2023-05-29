@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const User = require("../../../schemas/User");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -320,17 +321,14 @@ async function updateImmunizations(req) {
     if (req.file) {
       fileUrl = await uploadFile(req.file, `${req.user._id}/immunizations/`);
     }
-    const result = await User.findByIdAndUpdate(
-      req.user._id,
-      {
-        $push: {
-          "health.immunizations": {
-            ...req.body,
-            result: fileUrl
-          }
-        }
-      }
-    );
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $push: {
+        "health.immunizations": {
+          ...req.body,
+          result: fileUrl,
+        },
+      },
+    });
     if (!result) {
       return {
         status: "failed",
@@ -339,7 +337,7 @@ async function updateImmunizations(req) {
     }
     return {
       status: "success",
-      message: "successfully updated immunizations"
+      message: "successfully updated immunizations",
     };
   } catch (error) {
     throw new Error(`could not update immunizations. ${error}`);
@@ -371,7 +369,7 @@ async function updateSurgicalHistory(req) {
     const result = await User.findByIdAndUpdate(req.user._id, {
       $set: {
         "health.surgeries": req.body.surgeries,
-        "updatedAt": date,
+        updatedAt: date,
       },
     });
     if (!result) {
