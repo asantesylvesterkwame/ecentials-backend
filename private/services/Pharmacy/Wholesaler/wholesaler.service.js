@@ -43,9 +43,36 @@ async function updateWholesaler({ req }) {
   }
 }
 
+/**
+ * searchWholesaler returns a seller matching a text
+ */
+async function searchWholesaler(req) {
+  try {
+    const searchText = req.query.searchText;
+    const filter = {
+      $or: [
+        { name: { $regex: searchText, $options: "i" } },
+        { email: { $regex: searchText, $options: "i" } },
+        { city: { $regex: searchText, $options: "i" } },
+        { region: { $regex: searchText, $options: "i" } },
+        { country: { $regex: searchText, $options: "i" } },
+      ],
+    };
+    const result = await Wholesaler.find(filter);
+    return {
+      status: "success",
+      message: "data retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new Error(`could not retrieve wholesaler. ${error}`);
+  }
+}
+
 module.exports = {
   createWholesaler,
   fetchWholesaler,
   deleteWholesaler,
   updateWholesaler,
+  searchWholesaler,
 };
