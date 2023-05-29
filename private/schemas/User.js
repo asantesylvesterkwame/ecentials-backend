@@ -70,6 +70,14 @@ const userSchema = new mongoose.Schema({
         depressed: Boolean,
       },
     ],
+    sexualHistory: {
+      sexualPartners: String,
+      moreThanOneSexualPartner: Boolean,
+      history: [{
+        std: String,
+        date: Date
+      }]
+    },
     date: {
       type: Date,
       default: Date.now,

@@ -245,6 +245,55 @@ async function updateHealthIssues(req) {
   }
 }
 
+/**
+ * getSexualHistory returns a user's sexual history
+ */
+async function getSexualHistory(req) {
+  try {
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to get sexual history",
+      };
+    }
+    return {
+      status: "success",
+      message: "sexual history successfully retrieved",
+      data: result.health.sexualHistory,
+    };
+  } catch (error) {
+    throw new Error(`could not get sexual history. ${error}`);
+  }
+}
+
+async function updateSexualHistory(req) {
+  try {
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: {
+        "health.sexualHistory.sexualPartners": req.body.sexualPartners,
+        "health.sexualHistory.moreThanOneSexualPartner":
+          req.body.moreThanOneSexualPartner,
+      },
+      $push: {
+        "health.sexualHistory.history": req.body.history,
+      },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update sexual history",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated sexual history",
+    };
+  } catch (error) {
+    throw new Error(`could not update sexual history. ${error}`);
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
@@ -256,4 +305,6 @@ module.exports = {
   updateGynecologicalHistory,
   getHealthIssues,
   updateHealthIssues,
+  getSexualHistory,
+  updateSexualHistory,
 };

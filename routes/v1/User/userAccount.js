@@ -22,6 +22,8 @@ const {
   updateGynecologicalHistory,
   getHealthIssues,
   updateHealthIssues,
+  getSexualHistory,
+  updateSexualHistory,
 } = require("../../../private/services/User/Information/health");
 
 const storage = multer.memoryStorage();
@@ -517,6 +519,30 @@ router.get("/health-issues", verify, async (req, res, next) => {
 router.patch("/health-issues", verify, async (req, res, next) => {
   try {
     const result = await updateHealthIssues(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/sexual-history", verify, async (req, res, next) => {
+  try {
+    const result = await getSexualHistory(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(404).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.patch("/sexual-history", verify, async (req, res, next) => {
+  try {
+    const result = await updateSexualHistory(req);
     if (result.status === "success") {
       return res.status(200).json(result);
     }
