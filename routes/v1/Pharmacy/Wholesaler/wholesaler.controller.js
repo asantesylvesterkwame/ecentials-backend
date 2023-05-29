@@ -5,6 +5,7 @@ const {
   fetchWholesaler,
   deleteWholesaler,
   updateWholesaler,
+  searchWholesaler,
 } = require("../../../../private/services/Pharmacy/Wholesaler/wholesaler.service");
 
 // Add customers to pharmacy
@@ -44,6 +45,18 @@ router.patch("/update-wholesaler", verify, async (req, res, next) => {
       return res.status(200).json(result);
     }
     return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/search-wholesaler", verify, async (req, res, next) => {
+  try {
+    const result = await searchWholesaler(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(404).json(result);
   } catch (error) {
     return next(error);
   }
