@@ -1,3 +1,4 @@
+const Appointments = require("../../../schemas/Appointments");
 const Hospital = require("../../../schemas/Hospital");
 
 /**
@@ -27,6 +28,28 @@ async function fetchAvailableAppointmentDates(req) {
   }
 }
 
+async function getHospitalAppointments(req) {
+  try {
+    const result = await Appointments.find({
+      facility_id: req.params.hospitalId,
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "could not retrieve hospital appointments",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved appointments",
+      data: result,
+    };
+  } catch (error) {
+    throw new Error(`could not retrieve hospital appointments. ${error}`);
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
+  getHospitalAppointments,
 };
