@@ -144,10 +144,15 @@ async function registerNewHospital({ req }) {
   }
 }
 
+async function findHospitalById(id) {
+  return await Hospital.findById(id);
+}
+
 module.exports = {
   registerNewHospital,
   uploadHospitalImages,
   searchNearbyHospital,
   getHospitalDetails,
   isBusinessOwnerHavingHospital,
+  findHospitalById,
 };

@@ -1,6 +1,7 @@
 const router = require("express").Router();
+const { isCorrectDate } = require("../../../private/middlewares/custom_middlewares");
 const {
-  fetchAvailableAppointmentDates, getHospitalAppointments,
+  fetchAvailableAppointmentDates, getHospitalAppointments, createHospitalAppointment,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -28,4 +29,19 @@ router.get("/:hospitalId/appointments", verify, async (req, res, next) => {
   }
 });
 
+router.post(
+  "/:hospitalId/appointments/create",
+  [verify, isCorrectDate],
+  async (req, res, next) => {
+    try {
+      const result = await createHospitalAppointment({ req });
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(400).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
 module.exports = router;
