@@ -1,12 +1,11 @@
 const HospitalAppointmentTemplate = (
-    patientName,
-    date,
-    time,
-    hospitalName,
-    hospitalLocation,
-    hospitalPhoneNumber
-) => {
-    return `
+  patientName,
+  date,
+  time,
+  hospitalName,
+  hospitalLocation,
+  hospitalPhoneNumber
+) => `
     <!DOCTYPE html>
     <html lang="en">
     
@@ -104,7 +103,6 @@ const HospitalAppointmentTemplate = (
     </body>
     
     </html>
-    `
-}
+    `;
 
 module.exports = HospitalAppointmentTemplate;

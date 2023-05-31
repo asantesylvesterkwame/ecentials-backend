@@ -1,12 +1,11 @@
 const CancelledAppointmentTemplate = (
-    patientName,
-    date,
-    time,
-    hospitalName,
-    hospitalLocation,
-    hospitalPhoneNumber
-) => {
-    return `
+  patientName,
+  date,
+  time,
+  hospitalName,
+  hospitalLocation,
+  hospitalPhoneNumber
+) => `
     <!DOCTYPE html>
     <html lang="en">
     
@@ -98,7 +97,6 @@ const CancelledAppointmentTemplate = (
     </body>
     
     </html>
-    `
-}
+    `;
 
 module.exports = CancelledAppointmentTemplate;

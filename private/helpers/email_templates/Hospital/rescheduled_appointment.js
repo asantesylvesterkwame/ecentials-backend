@@ -1,14 +1,13 @@
 const RescheduledAppointmentTemplate = (
-    patientName,
-    date,
-    time,
-    hospitalName,
-    hospitalLocation,
-    hospitalPhoneNumber,
-    rescheduleDate,
-    rescheduleTime
-) => {
-    return `
+  patientName,
+  date,
+  time,
+  hospitalName,
+  hospitalLocation,
+  hospitalPhoneNumber,
+  rescheduleDate,
+  rescheduleTime
+) => `
     <!DOCTYPE html>
     <html lang="en">
     
@@ -106,7 +105,6 @@ const RescheduledAppointmentTemplate = (
     </body>
     
     </html>
-    `
-}
+    `;
 
 module.exports = RescheduledAppointmentTemplate;
