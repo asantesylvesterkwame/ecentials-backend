@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const { isCorrectDate } = require("../../../private/middlewares/custom_middlewares");
 const {
-  fetchAvailableAppointmentDates, getHospitalAppointments, createHospitalAppointment, cancelHospitalAppointment,
+  fetchAvailableAppointmentDates, getHospitalAppointments, createHospitalAppointment, cancelHospitalAppointment, rescheduleHospitalAppointment,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -51,6 +51,22 @@ router.patch(
   async (req, res, next) => {
     try {
       const result = await cancelHospitalAppointment(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(400).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.patch(
+  "/:hospitalId/appointments/:appointmentId/reschedule",
+  [verify, isCorrectDate],
+  async (req, res, next) => {
+    try {
+      const result = await rescheduleHospitalAppointment(req);
       if (result.status === "success") {
         return res.status(200).json(result);
       }
