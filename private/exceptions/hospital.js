@@ -1,10 +1,10 @@
 class HospitalAppointmentException extends Error {
-    constructor(message) {
-        super(message);
-        this.name = "HospitalAppointException";
-    }
+  constructor(message) {
+    super(message);
+    this.name = "HospitalAppointException";
+  }
 }
 
 module.exports = {
-    HospitalAppointmentException,
-}
+  HospitalAppointmentException,
+};

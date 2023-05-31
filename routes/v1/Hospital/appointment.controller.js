@@ -1,7 +1,13 @@
 const router = require("express").Router();
-const { isCorrectDate } = require("../../../private/middlewares/custom_middlewares");
 const {
-  fetchAvailableAppointmentDates, getHospitalAppointments, createHospitalAppointment, cancelHospitalAppointment, rescheduleHospitalAppointment,
+  isCorrectDate,
+} = require("../../../private/middlewares/custom_middlewares");
+const {
+  fetchAvailableAppointmentDates,
+  getHospitalAppointments,
+  createHospitalAppointment,
+  cancelHospitalAppointment,
+  rescheduleHospitalAppointment,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 

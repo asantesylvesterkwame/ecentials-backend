@@ -1,5 +1,7 @@
-const { HospitalAppointmentException } = require("../../../exceptions/hospital");
-const BaseTemplate = require("../../../helpers/base_mail");
+/* eslint-disable no-underscore-dangle */
+const {
+  HospitalAppointmentException,
+} = require("../../../exceptions/hospital");
 const CancelledAppointmentTemplate = require("../../../helpers/email_templates/Hospital/cancelled_appointment");
 const RescheduledAppointmentTemplate = require("../../../helpers/email_templates/Hospital/rescheduled_appointment");
 const HospitalAppointmentTemplate = require("../../../helpers/email_templates/hospital_appointment");
@@ -75,7 +77,7 @@ async function createHospitalAppointment({ req }) {
       };
     }
 
-    let mailBody = HospitalAppointmentTemplate(
+    const mailBody = HospitalAppointmentTemplate(
       user.personal.name,
       result.date.toDateString(),
       result.time.toLocaleTimeString(),
@@ -110,11 +112,11 @@ async function cancelHospitalAppointment(req) {
     const currentDate = new Date();
     const user = await findUserById(req.body.user_id);
     const hospital = await findHospitalById(req.params.hospitalId);
-    
+
     const result = await Appointments.findByIdAndUpdate(
       req.params.appointmentId,
       {
-        $set: { status: "cancelled", updatedAt: currentDate, },
+        $set: { status: "cancelled", updatedAt: currentDate },
       }
     );
 
@@ -133,7 +135,7 @@ async function cancelHospitalAppointment(req) {
       hospital.location,
       hospital.phone_number
     );
-    
+
     Promise.all([
       sendMail(user.email, mailBody),
       sendAndCreateNotification(
@@ -150,7 +152,9 @@ async function cancelHospitalAppointment(req) {
       message: "successfully cancelled appointment",
     };
   } catch (error) {
-    throw new HospitalAppointmentException(`could not cancel appointment. ${error}`);
+    throw new HospitalAppointmentException(
+      `could not cancel appointment. ${error}`
+    );
   }
 }
 
@@ -159,8 +163,10 @@ async function rescheduleHospitalAppointment(req) {
     const currentDate = new Date();
     const user = await findUserById(req.body.user_id);
     const hospital = await findHospitalById(req.params.hospitalId);
-    
-    const initialAppointmentState = await Appointments.findById(req.params.appointmentId);
+
+    const initialAppointmentState = await Appointments.findById(
+      req.params.appointmentId
+    );
 
     const result = await Appointments.findByIdAndUpdate(
       req.params.appointmentId,
@@ -173,7 +179,7 @@ async function rescheduleHospitalAppointment(req) {
         },
       }
     );
-    
+
     if (!result) {
       return {
         status: "failed",
@@ -208,7 +214,9 @@ async function rescheduleHospitalAppointment(req) {
       message: "successfully rescheduled appointment",
     };
   } catch (error) {
-    throw new HospitalAppointmentException(`could not reschedule appointment. ${error}`);
+    throw new HospitalAppointmentException(
+      `could not reschedule appointment. ${error}`
+    );
   }
 }
 module.exports = {
