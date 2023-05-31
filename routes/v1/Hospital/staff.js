@@ -17,6 +17,7 @@ const {
 const { verify } = require("../../../verifyToken");
 const {
   createHospitalStaff,
+  getHospitalStaff,
 } = require("../../../private/services/Hospital/Staff/staff.service");
 
 const storage = multer.memoryStorage();
@@ -137,6 +138,18 @@ router.post("/add-new-staff", verify, newStaffFiles, async (req, res, next) => {
       return res.status(201).json(result);
     }
     return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("", verify, async (req, res, next) => {
+  try {
+    const result = await getHospitalStaff(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(404).json(result);
   } catch (error) {
     return next(error);
   }

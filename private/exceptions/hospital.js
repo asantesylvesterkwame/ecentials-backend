@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 class HospitalAppointmentException extends Error {
   constructor(message) {
     super(message);
@@ -5,6 +6,14 @@ class HospitalAppointmentException extends Error {
   }
 }
 
+class HospitalStaffException extends Error {
+  constructor(message) {
+    super(message);
+    this.name = "HospitalStaffException";
+  }
+}
+
 module.exports = {
   HospitalAppointmentException,
+  HospitalStaffException,
 };

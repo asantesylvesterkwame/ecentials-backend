@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-underscore-dangle */
 
+const { HospitalStaffException } = require("../../../exceptions/hospital");
 const {
   generateEmployeeID,
   sendAccountCreationEmail,
@@ -74,6 +75,26 @@ async function createHospitalStaff({ req }) {
   //   }
 }
 
+async function getHospitalStaff(req) {
+  try {
+    const result = await Staff.find({ facility_id: req.body.hospitalId });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to retrieve hospital staff.",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved hospital staff",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalStaffException(`could not get staff. ${error}`);
+  }
+}
+
 module.exports = {
   createHospitalStaff,
+  getHospitalStaff,
 };
