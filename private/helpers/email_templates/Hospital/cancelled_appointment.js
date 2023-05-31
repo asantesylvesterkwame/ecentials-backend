@@ -1,4 +1,4 @@
-const HospitalAppointmentTemplate = (
+const CancelledAppointmentTemplate = (
     patientName,
     date,
     time,
@@ -84,14 +84,8 @@ const HospitalAppointmentTemplate = (
             <h1>Confirm Verification Code</h1>
             <p>Dear ${patientName},</p>
             <p>Dear ${patientName}, I am writing to confirm your upcoming hospital appointment, scheduled for ${date} at ${time},
-                at ${hospitalName} located at ${hospitalLocation}.</p>
-            <p>Please make sure to arrive at least 15 minutes prior to your scheduled appointment time to allow for check-in
-                procedures. Upon arrival, please inform the receptionist that you have arrived and provide them with your
-                name and appointment time. Please note that fasting may be required for your lab tests. If fasting is
-                required, please make sure to not eat or drink anything (except water) for at least 8 hours prior to your
-                appointment time. If you need to reschedule or cancel your appointment, please notify us at least 24 hours
-                in advance so we can offer your appointment slot to someone else</p>
-            <p>If you have any questions or concerns regarding your lab appointment, please feel free to contact us at ${hospitalPhoneNumber} or reply to this email. We look forward to seeing you soon. Best regards</p>
+                at ${hospitalName} located at ${hospitalLocation} has been cancelled.</p>
+            <p>If you have any questions or concerns regarding your appointment, please feel free to contact us at ${hospitalPhoneNumber} or reply to this email. We look forward to seeing you soon. Best regards</p>
             <a href="" class="btn">Add to calendar</a>
             <div class="line">
                 <p>54 Smith Street, Melbourne VIC.</p>
@@ -107,4 +101,4 @@ const HospitalAppointmentTemplate = (
     `
 }
 
-module.exports = HospitalAppointmentTemplate;
+module.exports = CancelledAppointmentTemplate;
