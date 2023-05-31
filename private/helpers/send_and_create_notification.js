@@ -17,7 +17,7 @@ async function sendAndCreateNotification(
     const createNotification = _createNewNotification(user_id, title, body);
 
     Promise.all([sendNotification, createNotification]).catch((e) => {
-      throw new Error(e);
+      console.log(`error occurred: ${e}`);
     });
   } catch (error) {
     console.log(`error occurred: ${error}`);
