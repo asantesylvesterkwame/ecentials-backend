@@ -47,6 +47,7 @@ router.get("/fetch-personal-details", verify, async (req, res) => {
       education: 1,
       health: 1,
       profile_image: 1,
+      health_history: 1,
     }
   );
   if (!isUserPresent) {
@@ -145,6 +146,7 @@ router.post("/addEdit-health-details", verify, async (req, res) => {
     },
     {
       $set: changes,
+      $push: { health_history: req.body }
     }
   );
   if (!add_details) {

@@ -122,6 +122,7 @@ const userSchema = new mongoose.Schema(
       required: false,
     },
     primary_doctors: [],
+    health_history: [],
   },
   { timestamps: true }
 );
