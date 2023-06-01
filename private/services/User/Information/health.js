@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const { UserHealthInformationException } = require("../../../exceptions/user");
 const User = require("../../../schemas/User");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -387,6 +388,49 @@ async function updateSurgicalHistory(req) {
   }
 }
 
+async function getOtherHealthComments(req) {
+  try {
+    const result = await User.findById(req.user._id);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to get comments",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved comments",
+      data: result.health.comments,
+    };
+  } catch (error) {
+    throw new UserHealthInformationException(
+      `could not get comments. ${error}`
+    );
+  }
+}
+
+async function updateOtherHealthComments(req) {
+  try {
+    const result = await User.findByIdAndUpdate(req.user._id, {
+      $set: { "health.comments": req.body.comments },
+    });
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to update comments",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully updated comments",
+    };
+  } catch (error) {
+    throw new UserHealthInformationException(
+      `could not update comments. ${error}`
+    );
+  }
+}
+
 module.exports = {
   getMedicalConditions,
   updateMedicalConditions,
@@ -404,4 +448,6 @@ module.exports = {
   updateImmunizations,
   getSurgicalHistory,
   updateSurgicalHistory,
+  getOtherHealthComments,
+  updateOtherHealthComments,
 };

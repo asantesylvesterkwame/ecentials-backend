@@ -64,6 +64,7 @@ const userSchema = new mongoose.Schema(
       medical_conditions: Array,
       preventive_care: Array,
       gynecological_history: Array,
+      comments: String,
       issues: {
         harmed: Boolean,
         harmedDescription: String,

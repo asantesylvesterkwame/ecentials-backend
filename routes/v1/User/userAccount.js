@@ -28,6 +28,8 @@ const {
   updateImmunizations,
   getSurgicalHistory,
   updateSurgicalHistory,
+  getOtherHealthComments,
+  updateOtherHealthComments,
 } = require("../../../private/services/User/Information/health");
 
 const storage = multer.memoryStorage();
@@ -146,7 +148,7 @@ router.post("/addEdit-health-details", verify, async (req, res) => {
     },
     {
       $set: changes,
-      $push: { health_history: req.body }
+      $push: { health_history: req.body },
     }
   );
   if (!add_details) {
@@ -602,6 +604,30 @@ router.get("/surgical-history", verify, async (req, res, next) => {
 router.patch("/surgical-history", verify, async (req, res, next) => {
   try {
     const result = await updateSurgicalHistory(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get("/comments", verify, async (req, res, next) => {
+  try {
+    const result = await getOtherHealthComments(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(404).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.patch("/comments", verify, async (req, res, next) => {
+  try {
+    const result = await updateOtherHealthComments(req);
     if (result.status === "success") {
       return res.status(200).json(result);
     }
