@@ -135,15 +135,14 @@ const userSchema = new mongoose.Schema(
     uniqueId: {
       type: String,
       unique: true,
-    }
+    },
   },
   { timestamps: true }
 );
 
-userSchema.pre("save", function(next) {
+userSchema.pre("save", function _(next) {
   this.uniqueId = (Math.floor(Math.random() * 900000) + 100000).toString();
   next();
 });
-
 
 module.exports = mongoose.model("User", userSchema);

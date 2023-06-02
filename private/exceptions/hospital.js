@@ -17,7 +17,7 @@ class HospitalPatientException extends Error {
   constructor(message) {
     super(message);
     this.name = "HospitalPatientException";
-  }  
+  }
 }
 
 module.exports = {
