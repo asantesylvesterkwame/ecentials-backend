@@ -34,11 +34,19 @@ const userSchema = new mongoose.Schema(
       required: false,
     },
     personal: {
-      name: String,
+      firstName: String,
+      lastName: String,
+      middleName: String,
       phone: String,
       gender: String,
       address: String,
       occupation: String,
+      religion: String,
+      nationality: String,
+      language: String,
+      phoneNumber: String,
+      nearestRelative: Array,
+      addressLineTwo: String,
       dob: String,
       ghana_card_no: String,
       height: Number,
@@ -124,8 +132,17 @@ const userSchema = new mongoose.Schema(
     },
     primary_doctors: [],
     health_history: [],
+    uniqueId: {
+      type: String,
+      unique: true,
+    },
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", function _(next) {
+  this.uniqueId = (Math.floor(Math.random() * 900000) + 100000).toString();
+  next();
+});
 
 module.exports = mongoose.model("User", userSchema);

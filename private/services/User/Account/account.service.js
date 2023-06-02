@@ -1,6 +1,7 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-underscore-dangle */
 
+const { UserAccountInformationException } = require("../../../exceptions/user");
 const User = require("../../../schemas/User");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -51,8 +52,17 @@ async function findUserById(id) {
   }
 }
 
+async function findUserByUniqueId(uniqueId) {
+  try {
+    return User.find({ uniqueId });
+  } catch (error) {
+    throw new UserAccountInformationException(`user not found. ${error}`);
+  }
+}
+
 module.exports = {
   uploadProfileImage,
   fetchUsersName,
   findUserById,
+  findUserByUniqueId,
 };
