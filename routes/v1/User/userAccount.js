@@ -69,7 +69,9 @@ router.get("/fetch-personal-details", verify, async (req, res) => {
 router.post("/addEdit-personal-details", verify, async (req, res) => {
   const user_id = req.user._id;
   const changes = {
-    "personal.name": req.body.name,
+    "personal.firstName": req.body.firstName,
+    "personal.lastName": req.body.lastName,
+    "personal.middleName": req.body.middleName,
     "personal.phone": req.body.phone,
     "personal.gender": req.body.gender,
     "personal.address": req.body.address,
