@@ -124,8 +124,18 @@ const userSchema = new mongoose.Schema(
     },
     primary_doctors: [],
     health_history: [],
+    uniqueId: {
+      type: String,
+      unique: true,
+    }
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", function(next) {
+  this.uniqueId = (Math.floor(Math.random() * 900000) + 100000).toString();
+  next();
+});
+
 
 module.exports = mongoose.model("User", userSchema);
