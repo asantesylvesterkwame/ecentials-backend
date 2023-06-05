@@ -9,6 +9,7 @@ const {
   cancelHospitalAppointment,
   rescheduleHospitalAppointment,
   getBookedAppointmentDatesForHospital,
+  getHospitalAppointmentsForADay,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -99,5 +100,17 @@ router.get(
     }
   }
 );
+
+router.get("/:hospitalId/appointments/day", verify, async (req, res, next) => {
+  try {
+    const result = await getHospitalAppointmentsForADay(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(404).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
 
 module.exports = router;
