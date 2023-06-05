@@ -275,6 +275,38 @@ async function getHospitalAppointmentsForADay(req) {
   }
 }
 
+async function getHospitalAppointmentsForAWeek(req) {
+  try {
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+    
+    const result = await Appointments.find(
+      {
+        facility_id: req.params.hospitalId,
+        date: {
+          $gte: startDate,
+          $lte: endDate,
+        },
+      }
+    );
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no appointments found for specified week",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    }
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve appointments for specified date. ${error}`
+    )
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
@@ -283,4 +315,5 @@ module.exports = {
   rescheduleHospitalAppointment,
   getBookedAppointmentDatesForHospital,
   getHospitalAppointmentsForADay,
+  getHospitalAppointmentsForAWeek,
 };
