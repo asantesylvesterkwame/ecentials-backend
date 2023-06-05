@@ -131,7 +131,7 @@ async function updatePreventiveCare({ req }) {
     }
     // eslint-disable-next-line no-underscore-dangle
     const result = await User.findByIdAndUpdate(req.user._id, {
-      $push: {
+      $set: {
         "health.preventive_care": {
           ...req.body,
           result: fileUrl,
