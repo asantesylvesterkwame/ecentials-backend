@@ -219,10 +219,35 @@ async function rescheduleHospitalAppointment(req) {
     );
   }
 }
+
+async function getBookedAppointmentDatesForHospital(req) {
+  try {
+    const result = await Appointments.find({
+      facility_id: req.params.hospitalId,
+    }).select("date time");
+    if (!result) {
+      return {
+        status: "failed",
+        message: "booked appointments not found",
+      };
+    }
+    return {
+      status: "success",
+      message: "booked appointment dates retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve booked appointment dates. ${error}`
+    );
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
   createHospitalAppointment,
   cancelHospitalAppointment,
   rescheduleHospitalAppointment,
+  getBookedAppointmentDatesForHospital,
 };
