@@ -74,7 +74,47 @@ async function registerNewPatient({ req }) {
   }
 }
 
+async function addPatientVisit({ req }) {
+  try {
+    const num = (Math.floor(Math.random() * 900000) + 100000).toString();
+
+    const currentDate = new Date();
+    let month = currentDate.getMonth() + 1;
+    month = month < 10 ? `0${month}` : month;
+    const lastTwoDigitsOfYear = currentDate.getFullYear().toString().slice(-2);
+
+    const visitNo = `${req.body.visitTypeCode}-${num}${month}${lastTwoDigitsOfYear}`;
+
+    const result = await Patient.findByIdAndUpdate(req.params.patientId, {
+      $push: {
+        visits: {
+          ...req.body,
+          visitNo,
+        },
+      },
+      $set: {
+        updatedAt: currentDate,
+      },
+    });
+
+    if (!result) {
+      return {
+        status: "failed",
+        message: "could not add patient visit",
+      };
+    }
+
+    return {
+      status: "success",
+      message: "patient visit added successfully",
+    };
+  } catch (error) {
+    throw new HospitalPatientException(`could not add patient visit. ${error}`);
+  }
+}
+
 module.exports = {
   addExistingEcentialsUserAsPatient,
   registerNewPatient,
+  addPatientVisit,
 };
