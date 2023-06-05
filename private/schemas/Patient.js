@@ -12,6 +12,21 @@ const patientSchema = new mongoose.Schema(
       required: true,
       ref: "User",
     },
+    visits: [
+      {
+        visitNo: {
+          type: String,
+          required: true,
+          unique: true,
+        },
+        visitDate: {
+          type: Date,
+          default: Date.now,
+        },
+        department: String,
+        staff: String,
+      },
+    ],
   },
   { timestamps: true }
 );
