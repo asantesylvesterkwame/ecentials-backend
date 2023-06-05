@@ -8,6 +8,7 @@ const {
   createHospitalAppointment,
   cancelHospitalAppointment,
   rescheduleHospitalAppointment,
+  getBookedAppointmentDatesForHospital,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -77,6 +78,22 @@ router.patch(
         return res.status(200).json(result);
       }
       return res.status(400).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/appointments/booked-appointment-date",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getBookedAppointmentDatesForHospital(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
     } catch (error) {
       return next(error);
     }
