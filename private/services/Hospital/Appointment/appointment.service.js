@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const ObjectId = require("mongoose").Types.ObjectId;
+const { ObjectId } = require("mongoose").Types;
 
 const {
   HospitalAppointmentException,
@@ -249,16 +249,14 @@ async function getHospitalAppointmentsForADay(req) {
   try {
     const date = new Date(req.query.date);
     const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-    
-    const result = await Appointments.find(
-      {
-        facility_id: req.params.hospitalId,
-        date: {
-          $gte: date,
-          $lte: endDate,
-        },
-      }
-    );
+
+    const result = await Appointments.find({
+      facility_id: req.params.hospitalId,
+      date: {
+        $gte: date,
+        $lte: endDate,
+      },
+    });
     if (!result) {
       return {
         status: "failed",
@@ -269,11 +267,11 @@ async function getHospitalAppointmentsForADay(req) {
       status: "success",
       message: "appointments retrieved successfully",
       data: result,
-    }
+    };
   } catch (error) {
     throw new HospitalAppointmentException(
       `could not retrieve appointments for specified date. ${error}`
-    )
+    );
   }
 }
 
@@ -281,16 +279,14 @@ async function getHospitalAppointmentsForAWeek(req) {
   try {
     const startDate = new Date(req.query.startDate);
     const endDate = new Date(req.query.endDate);
-    
-    const result = await Appointments.find(
-      {
-        facility_id: req.params.hospitalId,
-        date: {
-          $gte: startDate,
-          $lte: endDate,
-        },
-      }
-    );
+
+    const result = await Appointments.find({
+      facility_id: req.params.hospitalId,
+      date: {
+        $gte: startDate,
+        $lte: endDate,
+      },
+    });
     if (!result) {
       return {
         status: "failed",
@@ -301,7 +297,7 @@ async function getHospitalAppointmentsForAWeek(req) {
       status: "success",
       message: "appointments retrieved successfully",
       data: result,
-    }
+    };
   } catch (error) {
     throw new HospitalAppointmentException(
       `could not retrieve appointments for specified date. ${error}`
@@ -312,14 +308,14 @@ async function getHospitalAppointmentsForAWeek(req) {
 async function getHospitalAppointmentsForAMonth(req) {
   try {
     const currentYear = new Date().getFullYear();
-    
+
     const result = await Appointments.find({
       $expr: {
         $and: [
-          {facility_id: ObjectId(req.params.hospitalId)},
+          { facility_id: ObjectId(req.params.hospitalId) },
           { $eq: [{ $year: "$date" }, currentYear] },
           { $eq: [{ $month: "$date" }, req.query.month] },
-        ]
+        ],
       },
     });
 
@@ -333,7 +329,7 @@ async function getHospitalAppointmentsForAMonth(req) {
       status: "success",
       message: "appointments retrieved successfully",
       data: result,
-    }
+    };
   } catch (error) {
     throw new HospitalAppointmentException(
       `could not retrieve appointments for specified date. ${error}`
