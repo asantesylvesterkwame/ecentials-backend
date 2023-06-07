@@ -337,6 +337,70 @@ async function getHospitalAppointmentsForAMonth(req) {
   }
 }
 
+async function getBookedAppointmentsForWeek(req) {
+  try {
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+
+    const result = await Appointments.aggregate([
+      {
+        $match: {
+          facility_id: ObjectId(req.params.hospitalId),
+          date: {
+            $gte: startDate,
+            $lte: endDate,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          facility_type: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          patientFirstName: "$user.firstName",
+          patientLastName: "$user.lastName",
+          patientId: "$user.uniqueId",
+        }
+      }
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no booked appointments found for specified week",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve booked appointments for specified date. ${error}`
+    );
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
@@ -347,4 +411,5 @@ module.exports = {
   getHospitalAppointmentsForADay,
   getHospitalAppointmentsForAWeek,
   getHospitalAppointmentsForAMonth,
+  getBookedAppointmentsForWeek
 };
