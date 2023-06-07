@@ -13,6 +13,7 @@ const {
   getHospitalAppointmentsForAWeek,
   getHospitalAppointmentsForAMonth,
   getBookedAppointmentsForWeek,
+  getBookedAppointmentsByMonth,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -150,6 +151,22 @@ router.get(
   async (req, res, next) => {
     try {
       const result = await getBookedAppointmentsForWeek(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/appointments/booked/month",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getBookedAppointmentsByMonth(req);
       if (result.status === "success") {
         return res.status(200).json(result);
       }
