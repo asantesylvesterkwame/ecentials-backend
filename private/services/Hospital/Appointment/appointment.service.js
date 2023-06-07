@@ -405,7 +405,7 @@ async function getBookedAppointmentsByMonth(req) {
   try {
     const currentYear = new Date().getFullYear();
     const month = req.query.month;
-    
+
     const result = await Appointments.aggregate([
       {
         $match: {
@@ -414,6 +414,71 @@ async function getBookedAppointmentsByMonth(req) {
             $gte: new Date(currentYear, month - 1, 1),
             $lt: new Date(currentYear, month, 1)
           }
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user"
+        }
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          facility_type: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          patientFirstName: "$user.firstName",
+          patientLastName: "$user.lastName",
+          patientId: "$user.uniqueId",
+        }
+      }
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no booked appointments found for specified month",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve booked appointments for specified month. ${error}`
+    );
+  }
+}
+
+async function getADayAppointmentForDoctors(req) {
+  try {
+    const date = new Date(req.query.date);
+    const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+    
+    const result = await Appointments.aggregate([
+      {
+        $match: {
+          facility_id: ObjectId(req.params.hospitalId),
+          staff_id: ObjectId(req.user._id),
+          date: {
+            $gte: date,
+            $lte: endDate,
+          },
         },
       },
       {
@@ -477,4 +542,5 @@ module.exports = {
   getHospitalAppointmentsForAMonth,
   getBookedAppointmentsForWeek,
   getBookedAppointmentsByMonth,
+  getADayAppointmentForDoctors
 };

@@ -14,6 +14,7 @@ const {
   getHospitalAppointmentsForAMonth,
   getBookedAppointmentsForWeek,
   getBookedAppointmentsByMonth,
+  getADayAppointmentForDoctors,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -167,6 +168,22 @@ router.get(
   async (req, res, next) => {
     try {
       const result = await getBookedAppointmentsByMonth(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/doctor/appointments/day",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getADayAppointmentForDoctors(req);
       if (result.status === "success") {
         return res.status(200).json(result);
       }
