@@ -140,6 +140,12 @@ const staffSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    availableDates: [
+      {
+        type: mongoose.SchemaTypes.Date,
+        required: false,
+      },
+    ],
   },
   { timestamps: true }
 );
