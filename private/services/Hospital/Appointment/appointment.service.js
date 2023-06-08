@@ -358,8 +358,8 @@ async function getBookedAppointmentsForWeek(req) {
           from: "users",
           localField: "user_id",
           foreignField: "_id",
-          as: "user"
-        }
+          as: "user",
+        },
       },
       {
         $unwind: {
@@ -381,8 +381,8 @@ async function getBookedAppointmentsForWeek(req) {
           patientFirstName: "$user.firstName",
           patientLastName: "$user.lastName",
           patientId: "$user.uniqueId",
-        }
-      }
+        },
+      },
     ]);
     if (!result) {
       return {
@@ -405,7 +405,7 @@ async function getBookedAppointmentsForWeek(req) {
 async function getBookedAppointmentsByMonth(req) {
   try {
     const currentYear = new Date().getFullYear();
-    const month = req.query.month;
+    const { month } = req.query;
 
     const result = await Appointments.aggregate([
       {
@@ -413,8 +413,8 @@ async function getBookedAppointmentsByMonth(req) {
           facility_id: ObjectId(req.params.hospitalId),
           date: {
             $gte: new Date(currentYear, month - 1, 1),
-            $lt: new Date(currentYear, month, 1)
-          }
+            $lt: new Date(currentYear, month, 1),
+          },
         },
       },
       {
@@ -422,8 +422,8 @@ async function getBookedAppointmentsByMonth(req) {
           from: "users",
           localField: "user_id",
           foreignField: "_id",
-          as: "user"
-        }
+          as: "user",
+        },
       },
       {
         $unwind: {
@@ -445,8 +445,8 @@ async function getBookedAppointmentsByMonth(req) {
           patientFirstName: "$user.firstName",
           patientLastName: "$user.lastName",
           patientId: "$user.uniqueId",
-        }
-      }
+        },
+      },
     ]);
     if (!result) {
       return {
@@ -470,7 +470,7 @@ async function getADayAppointmentForDoctors(req) {
   try {
     const date = new Date(req.query.date);
     const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
-    
+
     const result = await Appointments.aggregate([
       {
         $match: {
@@ -487,8 +487,8 @@ async function getADayAppointmentForDoctors(req) {
           from: "users",
           localField: "user_id",
           foreignField: "_id",
-          as: "user"
-        }
+          as: "user",
+        },
       },
       {
         $unwind: {
@@ -510,8 +510,8 @@ async function getADayAppointmentForDoctors(req) {
           patientFirstName: "$user.firstName",
           patientLastName: "$user.lastName",
           patientId: "$user.uniqueId",
-        }
-      }
+        },
+      },
     ]);
     if (!result) {
       return {
@@ -537,33 +537,30 @@ async function setAvailabilityDatesForDoctor(req) {
       _id: req.params.hospitalId,
       available_appointment_dates: {
         $in: [req.body.date],
-      }
+      },
     });
 
     if (!isAvailableDate) {
       return {
         status: "failed",
         message: "selected date is not available",
-      }
+      };
     }
 
-    const result = await Staff.findByIdAndUpdate(
-      req.user._id,
-      {
-        $push: { availableDates: req.body.date },
-      }
-    );
+    const result = await Staff.findByIdAndUpdate(req.user._id, {
+      $push: { availableDates: req.body.date },
+    });
 
     if (!result) {
       return {
         status: "failed",
         message: "could not set availability date",
-      }
+      };
     }
     return {
       status: "success",
       message: "availability date set successfully",
-    }
+    };
   } catch (error) {
     throw new HospitalAppointmentException(
       `could not set availability date for doctor. ${error}`
