@@ -10,6 +10,7 @@ const HospitalAppointmentTemplate = require("../../../helpers/email_templates/ho
 const sendAndCreateNotification = require("../../../helpers/send_and_create_notification");
 const Appointments = require("../../../schemas/Appointments");
 const Hospital = require("../../../schemas/Hospital");
+const Staff = require("../../../schemas/Staff");
 const { findUserById } = require("../../User/Account/account.service");
 const sendMail = require("../../send_email");
 const { findHospitalById } = require("../hospital.service");
@@ -337,6 +338,236 @@ async function getHospitalAppointmentsForAMonth(req) {
   }
 }
 
+async function getBookedAppointmentsForWeek(req) {
+  try {
+    const startDate = new Date(req.query.startDate);
+    const endDate = new Date(req.query.endDate);
+
+    const result = await Appointments.aggregate([
+      {
+        $match: {
+          facility_id: ObjectId(req.params.hospitalId),
+          date: {
+            $gte: startDate,
+            $lte: endDate,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          facility_type: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          patientFirstName: "$user.firstName",
+          patientLastName: "$user.lastName",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no booked appointments found for specified week",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve booked appointments for specified date. ${error}`
+    );
+  }
+}
+
+async function getBookedAppointmentsByMonth(req) {
+  try {
+    const currentYear = new Date().getFullYear();
+    const { month } = req.query;
+
+    const result = await Appointments.aggregate([
+      {
+        $match: {
+          facility_id: ObjectId(req.params.hospitalId),
+          date: {
+            $gte: new Date(currentYear, month - 1, 1),
+            $lt: new Date(currentYear, month, 1),
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          facility_type: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          patientFirstName: "$user.firstName",
+          patientLastName: "$user.lastName",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no booked appointments found for specified month",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve booked appointments for specified month. ${error}`
+    );
+  }
+}
+
+async function getADayAppointmentForDoctors(req) {
+  try {
+    const date = new Date(req.query.date);
+    const endDate = new Date(date.getTime() + 24 * 60 * 60 * 1000);
+
+    const result = await Appointments.aggregate([
+      {
+        $match: {
+          facility_id: ObjectId(req.params.hospitalId),
+          staff_id: ObjectId(req.user._id),
+          date: {
+            $gte: date,
+            $lte: endDate,
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          facility_type: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          patientFirstName: "$user.firstName",
+          patientLastName: "$user.lastName",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no booked appointments found for specified month",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve booked appointments for specified month. ${error}`
+    );
+  }
+}
+
+async function setAvailabilityDatesForDoctor(req) {
+  try {
+    const isAvailableDate = await Hospital.findOne({
+      _id: req.params.hospitalId,
+      available_appointment_dates: {
+        $in: [req.body.date],
+      },
+    });
+
+    if (!isAvailableDate) {
+      return {
+        status: "failed",
+        message: "selected date is not available",
+      };
+    }
+
+    const result = await Staff.findByIdAndUpdate(req.user._id, {
+      $push: { availableDates: req.body.date },
+    });
+
+    if (!result) {
+      return {
+        status: "failed",
+        message: "could not set availability date",
+      };
+    }
+    return {
+      status: "success",
+      message: "availability date set successfully",
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not set availability date for doctor. ${error}`
+    );
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
@@ -347,4 +578,8 @@ module.exports = {
   getHospitalAppointmentsForADay,
   getHospitalAppointmentsForAWeek,
   getHospitalAppointmentsForAMonth,
+  getBookedAppointmentsForWeek,
+  getBookedAppointmentsByMonth,
+  getADayAppointmentForDoctors,
+  setAvailabilityDatesForDoctor,
 };

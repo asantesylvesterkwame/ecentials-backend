@@ -12,6 +12,10 @@ const {
   getHospitalAppointmentsForADay,
   getHospitalAppointmentsForAWeek,
   getHospitalAppointmentsForAMonth,
+  getBookedAppointmentsForWeek,
+  getBookedAppointmentsByMonth,
+  getADayAppointmentForDoctors,
+  setAvailabilityDatesForDoctor,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -137,6 +141,70 @@ router.get(
         return res.status(200).json(result);
       }
       return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/appointments/booked/week",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getBookedAppointmentsForWeek(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/appointments/booked/month",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getBookedAppointmentsByMonth(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/doctor/appointments/day",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getADayAppointmentForDoctors(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.patch(
+  "/:hospitalId/doctor/available-days",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await setAvailabilityDatesForDoctor(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(400).json(result);
     } catch (error) {
       return next(error);
     }
