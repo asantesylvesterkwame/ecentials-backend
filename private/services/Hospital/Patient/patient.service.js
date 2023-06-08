@@ -116,8 +116,6 @@ async function addPatientVisit({ req }) {
 
 async function searchPatientByPatientId(req) {
   try {
-    console.log(req.query.patientId)
-    console.log(req.params.hospitalId)
     const result = await Patient.aggregate([
       {
         $lookup: {
