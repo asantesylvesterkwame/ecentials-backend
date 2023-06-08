@@ -1,4 +1,5 @@
 /* eslint-disable no-underscore-dangle */
+const ObjectId = require("mongoose").Types.ObjectId;
 
 const { HospitalPatientException } = require("../../../exceptions/hospital");
 const { encryptPassword } = require("../../../helpers/functions");
@@ -113,8 +114,65 @@ async function addPatientVisit({ req }) {
   }
 }
 
+async function searchPatientByPatientId(req) {
+  try {
+    console.log(req.query.patientId)
+    console.log(req.params.hospitalId)
+    const result = await Patient.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "patient",
+          foreignField: "_id",
+          as: "user",
+        }
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          "user.uniqueId": req.query.patientId,
+          hospital: ObjectId(req.params.hospitalId),
+        }
+      },
+      {
+        $project: {
+          _id: 1,
+          hospital: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          visits: 1,
+          patientPersonalInfo: "$user.personal",
+          patientHealthInfo: "$user.health",
+          patientId: "$user.uniqueId",
+        }
+      }
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "patient not found",
+      };
+    }
+    return {
+      status: "success",
+      message: "patient found successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalPatientException(
+      `patient not found. ${error}`
+    );
+  }
+}
+
 module.exports = {
   addExistingEcentialsUserAsPatient,
   registerNewPatient,
   addPatientVisit,
+  searchPatientByPatientId,
 };
