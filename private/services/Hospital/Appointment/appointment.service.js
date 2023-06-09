@@ -516,7 +516,7 @@ async function getADayAppointmentForDoctors(req) {
     if (!result) {
       return {
         status: "failed",
-        message: "no booked appointments found for specified month",
+        message: "no appointments found for specified day",
       };
     }
     return {
@@ -526,7 +526,7 @@ async function getADayAppointmentForDoctors(req) {
     };
   } catch (error) {
     throw new HospitalAppointmentException(
-      `could not retrieve booked appointments for specified month. ${error}`
+      `could not retrieve appointments for specified day. ${error}`
     );
   }
 }
@@ -568,6 +568,64 @@ async function setAvailabilityDatesForDoctor(req) {
   }
 }
 
+async function getAppointmentsForSpecificDoctor(req) {
+  try {
+    const result = await Appointments.aggregate([
+      {
+        $match: {
+          facility_id: ObjectId(req.params.hospitalId),
+          staff_id: ObjectId(req.user._id),
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          facility_type: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          patientPersonalInfo: "$user.personal",
+          patientHealthInfo: "$user.health",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no appointments found for doctor",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve doctor's appointment. ${error}`
+    );
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
@@ -582,4 +640,5 @@ module.exports = {
   getBookedAppointmentsByMonth,
   getADayAppointmentForDoctors,
   setAvailabilityDatesForDoctor,
+  getAppointmentsForSpecificDoctor,
 };
