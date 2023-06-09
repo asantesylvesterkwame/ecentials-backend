@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-const ObjectId = require("mongoose").Types.ObjectId;
+const { ObjectId } = require("mongoose").Types;
 
 const { HospitalPatientException } = require("../../../exceptions/hospital");
 const { encryptPassword } = require("../../../helpers/functions");
@@ -123,7 +123,7 @@ async function searchPatientByPatientId(req) {
           localField: "patient",
           foreignField: "_id",
           as: "user",
-        }
+        },
       },
       {
         $unwind: {
@@ -135,7 +135,7 @@ async function searchPatientByPatientId(req) {
         $match: {
           "user.uniqueId": req.query.patientId,
           hospital: ObjectId(req.params.hospitalId),
-        }
+        },
       },
       {
         $project: {
@@ -147,8 +147,8 @@ async function searchPatientByPatientId(req) {
           patientPersonalInfo: "$user.personal",
           patientHealthInfo: "$user.health",
           patientId: "$user.uniqueId",
-        }
-      }
+        },
+      },
     ]);
     if (!result) {
       return {
@@ -162,9 +162,7 @@ async function searchPatientByPatientId(req) {
       data: result,
     };
   } catch (error) {
-    throw new HospitalPatientException(
-      `patient not found. ${error}`
-    );
+    throw new HospitalPatientException(`patient not found. ${error}`);
   }
 }
 

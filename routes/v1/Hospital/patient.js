@@ -56,20 +56,16 @@ router.post(
   }
 );
 
-router.get(
-  "/:hospitalId/patients",
-  verify,
-  async (req, res, next) => {
-    try {
-      const result = await searchPatientByPatientId(req);
-      if (result.status === "success") {
-        return res.status(200).json(result);
-      }
-      return res.status(404).json(result);
-    } catch (error) {
-      return next(error);
+router.get("/:hospitalId/patients", verify, async (req, res, next) => {
+  try {
+    const result = await searchPatientByPatientId(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
     }
+    return res.status(404).json(result);
+  } catch (error) {
+    return next(error);
   }
-);
+});
 
 module.exports = router;
