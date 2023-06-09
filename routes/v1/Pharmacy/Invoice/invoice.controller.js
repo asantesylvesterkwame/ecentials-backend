@@ -1,7 +1,7 @@
 /* eslint-disable camelcase */
 
-const router = require('express').Router();
-const { verify } = require('../../../../verifyToken');
+const router = require("express").Router();
+const { verify } = require("../../../../verifyToken");
 
 const {
   fetchInvoice,
@@ -9,10 +9,10 @@ const {
   deleteInvoice,
   searchInvoice,
   fetchCustomerName,
-} = require('../../../../private/services/Pharmacy/Invoice/invoice.service');
+} = require("../../../../private/services/Pharmacy/Invoice/invoice.service");
 
 // FETCH POS INVOICE
-router.post('', verify, async (req, res, next) => {
+router.post("", verify, async (req, res, next) => {
   const { store_id } = req.body;
   try {
     return res.status(200).json(await fetchInvoice({ store_id }));
@@ -21,10 +21,10 @@ router.post('', verify, async (req, res, next) => {
   }
 });
 
-router.get('/get-invoice', verify, fetchCustomerName);
+router.get("/get-invoice", verify, fetchCustomerName);
 
 // ADD INVOICE
-router.post('/add-invoice', verify, async (req, res, next) => {
+router.post("/add-invoice", verify, async (req, res, next) => {
   try {
     return res.status(200).json(await addInvoice({ req }));
   } catch (error) {
@@ -32,10 +32,10 @@ router.post('/add-invoice', verify, async (req, res, next) => {
   }
 });
 
-router.delete('/delete-invoice', verify, async (req, res, next) => {
+router.delete("/delete-invoice", verify, async (req, res, next) => {
   try {
     const result = await deleteInvoice(req);
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(200).json(result);
     }
     return res.status(400).json(result);
@@ -44,10 +44,10 @@ router.delete('/delete-invoice', verify, async (req, res, next) => {
   }
 });
 
-router.post('/search-invoice', verify, async (req, res, next) => {
+router.post("/search-invoice", verify, async (req, res, next) => {
   try {
     const result = await searchInvoice(req);
-    if (result.status === 'success') {
+    if (result.status === "success") {
       return res.status(200).json(result);
     }
     return res.status(400).json(result);
