@@ -626,6 +626,31 @@ async function getAppointmentsForSpecificDoctor(req) {
   }
 }
 
+async function getAvailableAppointmentDatesForDoctor(req) {
+  try {
+    const result = await Staff.find({
+      facility_id: req.params.hospitalId,
+      _id: req.params.doctorId,
+    });
+    
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no available dates found",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved available dates",
+      data: result[0].availableDates,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve available dates. ${error}`
+    );
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
@@ -641,4 +666,5 @@ module.exports = {
   getADayAppointmentForDoctors,
   setAvailabilityDatesForDoctor,
   getAppointmentsForSpecificDoctor,
+  getAvailableAppointmentDatesForDoctor,
 };
