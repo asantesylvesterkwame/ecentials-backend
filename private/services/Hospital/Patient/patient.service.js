@@ -166,9 +166,59 @@ async function searchPatientByPatientId(req) {
   }
 }
 
+async function getPatientHealthHistory(req) {
+  try {
+    const result = await Patient.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "patient",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          "user.uniqueId": req.params.patientId,
+          hospital: ObjectId(req.params.hospitalId),
+        },
+      },
+      {
+        $project: {          
+          patientHealthHistory: "$user.health_history",
+          patientMedicalConditions: "$user.medical_conditions",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "patient not found",
+      };
+    }
+    return {
+      status: "success",
+      message: "patient history retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalPatientException(
+      `could not retrieve health history. ${error}`
+    );
+  }
+}
+
 module.exports = {
   addExistingEcentialsUserAsPatient,
   registerNewPatient,
   addPatientVisit,
   searchPatientByPatientId,
+  getPatientHealthHistory,
 };

@@ -5,6 +5,7 @@ const {
   registerNewPatient,
   addPatientVisit,
   searchPatientByPatientId,
+  getPatientHealthHistory,
 } = require("../../../private/services/Hospital/Patient/patient.service");
 const { verify } = require("../../../verifyToken");
 
@@ -66,6 +67,21 @@ router.get("/:hospitalId/patients", verify, async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
+});
+
+router.get(
+  "/:hospitalId/patients/:patientId/health-history",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getPatientHealthHistory(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
 });
 
 module.exports = router;
