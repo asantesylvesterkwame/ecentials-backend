@@ -82,6 +82,7 @@ router.get(
     } catch (error) {
       return next(error);
     }
-});
+  }
+);
 
 module.exports = router;

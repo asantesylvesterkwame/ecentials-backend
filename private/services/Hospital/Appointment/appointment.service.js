@@ -632,7 +632,7 @@ async function getAvailableAppointmentDatesForDoctor(req) {
       facility_id: req.params.hospitalId,
       _id: req.params.doctorId,
     });
-    
+
     if (!result) {
       return {
         status: "failed",

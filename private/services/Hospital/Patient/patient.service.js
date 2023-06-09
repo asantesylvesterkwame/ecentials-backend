@@ -190,7 +190,7 @@ async function getPatientHealthHistory(req) {
         },
       },
       {
-        $project: {          
+        $project: {
           patientHealthHistory: "$user.health_history",
           patientMedicalConditions: "$user.medical_conditions",
           patientId: "$user.uniqueId",
