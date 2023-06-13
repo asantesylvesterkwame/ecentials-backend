@@ -42,34 +42,6 @@ async function fetchAvailableAppointmentDates(req) {
   }
 }
 
-async function getHospitalAppointments(req) {
-  try {
-    let result;
-    
-    if (req.query.q) {
-      result = await searchAppointmentByPatientNameAndId(req);
-    } else {
-      result = await Appointments.find({
-        facility_id: req.params.hospitalId,
-      });
-    }
-
-    if (!result) {
-      return {
-        status: "failed",
-        message: "could not retrieve hospital appointments",
-      };
-    }
-    return {
-      status: "success",
-      message: "successfully retrieved appointments",
-      data: result,
-    };
-  } catch (error) {
-    throw new Error(`could not retrieve hospital appointments. ${error}`);
-  }
-}
-
 async function createHospitalAppointment({ req }) {
   try {
     const user = await findUserById(req.body.user_id);
@@ -660,7 +632,7 @@ async function getAvailableAppointmentDatesForDoctor(req) {
 
 async function searchAppointmentByPatientNameAndId(req) {
   try {
-    const result =  await Appointments.aggregate([
+    const result = await Appointments.aggregate([
       {
         $lookup: {
           from: "users",
@@ -678,9 +650,9 @@ async function searchAppointmentByPatientNameAndId(req) {
       {
         $match: {
           $or: [
-            { "user.uniqueId": req.query.q, },
-            { "user.personal.firstName": req.query.q, },
-            { "user.personal.lastName": req.query.q, },
+            { "user.uniqueId": req.query.q },
+            { "user.personal.firstName": req.query.q },
+            { "user.personal.lastName": req.query.q },
           ],
           facility_id: ObjectId(req.params.hospitalId),
         },
@@ -699,12 +671,40 @@ async function searchAppointmentByPatientNameAndId(req) {
         },
       },
     ]);
-    
-    return result
+
+    return result;
   } catch (error) {
     throw new HospitalAppointmentException(
       `could not search patient. ${error}`
     );
+  }
+}
+
+async function getHospitalAppointments(req) {
+  try {
+    let result;
+
+    if (req.query.q) {
+      result = await searchAppointmentByPatientNameAndId(req);
+    } else {
+      result = await Appointments.find({
+        facility_id: req.params.hospitalId,
+      });
+    }
+
+    if (!result) {
+      return {
+        status: "failed",
+        message: "could not retrieve hospital appointments",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved appointments",
+      data: result,
+    };
+  } catch (error) {
+    throw new Error(`could not retrieve hospital appointments. ${error}`);
   }
 }
 
