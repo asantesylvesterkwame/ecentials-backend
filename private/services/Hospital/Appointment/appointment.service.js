@@ -44,9 +44,16 @@ async function fetchAvailableAppointmentDates(req) {
 
 async function getHospitalAppointments(req) {
   try {
-    const result = await Appointments.find({
-      facility_id: req.params.hospitalId,
-    });
+    let result;
+    
+    if (req.query.q) {
+      result = await searchAppointmentByPatientNameAndId(req);
+    } else {
+      result = await Appointments.find({
+        facility_id: req.params.hospitalId,
+      });
+    }
+
     if (!result) {
       return {
         status: "failed",
@@ -651,6 +658,56 @@ async function getAvailableAppointmentDatesForDoctor(req) {
   }
 }
 
+async function searchAppointmentByPatientNameAndId(req) {
+  try {
+    const result =  await Appointments.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          $or: [
+            { "user.uniqueId": req.query.q, },
+            { "user.personal.firstName": req.query.q, },
+            { "user.personal.lastName": req.query.q, },
+          ],
+          facility_id: ObjectId(req.params.hospitalId),
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          patientPersonalInfo: "$user.personal",
+          patientHealthInfo: "$user.health",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    
+    return result
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not search patient. ${error}`
+    );
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
@@ -667,4 +724,5 @@ module.exports = {
   setAvailabilityDatesForDoctor,
   getAppointmentsForSpecificDoctor,
   getAvailableAppointmentDatesForDoctor,
+  searchAppointmentByPatientNameAndId,
 };
