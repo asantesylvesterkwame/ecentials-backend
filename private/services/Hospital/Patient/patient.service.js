@@ -2,10 +2,17 @@
 const { ObjectId } = require("mongoose").Types;
 
 const { HospitalPatientException } = require("../../../exceptions/hospital");
+const ReferralTemplate = require("../../../helpers/email_templates/Hospital/referral");
 const { encryptPassword } = require("../../../helpers/functions");
 const generateRandomPassword = require("../../../helpers/random_password");
 const Patient = require("../../../schemas/Patient");
 const User = require("../../../schemas/User");
+const { findUserByPatientId } = require("../../User/Account/account.service");
+const sendMail = require("../../send_email");
+const {
+  findHospitalById,
+  findHospitalByPatientId,
+} = require("../hospital.service");
 
 async function addExistingEcentialsUserAsPatient(req) {
   try {
@@ -166,9 +173,103 @@ async function searchPatientByPatientId(req) {
   }
 }
 
+async function getPatientHealthHistory(req) {
+  try {
+    const result = await Patient.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "patient",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          "user.uniqueId": req.params.patientId,
+          hospital: ObjectId(req.params.hospitalId),
+        },
+      },
+      {
+        $project: {
+          patientHealthHistory: "$user.health_history",
+          patientMedicalConditions: "$user.medical_conditions",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "patient not found",
+      };
+    }
+    return {
+      status: "success",
+      message: "patient history retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalPatientException(
+      `could not retrieve health history. ${error}`
+    );
+  }
+}
+
+async function referPatient({ req }) {
+  try {
+    const referredHospital = await findHospitalById(req.body.hospital);
+
+    const patient = await findUserByPatientId(req.params.patientId);
+    const currentHospital = await findHospitalByPatientId(req.params.patientId);
+
+    const result = await Patient.findByIdAndUpdate(req.params.patientId, {
+      $set: {
+        refer: req.body,
+        updatedAt: new Date(),
+      },
+      $push: {
+        referHistory: req.body,
+      },
+    });
+
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to refer patient",
+      };
+    }
+
+    // send receiving hospital email notifying hospital
+    const mailBody = ReferralTemplate(
+      `${patient.lastName} ${patient.firstName}`,
+      req.body.date,
+      currentHospital.name,
+      currentHospital.phone_number
+    );
+
+    sendMail(referredHospital.email, mailBody);
+
+    return {
+      status: "success",
+      message: "patient successfully referred",
+    };
+  } catch (error) {
+    throw new HospitalPatientException(`could not refer patient. ${error}`);
+  }
+}
+
 module.exports = {
   addExistingEcentialsUserAsPatient,
   registerNewPatient,
   addPatientVisit,
   searchPatientByPatientId,
+  getPatientHealthHistory,
+  referPatient,
 };

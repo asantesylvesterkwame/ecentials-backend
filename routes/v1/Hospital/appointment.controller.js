@@ -16,6 +16,8 @@ const {
   getBookedAppointmentsByMonth,
   getADayAppointmentForDoctors,
   setAvailabilityDatesForDoctor,
+  getAppointmentsForSpecificDoctor,
+  getAvailableAppointmentDatesForDoctor,
 } = require("../../../private/services/Hospital/Appointment/appointment.service");
 const { verify } = require("../../../verifyToken");
 
@@ -180,7 +182,7 @@ router.get(
 );
 
 router.get(
-  "/:hospitalId/doctor/appointments/day",
+  "/:hospitalId/staff/doctor/appointments/day",
   verify,
   async (req, res, next) => {
     try {
@@ -196,7 +198,7 @@ router.get(
 );
 
 router.patch(
-  "/:hospitalId/doctor/available-days",
+  "/:hospitalId/staff/doctor/available-days",
   verify,
   async (req, res, next) => {
     try {
@@ -205,6 +207,38 @@ router.patch(
         return res.status(200).json(result);
       }
       return res.status(400).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/staff/doctor/appointments",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getAppointmentsForSpecificDoctor(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
+    } catch (error) {
+      return next(error);
+    }
+  }
+);
+
+router.get(
+  "/:hospitalId/staff/:doctorId/available-dates",
+  verify,
+  async (req, res, next) => {
+    try {
+      const result = await getAvailableAppointmentDatesForDoctor(req);
+      if (result.status === "success") {
+        return res.status(200).json(result);
+      }
+      return res.status(404).json(result);
     } catch (error) {
       return next(error);
     }

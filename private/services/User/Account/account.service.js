@@ -1,7 +1,10 @@
 /* eslint-disable camelcase */
 /* eslint-disable no-underscore-dangle */
 
+const { ObjectId } = require("mongoose").Types;
+
 const { UserAccountInformationException } = require("../../../exceptions/user");
+const Patient = require("../../../schemas/Patient");
 const User = require("../../../schemas/User");
 const { uploadFile } = require("../../Firebase/imageUpload.service");
 
@@ -60,9 +63,40 @@ async function findUserByUniqueId(uniqueId) {
   }
 }
 
+async function findUserByPatientId(patientId) {
+  const result = await Patient.aggregate([
+    {
+      $lookup: {
+        from: "users",
+        localField: "user_id",
+        foreignField: "_id",
+        as: "user",
+      },
+    },
+    {
+      $unwind: {
+        path: "$user",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $match: {
+        _id: ObjectId(patientId),
+      },
+    },
+    {
+      $project: {
+        user: "$user",
+      },
+    },
+  ]);
+  return result;
+}
+
 module.exports = {
   uploadProfileImage,
   fetchUsersName,
   findUserById,
   findUserByUniqueId,
+  findUserByPatientId,
 };

@@ -42,27 +42,6 @@ async function fetchAvailableAppointmentDates(req) {
   }
 }
 
-async function getHospitalAppointments(req) {
-  try {
-    const result = await Appointments.find({
-      facility_id: req.params.hospitalId,
-    });
-    if (!result) {
-      return {
-        status: "failed",
-        message: "could not retrieve hospital appointments",
-      };
-    }
-    return {
-      status: "success",
-      message: "successfully retrieved appointments",
-      data: result,
-    };
-  } catch (error) {
-    throw new Error(`could not retrieve hospital appointments. ${error}`);
-  }
-}
-
 async function createHospitalAppointment({ req }) {
   try {
     const user = await findUserById(req.body.user_id);
@@ -516,7 +495,7 @@ async function getADayAppointmentForDoctors(req) {
     if (!result) {
       return {
         status: "failed",
-        message: "no booked appointments found for specified month",
+        message: "no appointments found for specified day",
       };
     }
     return {
@@ -526,7 +505,7 @@ async function getADayAppointmentForDoctors(req) {
     };
   } catch (error) {
     throw new HospitalAppointmentException(
-      `could not retrieve booked appointments for specified month. ${error}`
+      `could not retrieve appointments for specified day. ${error}`
     );
   }
 }
@@ -568,6 +547,167 @@ async function setAvailabilityDatesForDoctor(req) {
   }
 }
 
+async function getAppointmentsForSpecificDoctor(req) {
+  try {
+    const result = await Appointments.aggregate([
+      {
+        $match: {
+          facility_id: ObjectId(req.params.hospitalId),
+          staff_id: ObjectId(req.user._id),
+        },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          facility_type: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          patientPersonalInfo: "$user.personal",
+          patientHealthInfo: "$user.health",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no appointments found for doctor",
+      };
+    }
+    return {
+      status: "success",
+      message: "appointments retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve doctor's appointment. ${error}`
+    );
+  }
+}
+
+async function getAvailableAppointmentDatesForDoctor(req) {
+  try {
+    const result = await Staff.find({
+      facility_id: req.params.hospitalId,
+      _id: req.params.doctorId,
+    });
+
+    if (!result) {
+      return {
+        status: "failed",
+        message: "no available dates found",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved available dates",
+      data: result[0].availableDates,
+    };
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not retrieve available dates. ${error}`
+    );
+  }
+}
+
+async function searchAppointmentByPatientNameAndId(req) {
+  try {
+    const result = await Appointments.aggregate([
+      {
+        $lookup: {
+          from: "users",
+          localField: "user_id",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      {
+        $unwind: {
+          path: "$user",
+          preserveNullAndEmptyArrays: true,
+        },
+      },
+      {
+        $match: {
+          $or: [
+            { "user.uniqueId": req.query.q },
+            { "user.personal.firstName": req.query.q },
+            { "user.personal.lastName": req.query.q },
+          ],
+          facility_id: ObjectId(req.params.hospitalId),
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          facility_id: 1,
+          staff_id: 1,
+          date: 1,
+          time: 1,
+          status: 1,
+          patientPersonalInfo: "$user.personal",
+          patientHealthInfo: "$user.health",
+          patientId: "$user.uniqueId",
+        },
+      },
+    ]);
+
+    return result;
+  } catch (error) {
+    throw new HospitalAppointmentException(
+      `could not search patient. ${error}`
+    );
+  }
+}
+
+async function getHospitalAppointments(req) {
+  try {
+    let result;
+
+    if (req.query.q) {
+      result = await searchAppointmentByPatientNameAndId(req);
+    } else {
+      result = await Appointments.find({
+        facility_id: req.params.hospitalId,
+      });
+    }
+
+    if (!result) {
+      return {
+        status: "failed",
+        message: "could not retrieve hospital appointments",
+      };
+    }
+    return {
+      status: "success",
+      message: "successfully retrieved appointments",
+      data: result,
+    };
+  } catch (error) {
+    throw new Error(`could not retrieve hospital appointments. ${error}`);
+  }
+}
+
 module.exports = {
   fetchAvailableAppointmentDates,
   getHospitalAppointments,
@@ -582,4 +722,7 @@ module.exports = {
   getBookedAppointmentsByMonth,
   getADayAppointmentForDoctors,
   setAvailabilityDatesForDoctor,
+  getAppointmentsForSpecificDoctor,
+  getAvailableAppointmentDatesForDoctor,
+  searchAppointmentByPatientNameAndId,
 };
