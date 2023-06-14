@@ -27,6 +27,21 @@ const patientSchema = new mongoose.Schema(
         staff: String,
       },
     ],
+    refer: {
+      hospital: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: true,
+      },
+      staff: {
+        type: mongoose.SchemaTypes.ObjectId,
+        required: false,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+    referHistory: [],
   },
   { timestamps: true }
 );
