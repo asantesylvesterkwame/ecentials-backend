@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+
 const { ObjectId } = require("mongoose").Types;
 
 const { WalletException } = require("../../exceptions/wallet");
@@ -12,18 +14,16 @@ async function createWallet(req) {
     if (!result) {
       return {
         status: "failed",
-        message: "Failed to create wallet. Try again later"
+        message: "Failed to create wallet. Try again later",
       };
     }
     return {
       status: "success",
-      message: "wallet created successfully", 
-      data: result
+      message: "wallet created successfully",
+      data: result,
     };
   } catch (error) {
-    throw new WalletException(
-      `could not create wallet. ${error}`
-    );
+    throw new WalletException(`could not create wallet. ${error}`);
   }
 }
 
@@ -55,7 +55,7 @@ async function getWalletInformation(req) {
       {
         $match: {
           user_id: ObjectId(req.user._id),
-        }
+        },
       },
       {
         $lookup: {
@@ -63,13 +63,13 @@ async function getWalletInformation(req) {
           localField: "walletId",
           foreignField: "_id",
           as: "transactions",
-        }
+        },
       },
       {
         $unwind: {
           path: "$transactions",
           preserveNullAndEmptyArrays: true,
-        }
+        },
       },
       {
         $project: {
@@ -77,15 +77,15 @@ async function getWalletInformation(req) {
           balance: 1,
           createdAt: 1,
           updatedAt: 1,
-          transactions: "$transactions"
-        }
-      }
+          transactions: "$transactions",
+        },
+      },
     ]);
 
     if (!result) {
       return {
         status: "failed",
-        message: "wallet information not found"
+        message: "wallet information not found",
       };
     }
 
@@ -95,9 +95,7 @@ async function getWalletInformation(req) {
       data: result,
     };
   } catch (error) {
-    throw new WalletException(
-      `could not get wallet information. ${error}`
-    );
+    throw new WalletException(`could not get wallet information. ${error}`);
   }
 }
 

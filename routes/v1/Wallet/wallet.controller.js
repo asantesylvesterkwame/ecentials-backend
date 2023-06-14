@@ -47,20 +47,16 @@ router.get(
   }
 );
 
-router.get(
-  "/information",
-  verify,
-  async (req, res, next) => {
-    try {
-      const result = await getWalletInformation(req);
-      if (result.status === "success") {
-        return res.status(200).json(result);
-      }
-      return res.status(404).json(result);
-    } catch (error) {
-      return next(error);
+router.get("/information", verify, async (req, res, next) => {
+  try {
+    const result = await getWalletInformation(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
     }
+    return res.status(404).json(result);
+  } catch (error) {
+    return next(error);
   }
-);
+});
 
 module.exports = router;
