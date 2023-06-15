@@ -103,6 +103,7 @@ async function isBusinessOwnerHavingHospital(req) {
         status: "success",
         message: "user has a hospital",
         has_hospital: true,
+        data: result,
       };
     }
     return {
