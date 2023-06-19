@@ -6,6 +6,7 @@ const bcrypt = require("bcryptjs/dist/bcrypt");
 const { WalletException } = require("../../exceptions/wallet");
 const Wallet = require("../../schemas/Wallet");
 const WalletTransactions = require("../../schemas/WalletTransactions");
+const { encryptData, decryptData } = require("../../helpers/encryption");
 
 // create a new ecentials wallet
 async function createWallet(req) {
@@ -100,14 +101,14 @@ async function getWalletInformation(req) {
   }
 }
 
-const encryptCardDetails = (data) => bcrypt.hashSync(data, 10);
+const encryptCardDetails = (data) => encryptData(data);
 
 async function addCreditCard({ req }) {
   try {
     const walletId = req.body.walletId;
 
     delete req.body.walletId;
-    
+
     const result = await Wallet.findByIdAndUpdate(
       walletId,
       {
@@ -124,20 +125,41 @@ async function addCreditCard({ req }) {
       return {
         status: "failed",
         message: "failed to add credit card to wallet",
-      }
+      };
     }
     return {
       status: "success",
       message: "credit card added to wallet successfully",
-    }
+    };
   } catch (error) {
     throw new WalletException(
       `could not add credit card. ${error}`
-    )
+    );
   }
 }
 
-
+async function getCards(req) {
+  try {
+    const result = await Wallet.findById(req.params.walletId);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to fetch wallet",
+      };
+    }
+    return {
+      status: "success",
+      message: "cards retrieved successfully",
+      data: result.cards.map((value) => {
+        return {...value, cardNumber: decryptData(value.cardNumber)}
+      }),
+    };
+  } catch (error) {
+    throw new WalletException(
+      `could not fetch cards. ${error}`
+    );
+  }
+}
 
 module.exports = {
   createWallet,
@@ -145,4 +167,5 @@ module.exports = {
   recentWalletTransactions,
   getWalletInformation,
   addCreditCard,
+  getCards,
 };
