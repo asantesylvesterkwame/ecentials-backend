@@ -1,6 +1,7 @@
 /* eslint-disable no-underscore-dangle */
 
 const { ObjectId } = require("mongoose").Types;
+const bcrypt = require("bcryptjs/dist/bcrypt");
 
 const { WalletException } = require("../../exceptions/wallet");
 const Wallet = require("../../schemas/Wallet");
@@ -99,9 +100,49 @@ async function getWalletInformation(req) {
   }
 }
 
+const encryptCardDetails = (data) => bcrypt.hashSync(data, 10);
+
+async function addCreditCard({ req }) {
+  try {
+    const walletId = req.body.walletId;
+
+    delete req.body.walletId;
+    
+    const result = await Wallet.findByIdAndUpdate(
+      walletId,
+      {
+        $push: {
+          cards: {
+            ...req.body,
+            cardNumber: encryptCardDetails(req.body.cardNumber),
+            cvc: encryptCardDetails(req.body.cvc),
+          }
+        }
+      }
+    );
+    if (!result) {
+      return {
+        status: "failed",
+        message: "failed to add credit card to wallet",
+      }
+    }
+    return {
+      status: "success",
+      message: "credit card added to wallet successfully",
+    }
+  } catch (error) {
+    throw new WalletException(
+      `could not add credit card. ${error}`
+    )
+  }
+}
+
+
+
 module.exports = {
   createWallet,
   getWalletBalance,
   recentWalletTransactions,
   getWalletInformation,
+  addCreditCard,
 };

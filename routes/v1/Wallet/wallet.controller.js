@@ -8,6 +8,7 @@ const {
   getWalletBalance,
   recentWalletTransactions,
   getWalletInformation,
+  addCreditCard,
 } = require("../../../private/services/wallet/wallet.service");
 const { verify } = require("../../../verifyToken");
 
@@ -54,6 +55,18 @@ router.get("/information", verify, async (req, res, next) => {
       return res.status(200).json(result);
     }
     return res.status(404).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.patch("/add-credit-card", verify, async (req, res, next) => {
+  try {
+    const result = await addCreditCard({ req });
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(400).json(result);
   } catch (error) {
     return next(error);
   }
