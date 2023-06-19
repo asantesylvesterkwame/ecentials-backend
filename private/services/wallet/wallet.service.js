@@ -1,7 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 
 const { ObjectId } = require("mongoose").Types;
-const bcrypt = require("bcryptjs/dist/bcrypt");
 
 const { WalletException } = require("../../exceptions/wallet");
 const Wallet = require("../../schemas/Wallet");
@@ -105,22 +104,19 @@ const encryptCardDetails = (data) => encryptData(data);
 
 async function addCreditCard({ req }) {
   try {
-    const walletId = req.body.walletId;
+    const { walletId } = req.body;
 
     delete req.body.walletId;
 
-    const result = await Wallet.findByIdAndUpdate(
-      walletId,
-      {
-        $push: {
-          cards: {
-            ...req.body,
-            cardNumber: encryptCardDetails(req.body.cardNumber),
-            cvc: encryptCardDetails(req.body.cvc),
-          }
-        }
-      }
-    );
+    const result = await Wallet.findByIdAndUpdate(walletId, {
+      $push: {
+        cards: {
+          ...req.body,
+          cardNumber: encryptCardDetails(req.body.cardNumber),
+          cvc: encryptCardDetails(req.body.cvc),
+        },
+      },
+    });
     if (!result) {
       return {
         status: "failed",
@@ -132,9 +128,7 @@ async function addCreditCard({ req }) {
       message: "credit card added to wallet successfully",
     };
   } catch (error) {
-    throw new WalletException(
-      `could not add credit card. ${error}`
-    );
+    throw new WalletException(`could not add credit card. ${error}`);
   }
 }
 
@@ -150,14 +144,13 @@ async function getCards(req) {
     return {
       status: "success",
       message: "cards retrieved successfully",
-      data: result.cards.map((value) => {
-        return {...value, cardNumber: decryptData(value.cardNumber)}
-      }),
+      data: result.cards.map((value) => ({
+        ...value,
+        cardNumber: decryptData(value.cardNumber),
+      })),
     };
   } catch (error) {
-    throw new WalletException(
-      `could not fetch cards. ${error}`
-    );
+    throw new WalletException(`could not fetch cards. ${error}`);
   }
 }
 

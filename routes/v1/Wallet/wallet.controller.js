@@ -75,7 +75,7 @@ router.patch("/add-credit-card", verify, async (req, res, next) => {
 
 router.get("/:walletId/cards", verify, async (req, res, next) => {
   try {
-    const result = await getCards(req)
+    const result = await getCards(req);
     if (result.status === "success") {
       return res.status(200).json(result);
     }
