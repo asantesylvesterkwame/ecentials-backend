@@ -8,6 +8,7 @@ const { verify } = require("../../../verifyToken");
 const {
   createOrderItem,
   cancelOrder,
+  getOrderDetails,
 } = require("../../../private/services/User/Orders/orders.service");
 
 // list all orders for a verified user
@@ -42,4 +43,17 @@ router.post("/cancel-order", verify, async (req, res, next) => {
     return next(error);
   }
 });
+
+router.post("/:orderId", verify, async (req, res, next) => {
+  try {
+    const result = await getOrderDetails(req);
+    if (result.status === "success") {
+      return res.status(200).json(result);
+    }
+    return res.status(404).json(result);
+  } catch (error) {
+    return next(error);
+  }
+});
+
 module.exports = router;
