@@ -6,6 +6,7 @@ const { WalletException } = require("../../exceptions/wallet");
 const Wallet = require("../../schemas/Wallet");
 const WalletTransactions = require("../../schemas/WalletTransactions");
 const { encryptData, decryptData } = require("../../helpers/encryption");
+const { verifyPaystackTransaction } = require("./Paystack/paystack.service");
 
 // create a new ecentials wallet
 async function createWallet(req) {
@@ -154,6 +155,65 @@ async function getCards(req) {
   }
 }
 
+async function topUpEcentialsWallet(req) {
+  try {
+    const response = await verifyPaystackTransaction(req.body.reference);
+   const parsedData = JSON.parse(response);
+
+    if (parsedData.data.status !== "success") {
+      // meaning transaction was not successful
+      return {
+        status: "failed",
+        message: "failed to top up wallet",
+      };
+    }
+
+    const transactionDetails = {
+      walletId: req.body.walletId,
+      transaction_type: "top-up",
+      amount: req.body.amount,
+      status: "successful",
+      currency: "GHS",
+    }
+
+    const [result1, result2] = Promise.all([
+      _createWalletTransaction(transactionDetails),
+      _updateWalletBalance(req.body.walletId, req.body.amount),
+    ]);
+
+    if (!result1 && !result2) {
+      return {
+        status: "failed",
+        message: "failed to top up wallet",
+      };
+    }
+
+    return {
+      status: "success",
+      message: "ecentials wallet top up successful",
+      data: result2,
+    };
+
+  } catch (error) {
+    throw new WalletException(
+      `an error ocurred. ${error}`
+    );
+  }
+}
+
+async function _createWalletTransaction(params) {
+  return await WalletTransactions.create(params);
+}
+
+async function _updateWalletBalance(walletId, amount) {
+  return await Wallet.findByIdAndUpdate(
+    walletId,
+    {
+     $inc: { balance: amount },
+    }
+  );
+}
+
 module.exports = {
   createWallet,
   getWalletBalance,
@@ -161,4 +221,5 @@ module.exports = {
   getWalletInformation,
   addCreditCard,
   getCards,
+  topUpEcentialsWallet,
 };
