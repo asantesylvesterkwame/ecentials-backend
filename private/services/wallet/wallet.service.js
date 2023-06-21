@@ -171,14 +171,14 @@ async function topUpEcentialsWallet(req) {
     const transactionDetails = {
       walletId: req.body.walletId,
       transaction_type: "top-up",
-      amount: req.body.amount,
+      amount: parsedData.data.amount,
       status: "successful",
       currency: "GHS",
     }
 
     const [result1, result2] = Promise.all([
       _createWalletTransaction(transactionDetails),
-      _updateWalletBalance(req.body.walletId, req.body.amount),
+      _updateWalletBalance(req.body.walletId, parsedData.data.amount),
     ]);
 
     if (!result1 && !result2) {
