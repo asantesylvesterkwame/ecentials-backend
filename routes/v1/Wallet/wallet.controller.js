@@ -89,7 +89,7 @@ router.get("/:walletId/cards", verify, async (req, res, next) => {
 router.patch("/top-up", verify, async (req, res, next) => {
   try {
     const result = await topUpEcentialsWallet(req);
-    console.log(result);
+
     if (result.status === "success") {
       return res.status(200).json(result);
     }

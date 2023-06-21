@@ -1,6 +1,6 @@
 // const Wallet = require('../../schemas/Wallet');
 const axios = require("axios");
-const https = require('https');
+const https = require("https");
 
 // create a new ecentials wallet
 async function initializePaymentTransaction(req) {
@@ -43,25 +43,29 @@ async function verifyPaystackTransaction(reference) {
   };
 
   const options = {
-    headers: headers
+    headers,
   };
-  
+
   return new Promise((resolve, reject) => {
+    https
+      .get(
+        `https://api.paystack.co/transaction/verify/${reference}`,
+        options,
+        (response) => {
+          let responseData = "";
 
-    
-    https.get(`https://api.paystack.co/transaction/verify/${reference}`, options, (response) =>  {
-      let responseData = '';
+          response.on("data", (chunk) => {
+            responseData += chunk;
+          });
 
-      response.on('data', (chunk) => {
-        responseData += chunk;
+          response.on("end", () => {
+            resolve(responseData);
+          });
+        }
+      )
+      .on("error", (error) => {
+        reject(error);
       });
-
-      response.on('end', () => {
-        resolve(responseData);
-      });
-    }).on('error', (error) => {
-      reject(error);
-    });
   });
 }
 

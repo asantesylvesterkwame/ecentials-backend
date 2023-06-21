@@ -155,10 +155,20 @@ async function getCards(req) {
   }
 }
 
+async function _createWalletTransaction(params) {
+  return WalletTransactions.create(params);
+}
+
+async function _updateWalletBalance(walletId, amount) {
+  return Wallet.findByIdAndUpdate(walletId, {
+    $inc: { balance: amount },
+  });
+}
+
 async function topUpEcentialsWallet(req) {
   try {
     const response = await verifyPaystackTransaction(req.body.reference);
-   const parsedData = JSON.parse(response);
+    const parsedData = JSON.parse(response);
 
     if (parsedData.data.status !== "success") {
       // meaning transaction was not successful
@@ -174,7 +184,7 @@ async function topUpEcentialsWallet(req) {
       amount: parsedData.data.amount,
       status: "successful",
       currency: "GHS",
-    }
+    };
 
     const [result1, result2] = Promise.all([
       _createWalletTransaction(transactionDetails),
@@ -193,25 +203,9 @@ async function topUpEcentialsWallet(req) {
       message: "ecentials wallet top up successful",
       data: result2,
     };
-
   } catch (error) {
-    throw new WalletException(
-      `an error ocurred. ${error}`
-    );
+    throw new WalletException(`an error ocurred. ${error}`);
   }
-}
-
-async function _createWalletTransaction(params) {
-  return await WalletTransactions.create(params);
-}
-
-async function _updateWalletBalance(walletId, amount) {
-  return await Wallet.findByIdAndUpdate(
-    walletId,
-    {
-     $inc: { balance: amount },
-    }
-  );
 }
 
 module.exports = {
