@@ -143,7 +143,7 @@ router.post("/add-new-staff", verify, newStaffFiles, async (req, res, next) => {
   }
 });
 
-router.get("", verify, async (req, res, next) => {
+router.post("", verify, async (req, res, next) => {
   try {
     const result = await getHospitalStaff(req);
     if (result.status === "success") {

@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 
 const walletTransactionSchema = new mongoose.Schema(
   {
-    user_id: {
+    walletId: {
       type: mongoose.SchemaTypes.ObjectId,
       required: true,
     },
     transaction_type: {
       type: String,
       required: true,
+      enum: ["purchase", "transfer", "top-up"],
     },
     amount: {
       type: Number,
@@ -21,12 +22,12 @@ const walletTransactionSchema = new mongoose.Schema(
     },
     paymentMethod: {
       type: String,
-      default: "flutterwave",
+      default: "paystack",
     },
     currency: {
       type: String,
       required: [true, "currency is required"],
-      enum: ["GH", "USD", "EUR", "GBP"],
+      enum: ["GHS", "USD", "EUR", "GBP"],
     },
   },
   { timestamps: true }

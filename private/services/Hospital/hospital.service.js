@@ -1,11 +1,14 @@
 /* eslint-disable */
 
+const { ObjectId } = require("mongoose").Types;
+
 const Hospital = require("../../schemas/Hospital");
 
 const { encryptPassword } = require("../../helpers/functions");
 
 const { uploadFile } = require("../Firebase/imageUpload.service");
 const getDistance = require("../../../private/helpers/get_distance");
+const Patient = require("../../schemas/Patient");
 
 // upload hospital images
 async function uploadHospitalImages({ hospital_id, files }) {
@@ -100,6 +103,7 @@ async function isBusinessOwnerHavingHospital(req) {
         status: "success",
         message: "user has a hospital",
         has_hospital: true,
+        data: result,
       };
     }
     return {
@@ -148,6 +152,36 @@ async function findHospitalById(id) {
   return await Hospital.findById(id);
 }
 
+async function findHospitalByPatientId(patientId) {
+  const result = await Patient.aggregate([
+    {
+      $lookup: {
+        from: "hospitals",
+        localField: "hospital",
+        foreignField: "_id",
+        as: "hospital",
+      },
+    },
+    {
+      $unwind: {
+        path: "$hospital",
+        preserveNullAndEmptyArrays: true,
+      },
+    },
+    {
+      $match: {
+        _id: ObjectId(patientId),
+      },
+    },
+    {
+      $project: {
+        hospital: "$hospital",
+      },
+    },
+  ]);
+  return result;
+}
+
 module.exports = {
   registerNewHospital,
   uploadHospitalImages,
@@ -155,4 +189,5 @@ module.exports = {
   getHospitalDetails,
   isBusinessOwnerHavingHospital,
   findHospitalById,
+  findHospitalByPatientId,
 };

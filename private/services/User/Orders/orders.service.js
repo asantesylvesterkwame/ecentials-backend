@@ -3,6 +3,7 @@
 
 const Orders = require("../../../schemas/Orders");
 const Drug = require("../../../schemas/Drug");
+const { OrderException } = require("../../../exceptions/order");
 
 async function generateOrderCode(orderInitial, pharmacyInitial) {
   const initials = orderInitial.slice(0, 2).toUpperCase();
@@ -139,10 +140,29 @@ async function cancelOrder(req) {
   }
 }
 
+async function getOrderDetails(req) {
+  try {
+    const result = await Orders.findById(req.params.orderId);
+    if (!result) {
+      return {
+        status: "failed",
+        message: "order not found",
+      };
+    }
+    return {
+      status: "success",
+      message: "order details retrieved successfully",
+      data: result,
+    };
+  } catch (error) {
+    throw new OrderException(`could not get order details. ${error}`);
+  }
+}
 module.exports = {
   generateOrderCode,
 
   generateInvoiceNumber,
   createOrderItem,
   cancelOrder,
+  getOrderDetails,
 };

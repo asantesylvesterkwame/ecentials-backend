@@ -49,8 +49,8 @@ const userSchema = new mongoose.Schema(
       addressLineTwo: String,
       dob: String,
       ghana_card_no: String,
-      height: Number,
-      weight: Number,
+      height: String,
+      weight: String,
       height_unit: String,
       weight_unit: String,
       date: {
